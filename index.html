@@ -84,6 +84,11 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
 .toggle::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .18s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
 .toggle.on::after{left:21px;}
 .nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--sf);border-top:1px solid var(--d);display:flex;padding:6px 0 calc(env(safe-area-inset-bottom,0px)+6px);z-index:100;}
+/* Safari通常ブラウザ時: 下部ツールバー分の余白を追加 */
+@media not all and (display-mode:standalone){
+  .nav{padding-bottom:calc(env(safe-area-inset-bottom,0px)+54px);}
+  body{padding-bottom:132px;}
+}
 [data-theme=dark] .nav{background:rgba(37,37,37,.95);backdrop-filter:blur(16px);}
 .nv{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:4px 0;background:none;border:none;color:var(--t3);font-size:10px;font-family:inherit;font-weight:500;transition:color .12s;}
 .nv.on{color:var(--ac);}
