@@ -565,16 +565,16 @@ function dfState() {
     txns: [],
     streak: { count:0, last:null },
     cats: {
-      'コンビニ':    { amount:3000,  color:'#E8720C', subs:[] },
-      '外食・カフェ': { amount:8000,  color:'#EB4336', subs:['ランチ','カフェ','ディナー','テイクアウト'] },
-      '食材・スーパー':{ amount:25000, color:'#2D9B5A', subs:[] },
-      'ガソリン':    { amount:8000,  color:'#787774', subs:[] },
-      '美容・理容':  { amount:4000,  color:'#D94F6B', subs:[] },
-      '医療・薬':    { amount:2000,  color:'#0B6E99', subs:[] },
-      '日用品':      { amount:5000,  color:'#7B52D9', subs:[] },
-      '娯楽':        { amount:3000,  color:'#4F7CFF', subs:['映画','ゲーム','趣味'] },
-      'サブスク':    { amount:5240,  color:'#4D7EBF', subs:[] },
-      'その他':      { amount:3000,  color:'#AFACA7', subs:[] },
+      'コンビニ':    { amount:0, color:'#E8720C', subs:[] },
+      '外食・カフェ': { amount:0, color:'#EB4336', subs:['ランチ','カフェ','ディナー','テイクアウト'] },
+      '食材・スーパー':{ amount:0, color:'#2D9B5A', subs:[] },
+      'ガソリン':    { amount:0, color:'#787774', subs:[] },
+      '美容・理容':  { amount:0, color:'#D94F6B', subs:[] },
+      '医療・薬':    { amount:0, color:'#0B6E99', subs:[] },
+      '日用品':      { amount:0, color:'#7B52D9', subs:[] },
+      '娯楽':        { amount:0, color:'#4F7CFF', subs:['映画','ゲーム','趣味'] },
+      'サブスク':    { amount:0, color:'#4D7EBF', subs:[] },
+      'その他':      { amount:0, color:'#AFACA7', subs:[] },
     },
     goals: [
       { id:'g1', name:'マイホーム頭金', target:3000000, current:0, color:'#2D9B5A' }
@@ -588,6 +588,19 @@ function dfState() {
 }
 function gs() { try { return JSON.parse(localStorage.getItem(KEY)) || dfState(); } catch(e) { return dfState(); } }
 function ss(s) { localStorage.setItem(KEY, JSON.stringify(s)); }
+// マイグレーション: デフォルト予算額(3000/8000/25000/5240等)を0にリセット
+(function migrateAmounts(){
+  const DEFAULT_AMOUNTS={3000:1,8000:1,25000:1,4000:1,2000:1,5000:1,5240:1};
+  try {
+    const raw=localStorage.getItem(KEY); if(!raw) return;
+    const s=JSON.parse(raw); if(!s?.cats) return;
+    let changed=false;
+    Object.values(s.cats).forEach(cfg=>{
+      if(cfg.amount!=null && DEFAULT_AMOUNTS[cfg.amount]){cfg.amount=0;changed=true;}
+    });
+    if(changed) localStorage.setItem(KEY,JSON.stringify(s));
+  } catch(e){}
+})();
 
 // ── UTILITIES ──────────────────────────────────────
 function categorize(name) {
@@ -1263,7 +1276,7 @@ function addCat() {
 function confirmAddCat() {
   const name=(document.getElementById('new-cat-name')?.value||'').trim();
   if (!name) { alert('カテゴリ名を入力してください'); return; }
-  const amt=parseInt(document.getElementById('new-cat-amt')?.value)||3000;
+  const amt=parseInt(document.getElementById('new-cat-amt')?.value)||0;
   const color=document.getElementById('new-cat-color-val')?.value||'#DA7756';
   const s=gs();
   if (s.cats[name]) { alert('同じ名前のカテゴリが既にあります'); return; }
@@ -1606,7 +1619,7 @@ function closeCatModal() {
 function confirmAddCatModal() {
   const name=(document.getElementById('modal-cat-name')?.value||'').trim();
   if (!name) { alert('カテゴリ名を入力してください'); return; }
-  const amt=parseInt(document.getElementById('modal-cat-amt')?.value)||3000;
+  const amt=parseInt(document.getElementById('modal-cat-amt')?.value)||0;
   const s=gs();
   if (s.cats[name]) { alert('同じ名前のカテゴリがすでにあります'); return; }
   s.cats[name]={amount:amt,color:'#DA7756',subs:[]};
