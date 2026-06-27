@@ -1,0 +1,29 @@
+{
+  "name": "Money Seed",
+  "short_name": "Money Seed",
+  "description": "家計管理アプリ",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#1E7850",
+  "theme_color": "#1E7850",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

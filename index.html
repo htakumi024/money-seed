@@ -10,8 +10,10 @@
 <meta name="theme-color" content="#F7F7F5" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#191919" media="(prefers-color-scheme: dark)">
 <title>Money Seed</title>
+<link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.png">
-<link rel="apple-touch-icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
@@ -117,9 +119,13 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
       <div style="font-size:24px;font-weight:800;letter-spacing:-.5px;">Money Seed</div>
       <div class="hint" id="h-ym" style="margin-top:1px;"></div>
     </div>
-    <div class="row">
-      <span id="h-streak" style="font-size:13px;font-weight:600;color:var(--t2);"></span>
-      <button onclick="toggleTheme()" id="theme-btn" style="background:none;border:none;cursor:pointer;font-size:20px;padding:4px;line-height:1;">🌙</button>
+    <div class="row" style="gap:10px;">
+      <span id="h-streak" style="font-size:12px;font-weight:600;color:var(--ac);white-space:nowrap;"></span>
+      <button onclick="nav('settings')" style="background:none;border:none;cursor:pointer;padding:6px 2px;display:flex;flex-direction:column;gap:4px;align-items:flex-end;justify-content:center;" aria-label="設定">
+        <span style="display:block;width:20px;height:2px;background:var(--t);border-radius:1px;"></span>
+        <span style="display:block;width:14px;height:2px;background:var(--t2);border-radius:1px;"></span>
+        <span style="display:block;width:20px;height:2px;background:var(--t);border-radius:1px;"></span>
+      </button>
     </div>
   </div>
 
@@ -167,6 +173,7 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
       <button class="nkey" onclick="pad('7')">7</button><button class="nkey" onclick="pad('8')">8</button><button class="nkey" onclick="pad('9')">9</button>
       <button class="nkey" onclick="pad('00')">00</button><button class="nkey" onclick="pad('0')">0</button><button class="nkey" onclick="pad('del')">⌫</button>
     </div>
+    <input type="text" id="r-memo" placeholder="メモ（任意）" style="margin-top:10px;">
   </div>
 
   <div class="card">
@@ -188,10 +195,13 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
     <div class="hint" id="r-bused" style="margin-top:5px;font-size:12px;text-align:right;"></div>
   </div>
 
-  <div class="row" style="gap:8px;margin-bottom:10px;">
-    <input type="text" id="r-memo" placeholder="個別メモ（任意）" style="flex:1;">
-    <input type="date" id="r-date" style="width:auto;flex-shrink:0;font-size:13px;">
-    <button class="btn btn-sm btn-g" onclick="setDateLastDay()" style="white-space:nowrap;flex-shrink:0;">月末</button>
+  <input type="date" id="r-date" style="display:none;">
+  <div class="card" style="padding:10px 14px 12px;">
+    <div class="sb" style="margin-bottom:8px;">
+      <div class="lbl" style="margin:0;">日付</div>
+      <div id="r-date-disp" style="font-size:13px;font-weight:600;color:var(--t2);"></div>
+    </div>
+    <div id="r-day-grid" style="display:flex;flex-wrap:wrap;gap:4px;"></div>
   </div>
   <button class="btn btn-p btn-full" onclick="addRecord()">記録を保存 ✓</button>
   <div id="r-fb" style="text-align:center;height:22px;margin-top:8px;font-size:13px;color:var(--ok);"></div>
@@ -341,7 +351,7 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
   <div class="card">
     <div class="section-hd">収入・給料日</div>
     <div class="lbl">月収（手取り）</div>
-    <input type="number" id="s-sal" style="margin-bottom:12px;" placeholder="346832">
+    <input type="number" id="s-sal" style="margin-bottom:12px;" placeholder="例：300000">
     <div class="lbl">給料日</div>
     <select id="s-pd" style="margin-bottom:10px;" onchange="updatePaydayUI()">
       <option value="last">月末（末日）</option>
@@ -695,7 +705,7 @@ function renderHome() {
   const MN=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
   document.getElementById('h-ym').textContent=`${now.getFullYear()}年${MN[now.getMonth()]}`;
   tickStreak(s);
-  document.getElementById('h-streak').textContent=`🔥 ${s.streak.count}日`;
+  document.getElementById('h-streak').textContent=s.streak.count>0?`${s.streak.count}日連続記録中！`:'';
 
   const sc=calcScore(s,ym), cl=scoreColor(sc);
   const se=document.getElementById('h-score');
@@ -775,16 +785,21 @@ let curAmt='', selCat='', selSub=null;
 function renderRecord() {
   const s=gs();
   if (!selCat || !s.cats[selCat]) selCat=Object.keys(s.cats)[0]||'コンビニ';
-  document.getElementById('r-date').value=new Date().toISOString().slice(0,10);
+  const inp=document.getElementById('r-date');
+  if(inp&&!inp.value) inp.value=new Date().toISOString().slice(0,10);
   renderCatChips(s);
   renderSubChips(s);
   updateBudget(s);
+  renderDayPicker();
 }
 function renderCatChips(s) {
-  document.getElementById('r-cats').innerHTML=Object.entries(s.cats).map(([c,cfg])=>
-    `<button class="chip${c===selCat?' on':''}" onclick="pickCat('${c}')" style="${c===selCat?'':'border-left:3px solid '+cfg.color+'!important'}">
-      <span class="dot" style="background:${cfg.color};margin-right:4px;"></span>${c}
-    </button>`).join('')+'<button class="chip" onclick="showCatModal()" style="border-style:dashed;color:var(--t2);">＋</button>';
+  document.getElementById('r-cats').innerHTML=Object.entries(s.cats).map(([c,cfg])=>{
+    const on=c===selCat;
+    return `<button class="chip${on?' on':''}" onclick="pickCat('${c}')"
+      style="${on?`background:${cfg.color};border-color:${cfg.color};`:`border-left:3px solid ${cfg.color}!important`}">
+      <span class="dot" style="background:${on?'rgba(255,255,255,0.75)':cfg.color};margin-right:4px;"></span>${c}
+    </button>`;
+  }).join('')+'<button class="chip" onclick="showCatModal()" style="border-style:dashed;color:var(--t2);">＋</button>';
 }
 function renderSubChips(s) {
   const cfg=s.cats[selCat]; const subs=cfg?.subs||[];
@@ -798,17 +813,28 @@ function renderSubChips(s) {
 function pickCat(c) { selCat=c; selSub=null; const s=gs(); renderCatChips(s); renderSubChips(s); updateBudget(s); }
 function pickSub(sub) { selSub=sub; const s=gs(); renderSubChips(s); }
 function updateBudget(s) {
-  const cfg=s.cats[selCat]; if (!cfg?.amount) { document.getElementById('r-bcard').style.display='none'; return; }
+  const cfg=s.cats[selCat];
+  const bcard=document.getElementById('r-bcard');
+  if (!cfg) { bcard.style.display='none'; return; }
+  bcard.style.display='block';
+  if (!cfg.amount) {
+    bcard.innerHTML=`<div class="sb"><div class="hint" style="font-size:12px;">${selCat}の月間上限未設定</div><button onclick="nav('settings')" style="font-size:11px;color:var(--ac);background:none;border:none;cursor:pointer;padding:2px 6px;">設定 →</button></div>`;
+    return;
+  }
   const ym=new Date().toISOString().slice(0,7);
   const spent=monthTxns(s,ym).filter(t=>t.cat===selCat).reduce((a,t)=>a+t.amount,0);
   const rem=cfg.amount-spent, pct=Math.min(100,Math.round(spent/cfg.amount*100));
-  document.getElementById('r-bcard').style.display='block';
-  document.getElementById('r-bcat').textContent=`${selCat} 今月の残り`;
-  document.getElementById('r-brem').textContent=`¥${Math.max(0,rem).toLocaleString()}`;
-  document.getElementById('r-bused').textContent=`使用 ¥${spent.toLocaleString()} / ¥${cfg.amount.toLocaleString()}`;
-  const bar=document.getElementById('r-bbar');
-  bar.style.width=pct+'%';
-  bar.style.background=pct>90?'var(--err)':pct>70?'var(--wn)':'var(--ok)';
+  const barColor=pct>90?'var(--err)':pct>70?'var(--wn)':'var(--ok)';
+  bcard.innerHTML=`
+    <div class="sb" style="margin-bottom:6px;">
+      <div class="hint" id="r-bcat">${selCat} 今月の残り</div>
+      <div class="row" style="gap:6px;">
+        <div style="font-size:13px;font-weight:600;" id="r-brem">¥${Math.max(0,rem).toLocaleString()}</div>
+        <button onclick="nav('settings')" style="font-size:11px;color:var(--t3);background:none;border:none;cursor:pointer;padding:0;" title="上限を変更">✎</button>
+      </div>
+    </div>
+    <div class="pbar"><div class="pbar-f" style="width:${pct}%;background:${barColor};"></div></div>
+    <div class="hint" style="margin-top:5px;font-size:12px;text-align:right;">使用 ¥${spent.toLocaleString()} / ¥${cfg.amount.toLocaleString()}</div>`;
 }
 function pad(v) {
   if (v==='del') curAmt=curAmt.slice(0,-1);
@@ -1101,7 +1127,7 @@ function renderSettings() {
   // Accent
   document.querySelectorAll('[data-a]').forEach(el=>el.classList.toggle('on',el.dataset.a===s.settings.accent));
   // Payday
-  document.getElementById('s-sal').value=s.settings.salary||'';
+  document.getElementById('s-sal').value=s.settings.salary!=null?s.settings.salary:0;
   const pd=s.settings.payday||'27';
   const sel=document.getElementById('s-pd');
   sel.value=['last','first','5','10','15','20','25','27','custom'].includes(pd)?pd:'custom';
@@ -1677,11 +1703,39 @@ async function submitFeedback(){
 
 // ── DATE HELPERS ───────────────────────────────────────────────
 function setDateLastDay() {
-  const now=new Date();
-  const last=new Date(now.getFullYear(),now.getMonth()+1,0);
-  const iso=last.toISOString().slice(0,10);
   const inp=document.getElementById('r-date');
-  if(inp) inp.value=iso;
+  const base=inp&&inp.value?new Date(inp.value+'T00:00:00'):new Date();
+  const last=new Date(base.getFullYear(),base.getMonth()+1,0);
+  if(inp) inp.value=last.toISOString().slice(0,10);
+  renderDayPicker();
+}
+function pickDay(day) {
+  const inp=document.getElementById('r-date');
+  const base=inp&&inp.value?new Date(inp.value+'T00:00:00'):new Date();
+  const yr=base.getFullYear(), mo=base.getMonth();
+  const max=new Date(yr,mo+1,0).getDate();
+  const d=Math.min(day,max);
+  inp.value=`${yr}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  renderDayPicker();
+}
+function renderDayPicker() {
+  const inp=document.getElementById('r-date');
+  if(!inp) return;
+  const base=inp.value?new Date(inp.value+'T00:00:00'):new Date();
+  const yr=base.getFullYear(), mo=base.getMonth(), selDay=base.getDate();
+  const daysInMonth=new Date(yr,mo+1,0).getDate();
+  const dispEl=document.getElementById('r-date-disp');
+  if(dispEl) dispEl.textContent=`${yr}年${mo+1}月`;
+  const grid=document.getElementById('r-day-grid');
+  if(!grid) return;
+  let html='';
+  for(let i=1;i<=daysInMonth;i++){
+    const on=i===selDay;
+    html+=`<button onclick="pickDay(${i})" style="min-width:30px;padding:6px 2px;font-size:12px;font-weight:${on?'700':'500'};border-radius:5px;border:1px solid ${on?'transparent':'var(--d)'};background:${on?'var(--ac)':'var(--sf2)'};color:${on?'#fff':'var(--t3)'};cursor:pointer;font-family:inherit;text-align:center;">${i}</button>`;
+  }
+  const lastOn=selDay===daysInMonth;
+  html+=`<button onclick="setDateLastDay()" style="padding:6px 8px;font-size:12px;font-weight:${lastOn?'700':'500'};border-radius:5px;border:1px solid ${lastOn?'transparent':'var(--d)'};background:${lastOn?'var(--ac)':'var(--sf2)'};color:${lastOn?'#fff':'var(--t2)'};cursor:pointer;font-family:inherit;">月末</button>`;
+  grid.innerHTML=html;
 }
 
 // ── DAILY MEMO ─────────────────────────────────────────────────
