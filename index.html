@@ -189,8 +189,9 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
   </div>
 
   <div class="row" style="gap:8px;margin-bottom:10px;">
-    <input type="text" id="r-memo" placeholder="メモ（任意）" style="flex:1;">
+    <input type="text" id="r-memo" placeholder="個別メモ（任意）" style="flex:1;">
     <input type="date" id="r-date" style="width:auto;flex-shrink:0;font-size:13px;">
+    <button class="btn btn-sm btn-g" onclick="setDateLastDay()" style="white-space:nowrap;flex-shrink:0;">月末</button>
   </div>
   <button class="btn btn-p btn-full" onclick="addRecord()">記録を保存 ✓</button>
   <div id="r-fb" style="text-align:center;height:22px;margin-top:8px;font-size:13px;color:var(--ok);"></div>
@@ -198,6 +199,11 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
 
   <!-- TAB: 今日の支出リスト -->
   <div id="rec-tab-list" style="display:none;">
+    <!-- 日次メモ -->
+    <div class="card" style="margin-bottom:10px;">
+      <div class="lbl" style="margin-bottom:6px;">📝 今日のメモ</div>
+      <textarea id="daily-memo-input" rows="2" placeholder="今日のまとめ・振り返りメモ（1日単位）" style="width:100%;border:1px solid var(--d);border-radius:var(--r);padding:8px 10px;font-size:13px;font-family:inherit;background:var(--bg);color:var(--t);resize:none;box-sizing:border-box;" oninput="saveDailyMemo(this.value)"></textarea>
+    </div>
     <div id="rec-today-wrap">
       <div class="hint" style="text-align:center;padding:40px 0;">今日の記録はまだありません</div>
     </div>
@@ -400,7 +406,7 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
         <input type="text" id="fix-name" placeholder="名称（例：仕送り）" style="margin-bottom:6px;">
         <div class="row" style="gap:6px;margin-bottom:6px;">
           <input type="number" id="fix-amt" placeholder="金額" style="flex:1;">
-          <input type="number" id="fix-day" placeholder="毎月何日" min="1" max="28" style="width:90px;">
+          <select id="fix-day" style="width:90px;"><option value="1">1日</option><option value="2">2日</option><option value="3">3日</option><option value="4">4日</option><option value="5">5日</option><option value="6">6日</option><option value="7">7日</option><option value="8">8日</option><option value="9">9日</option><option value="10">10日</option><option value="11">11日</option><option value="12">12日</option><option value="13">13日</option><option value="14">14日</option><option value="15">15日</option><option value="16">16日</option><option value="17">17日</option><option value="18">18日</option><option value="19">19日</option><option value="20">20日</option><option value="21">21日</option><option value="22">22日</option><option value="23">23日</option><option value="24">24日</option><option value="25">25日</option><option value="26">26日</option><option value="27">27日</option><option value="28">28日</option><option value="29">29日</option><option value="30">30日</option><option value="31">31日</option><option value="last">月末</option></select>
         </div>
         <select id="fix-cat" style="margin-bottom:8px;"></select>
         <button class="btn btn-p btn-full btn-sm" onclick="addFixedExpense()">＋ 追加</button>
@@ -565,7 +571,7 @@ function dfState() {
     ],
     fixedExpenses: [],
     settings: {
-      salary:346832, payday:'27', paydayCustom:null,
+      salary:0, payday:'27', paydayCustom:null,
       paydayWeekend:'before', theme:'light', accent:'#DA7756', notifications:false, notifTime:'21:00'
     }
   };
@@ -822,6 +828,7 @@ function switchRecordTab(tab) {
 }
 function renderTodayList() {
   const s=gs(), today=new Date().toISOString().slice(0,10);
+  loadDailyMemo(today, s);
   const txns=s.txns.filter(t=>t.date===today).sort((a,b)=>b.id.localeCompare(a.id));
   const wrap=document.getElementById('rec-today-wrap');
   if (!txns.length) { wrap.innerHTML='<div class="hint" style="text-align:center;padding:40px 0;">今日の記録はまだありません</div>'; return; }
@@ -1472,7 +1479,7 @@ function renderFixedList(s) {
       <div class="sb">
         <div>
           <div style="font-size:14px;font-weight:500;">${fe.name}</div>
-          <div style="font-size:12px;color:var(--t2);">毎月${fe.day}日 · ¥${fe.amount.toLocaleString()} · ${fe.cat}</div>
+          <div style="font-size:12px;color:var(--t2);">毎月${fe.day==='last'?'月末':fe.day+'日'} · ¥${fe.amount.toLocaleString()} · ${fe.cat}</div>
         </div>
         <button class="btn btn-sm btn-d" style="padding:4px 8px;" onclick="deleteFixed('${fe.id}')">×</button>
       </div>
@@ -1481,12 +1488,13 @@ function renderFixedList(s) {
 function addFixedExpense() {
   const name=(document.getElementById('fix-name')?.value||'').trim();
   const amt=parseInt(document.getElementById('fix-amt')?.value)||0;
-  const day=parseInt(document.getElementById('fix-day')?.value)||1;
+  const dayVal=document.getElementById('fix-day')?.value||'1';
+  const day=dayVal==='last'?'last':Math.min(31,Math.max(1,parseInt(dayVal)||1));
   const cat=document.getElementById('fix-cat')?.value||'その他';
   if (!name||!amt) { alert('名称と金額を入力してください'); return; }
   const s=gs();
   if (!s.fixedExpenses) s.fixedExpenses=[];
-  s.fixedExpenses.push({id:'fx'+Date.now(),name,amount:amt,cat,day:Math.min(28,Math.max(1,day))});
+  s.fixedExpenses.push({id:'fx'+Date.now(),name,amount:amt,cat,day});
   ss(s);
   document.getElementById('fix-name').value='';
   document.getElementById('fix-amt').value='';
@@ -1500,11 +1508,13 @@ function deleteFixed(id) {
 function applyFixedExpenses(s) {
   const now=new Date(), ym=now.toISOString().slice(0,7), today=now.getDate();
   let changed=false;
+  const lastDay=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
   for (const fe of (s.fixedExpenses||[])) {
-    if (fe.day>today) continue;
+    const targetDay=fe.day==='last'?lastDay:fe.day;
+    if (targetDay>today) continue;
     const key=`fx_${fe.id}_${ym}`;
     if (s.txns.some(t=>t.id===key)) continue;
-    const d=fe.day.toString().padStart(2,'0');
+    const d=targetDay.toString().padStart(2,'0');
     s.txns.push({id:key,date:`${ym}-${d}`,name:fe.name,amount:fe.amount,type:'expense',cat:fe.cat,sub:null,src:'fixed'});
     changed=true;
   }
@@ -1606,7 +1616,7 @@ function confirmDeleteTxn(id){
 
 // ── FEEDBACK ───────────────────────────────────────────────────
 let _fbStar=0, _fbCat='';
-const FEEDBACK_URL='__GAS_URL__'; // ← Google Apps Script URLをここに設定
+const FEEDBACK_URL='https://script.google.com/macros/s/AKfycbxMQhTZ8lgDRMs_qGudAPWEnLZFCWWHmXAfsbO_38iBUF4P1_gFooS4U-WZgleo9BnD/exec';
 
 function setFbStar(n){
   _fbStar=n;
@@ -1647,6 +1657,30 @@ async function submitFeedback(){
   }
   btn.disabled=false; btn.textContent='送信する';
   setTimeout(()=>{if(result)result.textContent='';},4000);
+}
+
+
+// ── DATE HELPERS ───────────────────────────────────────────────
+function setDateLastDay() {
+  const now=new Date();
+  const last=new Date(now.getFullYear(),now.getMonth()+1,0);
+  const iso=last.toISOString().slice(0,10);
+  const inp=document.getElementById('r-date');
+  if(inp) inp.value=iso;
+}
+
+// ── DAILY MEMO ─────────────────────────────────────────────────
+function saveDailyMemo(text) {
+  const today=new Date().toISOString().slice(0,10);
+  const s=gs();
+  if(!s.dayMemos) s.dayMemos={};
+  s.dayMemos[today]=text;
+  ss(s);
+}
+function loadDailyMemo(date, s) {
+  const el=document.getElementById('daily-memo-input');
+  if(!el) return;
+  el.value=(s.dayMemos&&s.dayMemos[date])||'';
 }
 
 </script>
