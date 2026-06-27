@@ -103,71 +103,71 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
 </head>
 <body>
 
-<!-- ââ HOME âââââââââââââââââââââââââââââââââ -->
+<!-- ── HOME ───────────────────────────────── -->
 <div class="page active" id="pg-home">
   <div class="sb" style="margin:8px 0 14px;">
     <div>
-      <div style="font-size:22px;font-weight:800;letter-spacing:-.5px;">ããã¹ã³</div>
+      <div style="font-size:22px;font-weight:800;letter-spacing:-.5px;">マネスコ</div>
       <div class="hint" id="h-ym" style="margin-top:1px;"></div>
     </div>
     <div class="row">
       <span id="h-streak" style="font-size:13px;font-weight:600;color:var(--t2);"></span>
-      <button onclick="toggleTheme()" id="theme-btn" style="background:none;border:none;cursor:pointer;font-size:20px;padding:4px;line-height:1;">ð</button>
+      <button onclick="toggleTheme()" id="theme-btn" style="background:none;border:none;cursor:pointer;font-size:20px;padding:4px;line-height:1;">🌙</button>
     </div>
   </div>
 
   <div class="card" style="text-align:center;padding:20px 16px 16px;">
-    <div class="lbl">ä»æã®å¥å¨ã¹ã³ã¢</div>
-    <div class="score-num" id="h-score" style="margin:6px 0 4px;color:var(--ac);">â</div>
+    <div class="lbl">今月の健全スコア</div>
+    <div class="score-num" id="h-score" style="margin:6px 0 4px;color:var(--ac);">—</div>
     <div class="pbar" style="margin:8px auto 10px;max-width:200px;"><div class="pbar-f" id="h-sbar" style="width:0%;background:var(--ac);"></div></div>
     <div class="hint" id="h-delta"></div>
   </div>
 
   <div class="card" id="h-loss" style="display:none;background:var(--ers);border-color:var(--err);">
-    <div style="font-size:12px;font-weight:600;color:var(--err);margin-bottom:2px;">ãã®ãã¼ã¹ã ã¨åæãã</div>
+    <div style="font-size:12px;font-weight:600;color:var(--err);margin-bottom:2px;">このペースだと先月より</div>
     <div id="h-lamt" style="font-size:20px;font-weight:700;color:var(--err);"></div>
   </div>
 
   <div id="h-goals"></div>
   <div id="h-cats"></div>
 
-  <button class="btn btn-p btn-full" onclick="nav('record')" id="h-rbtn" style="margin-top:4px;">ï¼ è¨é²ãã</button>
+  <button class="btn btn-p btn-full" onclick="nav('record')" id="h-rbtn" style="margin-top:4px;">＋ 記録する</button>
 
   <div id="h-backup-warn" style="display:none;margin-bottom:8px;"></div>
 
   <div id="h-empty" style="display:none;text-align:center;padding:48px 0 24px;">
-    <div style="font-size:40px;margin-bottom:12px;">ð</div>
-    <div style="font-size:17px;font-weight:600;margin-bottom:6px;">æç´°ãåãè¾¼ãã§å§ããã</div>
-    <div class="hint" style="margin-bottom:20px;">CSVãé¸æããã ãã§èªååé¡ããã¾ã</div>
-    <button class="btn btn-p" onclick="nav('import')">æç´°ãåãè¾¼ã â</button>
+    <div style="font-size:40px;margin-bottom:12px;">📊</div>
+    <div style="font-size:17px;font-weight:600;margin-bottom:6px;">明細を取り込んで始めよう</div>
+    <div class="hint" style="margin-bottom:20px;">CSVを選択するだけで自動分類されます</div>
+    <button class="btn btn-p" onclick="nav('import')">明細を取り込む →</button>
   </div>
 </div>
 
-<!-- ââ RECORD âââââââââââââââââââââââââââââââ -->
+<!-- ── RECORD ─────────────────────────────── -->
 <div class="page" id="pg-record">
   <div class="rtabs">
-    <button class="rtab on" id="rtab-input" onclick="switchRecordTab('input')">å¥å</button>
-    <button class="rtab" id="rtab-list" onclick="switchRecordTab('list')">ä»æ¥ã®æ¯åº</button>
+    <button class="rtab on" id="rtab-input" onclick="switchRecordTab('input')">入力</button>
+    <button class="rtab" id="rtab-list" onclick="switchRecordTab('list')">今日の支出</button>
   </div>
 
-  <!-- TAB: å¥å -->
+  <!-- TAB: 入力 -->
   <div id="rec-tab-input">
   <div class="card" style="padding:12px 14px 14px;">
-    <div id="r-disp" style="font-size:52px;font-weight:700;text-align:center;letter-spacing:-2px;padding:10px 0 14px;display:flex;align-items:baseline;justify-content:center;gap:6px;"><span style="font-size:22px;font-weight:400;color:var(--t2);">Â¥</span><span id="r-disp-num">0</span></div>
+    <div id="r-disp" style="font-size:52px;font-weight:700;text-align:center;letter-spacing:-2px;padding:10px 0 14px;display:flex;align-items:baseline;justify-content:center;gap:6px;"><span style="font-size:22px;font-weight:400;color:var(--t2);">¥</span><span id="r-disp-num">0</span></div>
     <div class="numpad">
       <button class="nkey" onclick="pad('1')">1</button><button class="nkey" onclick="pad('2')">2</button><button class="nkey" onclick="pad('3')">3</button>
       <button class="nkey" onclick="pad('4')">4</button><button class="nkey" onclick="pad('5')">5</button><button class="nkey" onclick="pad('6')">6</button>
       <button class="nkey" onclick="pad('7')">7</button><button class="nkey" onclick="pad('8')">8</button><button class="nkey" onclick="pad('9')">9</button>
-      <button class="nkey" onclick="pad('00')">00</button><button class="nkey" onclick="pad('0')">0</button><button class="nkey" onclick="pad('del')">â«</button>
+      <button class="nkey" onclick="pad('00')">00</button><button class="nkey" onclick="pad('0')">0</button><button class="nkey" onclick="pad('del')">⌫</button>
     </div>
   </div>
 
   <div class="card">
-    <div class="lbl">ã«ãã´ãª</div>
+    <div class="lbl">カテゴリ</div>
     <div id="r-cats" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
     <div id="r-subs-wrap" style="display:none;margin-top:10px;">
       <div class="sep" style="margin:8px 0 10px;"></div>
-      <div class="lbl">ãµãã«ãã´ãª</div>
+      <div class="lbl">サブカテゴリ</div>
       <div id="r-subs" style="display:flex;flex-wrap:wrap;gap:5px;"></div>
     </div>
   </div>
@@ -182,34 +182,34 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
   </div>
 
   <div class="row" style="gap:8px;margin-bottom:10px;">
-    <input type="text" id="r-memo" placeholder="ã¡ã¢ï¼ä»»æï¼" style="flex:1;">
+    <input type="text" id="r-memo" placeholder="メモ（任意）" style="flex:1;">
     <input type="date" id="r-date" style="width:auto;flex-shrink:0;font-size:13px;">
   </div>
-  <button class="btn btn-p btn-full" onclick="addRecord()">è¨é²ãä¿å­ â</button>
+  <button class="btn btn-p btn-full" onclick="addRecord()">記録を保存 ✓</button>
   <div id="r-fb" style="text-align:center;height:22px;margin-top:8px;font-size:13px;color:var(--ok);"></div>
   </div><!-- /rec-tab-input -->
 
-  <!-- TAB: ä»æ¥ã®æ¯åºãªã¹ã -->
+  <!-- TAB: 今日の支出リスト -->
   <div id="rec-tab-list" style="display:none;">
     <div id="rec-today-wrap">
-      <div class="hint" style="text-align:center;padding:40px 0;">ä»æ¥ã®è¨é²ã¯ã¾ã ããã¾ãã</div>
+      <div class="hint" style="text-align:center;padding:40px 0;">今日の記録はまだありません</div>
     </div>
   </div>
 </div>
 
-<!-- ââ IMPORT âââââââââââââââââââââââââââââââ -->
+<!-- ── IMPORT ─────────────────────────────── -->
 <div class="page" id="pg-import">
-  <div class="pg-title">æç´°ãåãè¾¼ã</div>
+  <div class="pg-title">明細を取り込む</div>
 
   <div class="card">
     <div class="dz" id="dz" onclick="document.getElementById('fIn').click()"
       ondragover="event.preventDefault();this.classList.add('drag');"
       ondragleave="this.classList.remove('drag');"
       ondrop="event.preventDefault();this.classList.remove('drag');handleFile(event.dataTransfer.files[0]);">
-      <div style="font-size:34px;margin-bottom:8px;">ð</div>
-      <div style="font-size:15px;font-weight:600;margin-bottom:4px;">CSVãã¡ã¤ã«ãé¸æ</div>
-      <div class="hint">ã¿ããã¿ãã¯ãã©ãã°ï¼ãã­ãã</div>
-      <div class="hint" style="margin-top:6px;font-size:12px;">ãã©ã¼ããããèªåå¤å¥ãã¾ã</div>
+      <div style="font-size:34px;margin-bottom:8px;">📂</div>
+      <div style="font-size:15px;font-weight:600;margin-bottom:4px;">CSVファイルを選択</div>
+      <div class="hint">タップまたはドラッグ＆ドロップ</div>
+      <div class="hint" style="margin-top:6px;font-size:12px;">フォーマットを自動判別します</div>
     </div>
     <input type="file" id="fIn" accept=".csv,.txt" style="display:none" onchange="handleFile(this.files[0])">
   </div>
@@ -220,88 +220,88 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
         <div style="font-weight:600;" id="imp-det"></div>
         <div class="hint" id="imp-cnt"></div>
       </div>
-      <button class="btn btn-p btn-sm" onclick="doImport()">åãè¾¼ã</button>
+      <button class="btn btn-p btn-sm" onclick="doImport()">取り込む</button>
     </div>
     <div style="overflow:auto;max-height:240px;">
-      <table id="imp-tbl"><thead><tr><th>æ¥ä»</th><th>åå®¹</th><th style="text-align:right;">éé¡</th><th>ã«ãã´ãª</th></tr></thead><tbody></tbody></table>
+      <table id="imp-tbl"><thead><tr><th>日付</th><th>内容</th><th style="text-align:right;">金額</th><th>カテゴリ</th></tr></thead><tbody></tbody></table>
     </div>
   </div>
 
   <div class="card">
-    <div class="section-hd">åè¾¼æ¸ã¿æ</div>
-    <div id="imp-months" class="hint">ãªã</div>
+    <div class="section-hd">取込済み月</div>
+    <div id="imp-months" class="hint">なし</div>
   </div>
 
   <div class="card">
-    <div class="section-hd" style="margin-bottom:6px;">ð¡ CSVã®ãã¦ã³ã­ã¼ãæ¹æ³</div>
+    <div class="section-hd" style="margin-bottom:6px;">💡 CSVのダウンロード方法</div>
     <div class="hint" style="line-height:1.8;">
-      åãµã¼ãã¹ã®ã¦ã§ããµã¤ãã»ã¢ããªãããå¥åºéæç´°ãããå©ç¨æç´°ãã<b>CSVå½¢å¼</b>ã§ãã¦ã³ã­ã¼ããã¦ãã ããã<br>
-      ä¸»è¦ãªå½åãµã¼ãã¹ã®ãã©ã¼ãããã«å¯¾å¿ãã¦ãã¾ãã
+      各サービスのウェブサイト・アプリから「入出金明細」や「利用明細」を<b>CSV形式</b>でダウンロードしてください。<br>
+      主要な国内サービスのフォーマットに対応しています。
     </div>
     <div class="hint" style="margin-top:10px;line-height:1.7;font-size:12px;">
-      ð¡ ãã¦ã³ã­ã¼ãããCSVãGoogle DriveãiCloud Driveã«ä¿å­ãã¦ããã¨ãå¾ããååè¾¼ã»åæãã§ãã¦ä¾¿å©ã§ãã
+      💡 ダウンロードしたCSVをGoogle DriveやiCloud Driveに保存しておくと、後から再取込・分析ができて便利です。
     </div>
   </div>
 </div>
 
-<!-- ââ REPORT âââââââââââââââââââââââââââââââ -->
+<!-- ── REPORT ─────────────────────────────── -->
 <div class="page" id="pg-report">
   <div class="sb" style="padding:10px 0 14px;align-items:center;">
-    <div class="pg-title" style="padding:0;">ã¬ãã¼ã</div>
+    <div class="pg-title" style="padding:0;">レポート</div>
     <div class="row" style="gap:6px;">
-      <button class="btn btn-sm btn-g" onclick="shiftMonth(-1)" style="padding:5px 10px;">â¹</button>
+      <button class="btn btn-sm btn-g" onclick="shiftMonth(-1)" style="padding:5px 10px;">‹</button>
       <span id="rp-ym" class="hint" style="min-width:60px;text-align:center;"></span>
-      <button class="btn btn-sm btn-g" onclick="shiftMonth(1)" style="padding:5px 10px;">âº</button>
+      <button class="btn btn-sm btn-g" onclick="shiftMonth(1)" style="padding:5px 10px;">›</button>
     </div>
   </div>
 
   <div class="card" style="text-align:center;padding:18px 16px 14px;">
-    <div class="lbl">å¥å¨ã¹ã³ã¢</div>
-    <div class="score-num" id="rp-score" style="margin:6px 0 4px;color:var(--ac);">â</div>
+    <div class="lbl">健全スコア</div>
+    <div class="score-num" id="rp-score" style="margin:6px 0 4px;color:var(--ac);">—</div>
     <div class="pbar" style="margin:8px auto 8px;max-width:180px;"><div class="pbar-f" id="rp-sbar" style="width:0%;background:var(--ac);"></div></div>
     <div class="hint" id="rp-msg"></div>
   </div>
 
   <!-- Calendar heatmap -->
   <div class="card">
-    <div class="section-hd">è¨é²ã«ã¬ã³ãã¼</div>
+    <div class="section-hd">記録カレンダー</div>
     <div class="cal-grid" id="rp-cal-hds" style="margin-bottom:4px;"></div>
     <div class="cal-grid" id="rp-cal"></div>
-    <div class="hint" style="margin-top:8px;font-size:11px;">â = æåè¨é²ãããè²ã®æ¿ã = æ¯åºé¡</div>
+    <div class="hint" style="margin-top:8px;font-size:11px;">● = 手動記録あり　色の濃さ = 支出額</div>
   </div>
 
   <div class="card">
-    <div class="section-hd">ã«ãã´ãªå¥æ¯åº</div>
+    <div class="section-hd">カテゴリ別支出</div>
     <canvas id="rp-chart" height="200"></canvas>
   </div>
 
   <div class="card">
-    <div class="section-hd">åè¨³ã¨äºç®å¯¾æ¯</div>
+    <div class="section-hd">内訳と予算対比</div>
     <div id="rp-bd"></div>
   </div>
 
   <div class="card" style="text-align:center;padding:18px;">
-    <div style="font-weight:600;margin-bottom:4px;">ã¹ã³ã¢ãã·ã§ã¢</div>
-    <div class="hint" style="margin-bottom:14px;">ç»åã¨ãã¦ä¿å­ãã¦åéã¨æ¯ã¹ãã</div>
-    <button class="btn btn-p" onclick="shareScore()">ð¤ ç»åãä¿å­</button>
+    <div style="font-weight:600;margin-bottom:4px;">スコアをシェア</div>
+    <div class="hint" style="margin-bottom:14px;">画像として保存して友達と比べよう</div>
+    <button class="btn btn-p" onclick="shareScore()">📤 画像を保存</button>
   </div>
 </div>
 
-<!-- ââ SETTINGS âââââââââââââââââââââââââââââ -->
+<!-- ── SETTINGS ───────────────────────────── -->
 <div class="page" id="pg-settings">
-  <div class="pg-title">è¨­å®</div>
+  <div class="pg-title">設定</div>
 
   <!-- Theme -->
   <div class="card">
-    <div class="section-hd">ãã¼ã</div>
+    <div class="section-hd">テーマ</div>
     <div class="sb" style="margin-bottom:14px;">
       <div>
-        <div style="font-weight:500;">ãã¼ã¯ã¢ã¼ã</div>
-        <div class="hint" style="font-size:12px;">ç®ã«åªããæãèæ¯</div>
+        <div style="font-weight:500;">ダークモード</div>
+        <div class="hint" style="font-size:12px;">目に優しい暗い背景</div>
       </div>
       <button class="toggle" id="s-dark-toggle" onclick="toggleTheme()"></button>
     </div>
-    <div class="lbl">ã¢ã¯ã»ã³ãã«ã©ã¼</div>
+    <div class="lbl">アクセントカラー</div>
     <div class="row" style="gap:10px;margin-top:4px;align-items:center;">
       <button id="ac-preview" style="width:32px;height:32px;border-radius:50%;border:2px solid var(--d2);cursor:pointer;" onclick="showColorPicker(function(c){setAccent(c);}, gs().settings.accent||'#DA7756', this)"></button>
       <span class="hint" id="ac-hex" style="font-size:13px;font-family:monospace;"></span>
@@ -312,52 +312,52 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
   <div class="card">
     <div class="sb" style="margin-bottom:10px;">
       <div>
-        <div style="font-weight:500;">è¨é²ãªãã¤ã³ãã¼</div>
-        <div class="hint" style="font-size:12px;">æªè¨é²ã®æ¥ã®ã¿éç¥</div>
+        <div style="font-weight:500;">記録リマインダー</div>
+        <div class="hint" style="font-size:12px;">未記録の日のみ通知</div>
         <div id="s-notif-status" class="hint" style="font-size:11px;margin-top:2px;"></div>
       </div>
       <button class="toggle" id="s-notif-toggle" onclick="toggleNotifications()"></button>
     </div>
     <div id="s-notif-time-row" style="display:none;">
-      <div class="lbl">éç¥æå»</div>
+      <div class="lbl">通知時刻</div>
       <input type="time" id="s-notif-time" value="21:00" style="width:auto;" onchange="saveNotifTime()">
     </div>
   </div>
 
   <!-- Basic -->
   <div class="card">
-    <div class="section-hd">åå¥ã»çµ¦ææ¥</div>
-    <div class="lbl">æåï¼æåãï¼</div>
+    <div class="section-hd">収入・給料日</div>
+    <div class="lbl">月収（手取り）</div>
     <input type="number" id="s-sal" style="margin-bottom:12px;" placeholder="346832">
-    <div class="lbl">çµ¦ææ¥</div>
+    <div class="lbl">給料日</div>
     <select id="s-pd" style="margin-bottom:10px;" onchange="updatePaydayUI()">
-      <option value="last">ææ«ï¼æ«æ¥ï¼</option>
-      <option value="first">æåï¼1æ¥ï¼</option>
-      <option value="5">5æ¥</option>
-      <option value="10">10æ¥</option>
-      <option value="15">15æ¥</option>
-      <option value="20">20æ¥</option>
-      <option value="25">25æ¥</option>
-      <option value="27">27æ¥</option>
-      <option value="custom">ãã®ä»ï¼æå®ï¼</option>
+      <option value="last">月末（末日）</option>
+      <option value="first">月初（1日）</option>
+      <option value="5">5日</option>
+      <option value="10">10日</option>
+      <option value="15">15日</option>
+      <option value="20">20日</option>
+      <option value="25">25日</option>
+      <option value="27">27日</option>
+      <option value="custom">その他（指定）</option>
     </select>
     <div id="s-pd-custom" style="display:none;margin-bottom:10px;">
-      <div class="lbl">æ¥ä»ãæå®</div>
-      <input type="number" id="s-pd-day" placeholder="ä¾: 23" min="1" max="31">
+      <div class="lbl">日付を指定</div>
+      <input type="number" id="s-pd-day" placeholder="例: 23" min="1" max="31">
     </div>
-    <div class="lbl">åæ¥ã«è©²å½ããå ´å</div>
+    <div class="lbl">土日に該当した場合</div>
     <div class="row" style="gap:8px;margin-top:4px;">
-      <button class="chip" id="pd-before" onclick="pickWeekend('before')">ååãï¼åã®å¹³æ¥ï¼</button>
-      <button class="chip" id="pd-after"  onclick="pickWeekend('after')">å¾ãåãï¼ç¿å¹³æ¥ï¼</button>
+      <button class="chip" id="pd-before" onclick="pickWeekend('before')">前倒し（前の平日）</button>
+      <button class="chip" id="pd-after"  onclick="pickWeekend('after')">後ろ倒し（翌平日）</button>
     </div>
-    <button class="btn btn-p btn-full" onclick="saveBasic()" style="margin-top:14px;">ä¿å­</button>
+    <button class="btn btn-p btn-full" onclick="saveBasic()" style="margin-top:14px;">保存</button>
   </div>
 
   <!-- Categories -->
   <div class="card">
     <div class="sb" style="margin-bottom:12px;">
-      <div class="section-hd" style="margin:0;">ã«ãã´ãªå¥äºç®</div>
-      <button class="btn btn-sm" onclick="addCat()">ï¼ è¿½å </button>
+      <div class="section-hd" style="margin:0;">カテゴリ別予算</div>
+      <button class="btn btn-sm" onclick="addCat()">＋ 追加</button>
     </div>
     <div id="s-cats"></div>
   </div>
@@ -365,122 +365,122 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
   <!-- Goals -->
   <div class="card">
     <div class="sb" style="margin-bottom:12px;">
-      <div class="section-hd" style="margin:0;">ç®æ¨è²¯é</div>
-      <button class="btn btn-sm" onclick="addGoal()">ï¼ è¿½å </button>
+      <div class="section-hd" style="margin:0;">目標貯金</div>
+      <button class="btn btn-sm" onclick="addGoal()">＋ 追加</button>
     </div>
     <div id="s-goals"></div>
   </div>
 
   <!-- Data Backup -->
   <div class="card">
-    <div class="section-hd">ãã¼ã¿ã®ããã¯ã¢ãã</div>
+    <div class="section-hd">データのバックアップ</div>
     <div id="s-backup-info" class="hint" style="margin-bottom:12px;font-size:12px;"></div>
-    <button class="btn btn-full" onclick="exportData()" style="margin-bottom:8px;">ð¤ ããã¯ã¢ãããä¿å­ï¼JSONï¼</button>
-    <button class="btn btn-full" onclick="importData()">ð¥ ããã¯ã¢ããããå¾©å</button>
+    <button class="btn btn-full" onclick="exportData()" style="margin-bottom:8px;">📤 バックアップを保存（JSON）</button>
+    <button class="btn btn-full" onclick="importData()">📥 バックアップから復元</button>
   </div>
 
   <!-- Fixed Expenses -->
   <div class="card">
     <div class="sb" style="margin-bottom:4px;">
-      <div class="section-hd" style="margin:0;">åºå®è²»ã®èªåè¨é²</div>
-      <button class="btn btn-sm btn-g" onclick="toggleFixedSection()" id="fix-toggle-btn" style="font-size:12px;">â¼ å±é</button>
+      <div class="section-hd" style="margin:0;">固定費の自動記録</div>
+      <button class="btn btn-sm btn-g" onclick="toggleFixedSection()" id="fix-toggle-btn" style="font-size:12px;">▼ 展開</button>
     </div>
-    <div class="hint" style="font-size:12px;margin-bottom:8px;">æ¯æåé¡ã§åºã¦ãããéãèªåè¨é²ï¼ä»»æï¼</div>
+    <div class="hint" style="font-size:12px;margin-bottom:8px;">毎月同額で出ていくお金を自動記録（任意）</div>
     <div id="fix-section" style="display:none;">
       <div id="s-fixed"></div>
       <div class="fix-sec" style="margin-top:8px;">
-        <div class="lbl">æ°ããåºå®è²»</div>
-        <input type="text" id="fix-name" placeholder="åç§°ï¼ä¾ï¼ä»éãï¼" style="margin-bottom:6px;">
+        <div class="lbl">新しい固定費</div>
+        <input type="text" id="fix-name" placeholder="名称（例：仕送り）" style="margin-bottom:6px;">
         <div class="row" style="gap:6px;margin-bottom:6px;">
-          <input type="number" id="fix-amt" placeholder="éé¡" style="flex:1;">
-          <input type="number" id="fix-day" placeholder="æ¯æä½æ¥" min="1" max="28" style="width:90px;">
+          <input type="number" id="fix-amt" placeholder="金額" style="flex:1;">
+          <input type="number" id="fix-day" placeholder="毎月何日" min="1" max="28" style="width:90px;">
         </div>
         <select id="fix-cat" style="margin-bottom:8px;"></select>
-        <button class="btn btn-p btn-full btn-sm" onclick="addFixedExpense()">ï¼ è¿½å </button>
+        <button class="btn btn-p btn-full btn-sm" onclick="addFixedExpense()">＋ 追加</button>
       </div>
     </div>
   </div>
 
   <!-- Danger -->
   <div class="card" style="border-color:var(--err);">
-    <div class="section-hd" style="color:var(--err);">å±éºãªæä½</div>
-    <button class="btn btn-d btn-full" onclick="clearAll()">ð å¨ãã¼ã¿ãåé¤</button>
+    <div class="section-hd" style="color:var(--err);">危険な操作</div>
+    <button class="btn btn-d btn-full" onclick="clearAll()">🗑 全データを削除</button>
   </div>
 </div>
 
 <!-- NAV -->
 <nav class="nav">
   <button class="nv on" onclick="nav('home')">
-    <span class="nv-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>ãã¼ã 
+    <span class="nv-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>ホーム
   </button>
   <button class="nv" onclick="nav('record')">
-    <span class="nv-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>è¨é²
+    <span class="nv-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>記録
   </button>
   <button class="nv" onclick="nav('import')">
-    <span class="nv-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>åè¾¼
+    <span class="nv-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>取込
   </button>
   <button class="nv" onclick="nav('report')">
-    <span class="nv-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>ã¬ãã¼ã
+    <span class="nv-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>レポート
   </button>
   <button class="nv" onclick="nav('settings')">
-    <span class="nv-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></span>è¨­å®
+    <span class="nv-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></span>設定
   </button>
 </nav>
 <canvas id="sh-c" style="display:none;"></canvas>
 
-<!-- ââ ONBOARDING ââââââââââââââââââââââââââââââââ -->
+<!-- ── ONBOARDING ──────────────────────────────── -->
 <div id="ob-overlay" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;transition:opacity .3s;">
   <div style="width:100%;max-width:360px;">
 
     <!-- Step 1: Welcome -->
     <div id="ob-1">
-      <div style="font-size:52px;text-align:center;margin-bottom:20px;">ð±</div>
-      <div style="font-size:26px;font-weight:800;text-align:center;margin-bottom:8px;letter-spacing:-.5px;">Money Seedã¸ãããã</div>
-      <div class="hint" style="text-align:center;margin-bottom:32px;font-size:15px;line-height:1.7;">æ¯æã®æ¯åºãè¨é²ãã¦ã<br>è²¯éä½è³ªã«ãªããã</div>
-      <button class="btn btn-p btn-full" style="font-size:16px;padding:14px;" onclick="obStep(2)">ã¯ããã â</button>
-      <button class="btn btn-g btn-full" style="margin-top:8px;" onclick="obSkip()">ã¹ã­ãã</button>
+      <div style="font-size:52px;text-align:center;margin-bottom:20px;">🌱</div>
+      <div style="font-size:26px;font-weight:800;text-align:center;margin-bottom:8px;letter-spacing:-.5px;">Money Seedへようこそ</div>
+      <div class="hint" style="text-align:center;margin-bottom:32px;font-size:15px;line-height:1.7;">毎月の支出を記録して、<br>貯金体質になろう。</div>
+      <button class="btn btn-p btn-full" style="font-size:16px;padding:14px;" onclick="obStep(2)">はじめる →</button>
+      <button class="btn btn-g btn-full" style="margin-top:8px;" onclick="obSkip()">スキップ</button>
     </div>
 
     <!-- Step 2: Salary -->
     <div id="ob-2" style="display:none;">
       <div style="font-size:12px;font-weight:600;color:var(--t2);margin-bottom:24px;text-align:center;letter-spacing:.6px;">STEP 1 / 2</div>
-      <div style="font-size:20px;font-weight:700;margin-bottom:6px;">æåãæåãæãã¦ãã ãã</div>
-      <div class="hint" style="margin-bottom:20px;">äºç®ã®è¨ç®ã«ä½¿ãã¾ãããã¨ããå¤æ´ã§ãã¾ãã</div>
+      <div style="font-size:20px;font-weight:700;margin-bottom:6px;">手取り月収を教えてください</div>
+      <div class="hint" style="margin-bottom:20px;">予算の計算に使います。あとから変更できます。</div>
       <div style="position:relative;margin-bottom:20px;">
-        <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--t2);font-size:16px;">Â¥</span>
+        <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--t2);font-size:16px;">¥</span>
         <input type="number" id="ob-sal" placeholder="300000" style="padding-left:30px;font-size:18px;font-weight:600;">
       </div>
-      <button class="btn btn-p btn-full" style="font-size:16px;padding:14px;" onclick="obStep(3)">æ¬¡ã¸ â</button>
-      <button class="btn btn-g btn-full" style="margin-top:8px;" onclick="obStep(3)">ã¹ã­ãã</button>
+      <button class="btn btn-p btn-full" style="font-size:16px;padding:14px;" onclick="obStep(3)">次へ →</button>
+      <button class="btn btn-g btn-full" style="margin-top:8px;" onclick="obStep(3)">スキップ</button>
     </div>
 
     <!-- Step 3: Done -->
     <div id="ob-3" style="display:none;">
       <div style="font-size:12px;font-weight:600;color:var(--t2);margin-bottom:24px;text-align:center;letter-spacing:.6px;">STEP 2 / 2</div>
-      <div style="font-size:20px;font-weight:700;margin-bottom:6px;">æºåå®äºï¼ð</div>
-      <div class="hint" style="margin-bottom:28px;line-height:1.7;">ã¾ãã¯ä»æ¥ã®æ¯åºã1ä»¶è¨é²ãã¦ã¿ã¾ãããã<br>å°ããªä¸æ­©ãè²¯éä½è³ªãã¤ããã¾ãã</div>
-      <button class="btn btn-p btn-full" style="font-size:16px;padding:14px;" onclick="obFinish('record')">âï¸ æåã®æ¯åºãè¨é²ãã</button>
-      <button class="btn btn-full" style="margin-top:8px;" onclick="obFinish('import')">ð æç´°CSVãåãè¾¼ã</button>
+      <div style="font-size:20px;font-weight:700;margin-bottom:6px;">準備完了！🎉</div>
+      <div class="hint" style="margin-bottom:28px;line-height:1.7;">まずは今日の支出を1件記録してみましょう。<br>小さな一歩が貯金体質をつくります。</div>
+      <button class="btn btn-p btn-full" style="font-size:16px;padding:14px;" onclick="obFinish('record')">✏️ 最初の支出を記録する</button>
+      <button class="btn btn-full" style="margin-top:8px;" onclick="obFinish('import')">📂 明細CSVを取り込む</button>
     </div>
 
   </div>
 </div>
 
-<!-- ââ COLOR PICKER âââââââââââââââââââââââââââââââââ -->
+<!-- ── COLOR PICKER ───────────────────────────────── -->
 <div class="cp-modal" id="cp-modal">
   <div class="cp-bd" onclick="closeColorPicker()"></div>
   <div class="cp-box" id="cp-box">
     <div class="cp-grid" id="cp-grid"></div>
     <div style="border-top:1px solid var(--d);padding-top:10px;display:flex;align-items:center;gap:10px;">
       <input type="color" id="cp-custom" style="width:36px;height:28px;padding:2px;border-radius:5px;border:1px solid var(--d);cursor:pointer;" oninput="selectColorPicker(this.value)">
-      <span style="font-size:12px;color:var(--t2);">ã«ã¹ã¿ã </span>
+      <span style="font-size:12px;color:var(--t2);">カスタム</span>
       <span id="cp-hex" style="font-size:12px;font-family:monospace;color:var(--t2);margin-left:auto;"></span>
     </div>
   </div>
 </div>
 
 <script>
-// ââ CONSTANTS ââââââââââââââââââââââââââââââââââââââ
+// ── CONSTANTS ──────────────────────────────────────
 const KEY = 'manesco_v2';
 const PCOLORS = ['#EB4336','#E8720C','#DFAB01','#2D9B5A','#0B6E99','#4F7CFF','#7B52D9','#D94F6B','#9B9A97','#5A3A1A'];
 // Google Sheets style palette
@@ -493,335 +493,911 @@ const GCOLORS = [
   '#d0e4e8','#cfe2f3','#d9d2e9','#ead1dc','#DA7756','#E8720C','#2D9B5A','#4F7CFF','#7B52D9','#D94F6B',
 ];
 const KW = {
-  'ã³ã³ãã':['ã»ãã³','SEVEN','7-','ã­ã¼ã½ã³','LAWSON','ãã¡ããªã¼ãã¼ã','ãã¡ãã','FAMILY','ããã¹ããã','ãã¤ãªã¼'],
-  'å¤é£ã»ã«ãã§':['ã³ã¡ã','KOMEDA','ãã¯ããã«ã','MCDONALD','ã®ãã¯','ããå®¶','ã¹ã·ã­ã¼','ã¦ã¼ãã¼','UBER','EATS','ãµã¤ã¼','ã¬ã¹ã','ãã¼ãã¤ã³','ããã¼ãº','ããã¼ã«','ã¹ã¿ã','STARBUCKS','ã¿ãªã¼ãº','TULLY','ã©ã¼ã¡ã³','ç¼è','å±éå±','ããå¯¿å¸','ã¯ã¾å¯¿å¸','åéå®¶','æ¾å±','ãªãå¯'],
-  'é£æã»ã¹ã¼ãã¼':['ã¤ãªã³','AEON','ããã¯ã¹ããªã¥','ã©ã¤ã','ã¨ã¼ã«ãã¼','ã³ã¼ã','ãã¸','ãã­ã¼ãº','ãã«ãã«'],
-  'ã¬ã½ãªã³':['ã¨ããªã¹','ENEOS','ã·ã§ã«','åºå','ã³ã¹ã¢','ã¨ãã½','ã¬ã½ãªã³','çµ¦æ²¹'],
-  'ç¾å®¹ã»çå®¹':['ç¾å®¹å®¤','ãã¢ãµã­ã³','ã«ãã','ãã¼ãã¼','BARBER','ãã¢ã«ã©ã¼','ã³ã¯ã¢'],
-  'å»çã»è¬':['ã®ãã­ã¨','ãã«ã','ã¦ã§ã«ã·ã¢','ãã©ãã°','ã¯ãªããã¯','çé¢','èª¿å¤','è¬å±'],
-  'æ¥ç¨å':['ãããª','ã«ã¤ã³ãº','ã³ã¼ãã³','ã±ã¼ãº','ã¤ãã','ããã¯ã«ã¡ã©','ãã³ã­','ãã³ã»ã­ãã¼ã'],
-  'ãµãã¹ã¯':['NETFLIX','AMAZON','PRIME','SPOTIFY','CLAUDE','OPENAI','GOOGLE','APPLE','ãããã','GWS','WORKSPACE'],
-  'äº¤é':['JR','é»è»','ãã¹','ã¿ã¯ã·ã¼','SUICA','PASMO','ETC','ã¿ã¤ã ãº','é§è»'],
-  'åºå®è²»':['ä¿éº','ãã³ã¢','DOCOMO','AHAMO','ã½ãããã³ã¯','NTT','æ±äº¬æµ·ä¸','æ¥½å¤©çå½','ã³ã³ã·ã¥ã¼ãã¼'],
-  'åå¥':['çµ¦ä¸','çµ¦æ','æ¯è¾¼å¥é','ã¡ã¬ã«ãª','éå½'],
+  'コンビニ':['セブン','SEVEN','7-','ローソン','LAWSON','ファミリーマート','ファミマ','FAMILY','ミニストップ','デイリー'],
+  '外食・カフェ':['コメダ','KOMEDA','マクドナルド','MCDONALD','マック','すき家','スシロー','ウーバー','UBER','EATS','サイゼ','ガスト','バーミヤン','デニーズ','ドトール','スタバ','STARBUCKS','タリーズ','TULLY','ラーメン','焼肉','居酒屋','くら寿司','はま寿司','吉野家','松屋','なか卯'],
+  '食材・スーパー':['イオン','AEON','マックスバリュ','ライフ','ヨーカドー','コープ','フジ','ハローズ','マルナカ'],
+  'ガソリン':['エネオス','ENEOS','シェル','出光','コスモ','エッソ','ガソリン','給油'],
+  '美容・理容':['美容室','ヘアサロン','カット','バーバー','BARBER','ヘアカラー','コクア'],
+  '医療・薬':['マツキヨ','ツルハ','ウェルシア','ドラッグ','クリニック','病院','調剤','薬局'],
+  '日用品':['ニトリ','カインズ','コーナン','ケーズ','ヤマダ','ビックカメラ','ドンキ','ドン・キホーテ'],
+  'サブスク':['NETFLIX','AMAZON','PRIME','SPOTIFY','CLAUDE','OPENAI','GOOGLE','APPLE','あすけん','GWS','WORKSPACE'],
+  '交通':['JR','電車','バス','タクシー','SUICA','PASMO','ETC','タイムズ','駐車'],
+  '固定費':['保険','ドコモ','DOCOMO','AHAMO','ソフトバンク','NTT','東京海上','楽天生命','コンシューマー'],
+  '収入':['給与','給料','振込入金','メルカリ','配当'],
 };
-const WASTE = ['ã³ã³ãã','å¤é£ã»ã«ãã§','å¨¯æ¥½','ãã®ä»''];
+const WASTE = ['コンビニ','外食・カフェ','娯楽','その他'];
 
-// ââ STATE âââââââââââââââââââââââââââââââââââââââââââ
+// ── STATE ──────────────────────────────────────────
 function dfState() {
   return {
     txns: [],
     streak: { count:0, last:null },
     cats: {
-      'ã³ã³ãã':    { amount:3000,  color:'#E8720C', subs:[] },
-      'åé£ã»ã«ãã§': { amount:8000,  color:'#EB4336', subs:['ã©ã³ã','ã«ãã§','ãã¢ãã¼','
-
-¿
-
- tô°(¦vCï
-çóGðéìµ½Õ¹ÐèÈÔÀÀÀ°½±½ÈèÉåÕ°ÍÕÌémtô°(
-³
-÷«Ìèìµ½Õ¹ÐèàÀÀÀ°½±½ÈèÜàÜÜÜÐ°ÍÕÌémtô°(ú;ºçïBºäèìµ½Õ¹ÐèÐÀÀÀ°½±½ÈèäÑÙ°ÍÕÌémtô°(2ïfï¢Z°èìµ½Õ¹ÐèÈÀÀÀ°½±½ÈèÁÙää°ÍÕÌémtô°(^R£Nèìµ½Õ¹ÐèÔÀÀÀ°½±½ÈèÝÔÉä°ÍÕÌémtô°(¢¿ôèìµ½Õ¹ÐèÌÀÀÀ°½±½ÈèÑÝ
-°ÍÕÌélbRì°
-Ëó°¢ÚFÌtô°(
-×[
-ç
-¼èìµ½Õ¹ÐèÔÈÐÀ°½±½ÈèÑÝ	°ÍÕÌémtô°(w»îXèìµ½Õ¹ÐèÌÀÀÀ°½±½Èè
-Ü°ÍÕÌémtô°(ô°(½±Ìèl(ì¥èÄ°¹µè{
-oó¦·¦D°ÑÉÐèÌÀÀÀÀÀÀ°ÕÉÉ¹ÐèÀ°½±½ÈèÉåÕô(t°(¥ááÁ¹ÍÌèmt°(ÍÑÑ¥¹Ìèì(Í±ÉäèÌÐØàÌÈ°ÁåäèÈÜ°Áåå
-ÕÍÑ½´é¹Õ±°°(Áåå]­¹è½É°Ñ¡µè±¥¡Ð°¹ÐèÜÜÔØ°¹½Ñ¥¥Ñ¥½¹Ìé±Í°¹½Ñ¥Q¥µèÈÄèÀÀ(ô(ôì)ô)Õ¹Ñ¥½¸Ì ¤ìÑÉäìÉÑÕÉ¸)M=8¹ÁÉÍ¡±½±MÑ½É¹Ñ%Ñ´¡-d¤¤ñðMÑÑ ¤ìôÑ ¡¤ìÉÑÕÉ¸MÑÑ ¤ìôô)Õ¹Ñ¥½¸ÍÌ¡Ì¤ì±½±MÑ½É¹ÍÑ%Ñ´¡-d°)M=8¹ÍÑÉ¥¹¥ä¡Ì¤¤ìô((¼¼RR UQ%1%Q%LRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR )Õ¹Ñ¥½¸Ñ½É¥é¡¹µ¤ì(¥ ¹µ¤ÉÑÕÉ¸w»îXì(½¹ÍÐÔô¹µ¹Ñ½UÁÁÉ
-Í ¤ì(½È¡½¹ÍÐm°­ÝÍt½=©Ð¹¹ÑÉ¥Ì¡-\¤¤ì(½È¡½¹ÍÐ¬½­ÝÌ¤¥¡Ô¹¥¹±ÕÌ¡¬¹Ñ½UÁÁÉ
-Í ¤¤¤ÉÑÕÉ¸ì(ô(ÉÑÕÉ¸w»îXì)ô)Õ¹Ñ¥½¸ÁÑ¡Ø¤ì(¥ Ø¤ÉÑÕÉ¸¹Õ±°ì(½¹ÍÐÌôØ¹Ñ½MÑÉ¥¹ ¤¹ÑÉ¥´ ¤ì(±Ð´ì(¥ ¡´ôÌ¹µÑ  ¼¡qìÑô¥mp½pµt¡qìÄ°Éô¥mp½pµt¡qìÄ°Éô¤¼¤¤¤(ÉÑÕÉ¸íµlÅuô´íµlÉt¹ÁMÑÉÐ È°À¥ô´íµlÍt¹ÁMÑÉÐ È°À¥õì(¥ ¡´ôÌ¹µÑ  ¿îJ0¡q¬§æÑqÌ¨¡q¬§r!qÌ¨¡q¬§^¼¤¤¤(ÉÑÕÉ¸ìÈÀÄà­ÁÉÍ%¹Ð¡µlÅt¥ô´íµlÉt¹ÁMÑÉÐ È°À¥ô´íµlÍt¹ÁMÑÉÐ È°À¥õì(¥ ¡´ôÌ¹µÑ  ¿æÏ"@¡q¬§æÑqÌ¨¡q¬§r!qÌ¨¡q¬§^¼¤¤¤(ÉÑÕÉ¸ìÄäàà­ÁÉÍ%¹Ð¡µlÅt¥ô´íµlÉt¹ÁMÑÉÐ È°À¥ô´íµlÍt¹ÁMÑÉÐ È°À¥õì(¥ ¡´ôÌ¹µÑ  ¼¡qìÄ°Éô¥p¼¡qìÄ°Éô¥p¼¡qìÑô¤¼¤¤¤(ÉÑÕÉ¸íµlÍuô´íµlÅt¹ÁMÑÉÐ È°À¥ô´íµlÉt¹ÁMÑÉÐ È°À¥õì(ÉÑÕÉ¸¹Õ±°ì)ô)Õ¹Ñ¥½¸ÁµÐ¡Ø¤ì(¥¡Øôô¹Õ±°¤ÉÑÕÉ¸Àì(ÉÑÕÉ¸ÁÉÍ%¹Ð¡Ø¹Ñ½MÑÉ¥¹ ¤¹ÉÁ± ½o
-³qÍt½°¤¹ÉÁ± ½o¾ò7ZË"K"It¼°´¤¤ñðÀì)ô)Õ¹Ñ¥½¸ÑÑ	¹¬¡¥±Ì¤ì(½¹ÍÐ ô¡¥±Íññmt¤¹µÀ¡ôø¡ñð¤¹Ñ½MÑÉ¥¹ ¤¤¹©½¥¸ °¤¹Ñ½UÁÁÉ
-Í ¤ì(¥¡ ¹¥¹±ÕÌ "§R£ê_B4¤ ¹¥¹±ÕÌ "§R£¦G¦4¤¤ÉÑÕÉ¸ì(¥¡ ¹¥¹±ÕÌ +R¿&W¦G¦4¤ñð ¹¥¹±ÕÌ +¦C
-+¦G¦4¤¤ÉÑÕÉ¸ì(¥¡ ¹¥¹±ÕÌ ë¦D¤ ¹¥¹±ÕÌ º/¦®`¤¤ÉÑÕÉ¸ì(¥¡ ¹¥¹±ÕÌ "§R£ ¤¡ ¹¥¹±ÕÌ &/VÃZd¥ññ ¹¥¹±ÕÌ S"§R ¤¤¤ÉÑÕÉ¸ì(¥¡ ¹¥¹±ÕÌ Fc¢¤ñð ¹¥¹±ÕÌ >[òWºä¤¤ÉÑÕÉ¸ì(ÉÑÕÉ¸hì)ô)Õ¹Ñ¥½¸ÁÉÍI½ÝÌ¡É½ÝÌ°¹¬¤ì(½¹ÍÐÉÌômtì(½È¡½¹ÍÐÉ½Ü½É½ÝÌ¤ì(½¹ÍÐØô=©Ð¹Ù±ÕÌ¡É½Ü¤ì(±ÐÑ°¹µ°µ½Õ¹Ð°ÑåÁôáÁ¹Íì(¥¡¹¬ôôô¤ìÑõÁÑ¡ÙlÁt¤ì¹µõÙlÅuñðìµ½Õ¹ÐõÁµÐ¡ÙlÑuññÙlÉt¤ìô(±Í¥¡¹¬ôôô¤ì(ÑõÁÑ¡ÙlÁt¤ì¹µõÙlÅuñðì(½¹ÍÐ½ÕÐõÁµÐ¡ÙlÉt¤°¥¹õÁµÐ¡ÙlÍt¤ì(¥¡½ÕÐøÀ¤ìµ½Õ¹Ðõ½ÕÐìô±Íìµ½Õ¹Ðõ¥¹ìÑåÁô¥¹½µìô(ô(±Í¥¡¹¬ôôô¤ì(ÑõÁÑ¡ÙlÁt¤ì½¹ÍÐµØõÁµÐ¡ÙlÅt¤ì¹µõÙlÍuññÙlÉuñðì(¥¡µØðÀ¤ìµ½Õ¹Ðõ5Ñ ¹Ì¡µØ¤ìô±Íìµ½Õ¹ÐõµØìÑåÁô¥¹½µìô(ô(±Í¥¡¹¬ôôô¤ìÑõÁÑ¡ÙlÁt¤ì¹µõÙlÅuñðìµ½Õ¹ÐõÁµÐ¡ÙlÉt¤ìô(±Í¥¡¹¬ôôô¤ì(ÑõÁÑ¡ÙlÁt¤ì¹µõÙlÅuññÙlÉuñðì(½¹ÍÐ½ÕÐõÁµÐ¡ÙlÍt¤°¥¹õÁµÐ¡ÙlÑt¤ì(¥¡½ÕÐøÀ¤ìµ½Õ¹Ðõ½ÕÐìô±Íìµ½Õ¹Ðõ¥¹ìÑåÁô¥¹½µìô(ô(±ÍìÑõÁÑ¡ÙlÁt¤ì¹µô¡ÙlÅuñð¤¹Ñ½MÑÉ¥¹ ¤ìµ½Õ¹ÐõÁµÐ¡ÙlÉt¤ìô(¥ Ññðµ½Õ¹Ð¤½¹Ñ¥¹Õì(½¹ÍÐÐôÑåÁôôô¥¹½µü>;èÑ½É¥é¡¹µ¤ì(ÉÌ¹ÁÕÍ ¡ì¥éíÑ¹¹½Ü ¥õ|í5Ñ ¹É¹½´ ¥õ°Ñ°¹µé¹µ¹ÑÉ¥´ ¤°µ½Õ¹Ð°ÑåÁ°Ð°ÍÕé¹Õ±°°ÍÉèÍØô¤ì(ô(ÉÑÕÉ¸ÉÌì)ô((¼¼RR 	UM%9ML1=%RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR )Õ¹Ñ¥½¸µ½¹Ñ¡Qá¹Ì¡Ì°å´¤ìÉÑÕÉ¸Ì¹Ñá¹Ì¹¥±ÑÈ¡ÐôùÐ¹Ñ¹ÍÑÉÑÍ]¥Ñ ¡å´¤Ð¹ÑåÁôôôáÁ¹Í¤ìô)Õ¹Ñ¥½¸ÑQ½Ñ±Ì¡Ñá¹Ì¤ì(½¹ÍÐÈõíôì(½È¡½¹ÍÐÐ½Ñá¹Ì¤ÉmÐ¹Ñtô¡ÉmÐ¹ÑuñðÀ¤­Ð¹µ½Õ¹Ðì(ÉÑÕÉ¸Èì)ô)Õ¹Ñ¥½¸±M½É¡Ì°å´¤ì(½¹ÍÐÑá¹Ìôµ½¹Ñ¡Qá¹Ì¡Ì°å´¤ì(¥ Ñá¹Ì¹±¹Ñ ¤ÉÑÕÉ¸¹Õ±°ì(½¹ÍÐÐôÑQ½Ñ±Ì¡Ñá¹Ì¤ì(±ÐôÀì(½È¡½¹ÍÐ½]MQ¤ì(½¹ÍÐÍÀõÑmuñðÀ°Õô¡Ì¹ÑÍmtü¹µ½Õ¹Ð¥ñðÌÀÀÀì(¥¡ÍÀùÕ¤¬õ5Ñ ¹µ¥¸ ¡ÍÀµÕ¤½Õ¨Äà°ÈÈ¤ì(ô(½È¡½¹ÍÐm°t½=©Ð¹¹ÑÉ¥Ì¡Ì¹ÑÌ¤¤ì(¥ ¡ÑmuñðÀ¤ù¹µ½Õ¹Ð¤¬ôÈì(ô(ÉÑÕÉ¸5Ñ ¹µà ÈÀ°5Ñ ¹É½Õ¹ ÄÀÀµ¤¤ì)ô)Õ¹Ñ¥½¸Í½É
-½±½È¡Í¤ì(¥¡Íôôõ¹Õ±°¤ÉÑÕÉ¸ÙÈ ´µ¤ì(¥¡ÍøôàÀ¤ÉÑÕÉ¸ÙÈ ´µ½¬¤ì(¥¡ÍøôØÀ¤ÉÑÕÉ¸ÙÈ ´µ¤ì(¥¡ÍøôÐÀ¤ÉÑÕÉ¸ÙÈ ´µÝ¸¤ì(ÉÑÕÉ¸ÙÈ ´µÉÈ¤ì)ô)Õ¹Ñ¥½¸ÁÉ½©¥¡Ì¤ì(½¹ÍÐ¹½Üõ¹ÜÑ ¤°å´õ¹½Ü¹Ñ½%M=MÑÉ¥¹ ¤¹Í±¥ À°Ü¤°äõ¹½Ü¹ÑÑ ¤ì(½¹ÍÐ¥´õ¹ÜÑ¡¹½Ü¹ÑÕ±±eÈ ¤±¹½Ü¹Ñ5½¹Ñ  ¤¬Ä°À¤¹ÑÑ ¤ì(½¹ÍÐÕÈõµ½¹Ñ¡Qá¹Ì¡Ì±å´¤¹ÉÕ ¡±Ð¤ôù­Ð¹µ½Õ¹Ð°À¤ì(½¹ÍÐÁÉ½¨õ5Ñ ¹É½Õ¹¡ÕÈ½ä©¥´¤ì(½¹ÍÐ±äõ¹ÜÑ¡¹½Ü¹ÑÕ±±eÈ ¤±¹½Ü¹Ñ5½¹Ñ  ¤´Ä°Ä¤ì(½¹ÍÐ±ÍÐõµ½¹Ñ¡Qá¹Ì¡Ì±±ä¹Ñ½%M=MÑÉ¥¹ ¤¹Í±¥ À°Ü¤¤¹ÉÕ ¡±Ð¤ôù­Ð¹µ½Õ¹Ð°À¤ì(ÉÑÕÉ¸±ÍÐøÀüÁÉ½¨µ±ÍÐèÀì)ô)Õ¹Ñ¥½¸Ñ¥­MÑÉ¬¡Ì¤ì(½¹ÍÐÑ½äõ¹ÜÑ ¤¹Ñ½%M=MÑÉ¥¹ ¤¹Í±¥ À°ÄÀ¤ì(¥¡Ì¹ÍÑÉ¬¹±ÍÐôôõÑ½ä¤ÉÑÕÉ¸ì(½¹ÍÐåõ¹ÜÑ¡Ñ¹¹½Ü ¤´àØÐÀÀÀÀÀ¤¹Ñ½%M=MÑÉ¥¹ ¤¹Í±¥ À°ÄÀ¤ì(Ì¹ÍÑÉ¬¹½Õ¹ÐôÌ¹ÍÑÉ¬¹±ÍÐôôõåüÌ¹ÍÑÉ¬¹½Õ¹Ð¬ÄèÄì(Ì¹ÍÑÉ¬¹±ÍÐõÑ½äìÍÌ¡Ì¤ì)ô((¼¼RR !=5RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR )Õ¹Ñ¥½¸É¹É!½µ ¤ì(½¹ÍÐÌõÌ ¤°¹½Üõ¹ÜÑ ¤°å´õ¹½Ü¹Ñ½%M=MÑÉ¥¹ ¤¹Í±¥ À°Ü¤ì(½¹ÍÐ58õlÄæ°Ër °Ïr °Ór °×r °Ûr °ßr °ãr °çr °ÄÃr °ÄÇr °ÄËr tì(½Õµ¹Ð¹Ñ±µ¹Ñ	å%  ­å´¤¹ÑáÑ
-½¹Ñ¹Ðõí¹½Ü¹ÑÕ±±eÈ ¥÷¹¦ç í59m¹½Ü¹Ñ5½¹Ñ  ¥uõì(Ñ¥­MÑÉ¬¡Ì¤ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å%  µÍÑÉ¬¤¹ÑáÑ
-½¹Ñ¹ÐõÂ~RíÌ¹ÍÑÉ¬¹½Õ¹Ñ÷^ì((½¹ÍÐÍõ±M½É¡Ì±å´¤°°õÍ½É
-½±½È¡Í¤ì(½¹ÍÐÍõ½Õµ¹Ð¹Ñ±µ¹Ñ	å%  µÍ½É¤ì(Í¹ÑáÑ
-½¹Ñ¹ÐõÍüüPìÍ¹ÍÑå±¹½±½Èõ°ì(½¹ÍÐÍÈõ½Õµ¹Ð¹Ñ±µ¹Ñ	å%  µÍÈ¤ì(ÍÈ¹ÍÑå±¹Ý¥Ñ ô¡ÍüüÀ¤¬ìÍÈ¹ÍÑå±¹­É½Õ¹õ°ì(½¹ÍÐõ½Õµ¹Ð¹Ñ±µ¹Ñ	å%  µ±Ñ¤ì(¥¡Íôõ¹Õ±°¤ì(½¹ÍÐ±äõ¹ÜÑ¡¹½Ü¹ÑÕ±±eÈ ¤±¹½Ü¹Ñ5½¹Ñ  ¤´Ä°Ä¤ì(½¹ÍÐ±Ìõ±M½É¡Ì±±ä¹Ñ½%M=MÑÉ¥¹ ¤¹Í±¥ À°Ü¤¤ì(¥¡±Ì¤ì½¹ÍÐõÍµ±Ìì¹ÑáÑ
-½¹Ñ¹Ðõ#r í±Í÷
-äHíøôÀüZÈèZðôí5Ñ ¹Ì¡¥÷
-åì¹ÍÑå±¹½±½ÈõøôÀüÙÈ ´µ½¬¤èÙÈ ´µÉÈ¤ìô(±Í¹ÑáÑ
-½¹Ñ¹Ðôì(ô±Íì¹ÑáÑ
-½¹Ñ¹Ðô
-M[
-K>[
-+¢úó
-£
-ç
-Ï
-3¢£ëW
-3ûdì¹ÍÑå±¹½±½ÈôÙÈ ´µÐÈ¤ìô((¼¼	­ÕÀÝÉ¹¥¹(½¹ÍÐÝ°õ½Õµ¹Ð¹Ñ±µ¹Ñ	å%  µ­ÕÀµÝÉ¸¤ì(¥¡Ì¹}áÁ½ÉÑÐ¤ì(½¹ÍÐåÌõ5Ñ ¹±½½È ¡Ñ¹¹½Ü ¤µ¹ÜÑ¡Ì¹}áÁ½ÉÑÐ¤¤¼àØÐÀÀÀÀÀ¤ì(¥¡åÌøôÜ¤ì(Ý°¹ÍÑå±¹¥ÍÁ±äô±½¬ì(Ý°¹¥¹¹É!Q50ññ¥Ø±ÍÌôÉÍÑå±ô­É½Õ¹éÙÈ ´µÝ¹Ì¤í½ÉÈµ½±½ÈéÙÈ ´µÝ¸¤íÁ¥¹èÄÁÁàÄÑÁàìø(ñ¥ØÍÑå±ô½¹ÐµÍ¥éèÄÍÁàí½¹ÐµÝ¥¡ÐèØÀÀí½±½ÈéÙÈ ´µÝ¸¤ìûj¾â<C
-¿
-_0íåÍ÷^&7dð½¥Øø(ñ¥ØÍÑå±ô½¹ÐµÍ¥éèÄÉÁàí½±½ÈéÙÈ ´µÐÈ¤íµÉ¥¸µÑ½ÀèÉÁàìû¢¢·ºk/
-'C
-¿
-_
-Kþw¶c_?Wð½¥Øø(ð½¥Øùì(ô±ÍÝ°¹ÍÑå±¹¥ÍÁ±äô¹½¹ì(ô±Í¥¡Ì¹Ñá¹Ì¹±¹Ñ øÄÀ¤ì(Ý°¹ÍÑå±¹¥ÍÁ±äô±½¬ì(Ý°¹¥¹¹É!Q50õñ¥Ø±ÍÌôÉÍÑå±ô­É½Õ¹éÙÈ ´µÝ¹Ì¤í½ÉÈµ½±½ÈéÙÈ ´µÝ¸¤íÁ¥¹èÄÁÁàÄÑÁàìø(ñ¥ØÍÑå±ô½¹ÐµÍ¥éèÄÍÁàí½¹ÐµÝ¥¡ÐèØÀÀí½±½ÈéÙÈ ´µÝ¸¤ìûj¾â<C
-¿
-_3r«þw¶cdð½¥Øø(ñ¥ØÍÑå±ô½¹ÐµÍ¥éèÄÉÁàí½±½ÈéÙÈ ´µÐÈ¤íµÉ¥¸µÑ½ÀèÉÁàìû¦¢»'nÓ
-[§
-
-Û«
-ï#ó
-ÿ3Ú##ûdð½¥Øø(ð½¥Øùì(ô±ÍÝ°¹ÍÑå±¹¥ÍÁ±äô¹½¹ì((½¹ÍÐ¥õÁÉ½©¥¡Ì¤°±õ½Õµ¹Ð¹Ñ±µ¹Ñ	å%  µ±½ÍÌ¤ì(¥¡¥øÔÀÀ¤ì±¹ÍÑå±¹¥ÍÁ±äô±½¬ì½Õµ¹Ð¹Ñ±µ¹Ñ	å%  µ±µÐ¤¹ÑáÑ
-½¹Ñ¹Ðõ
-í¥¹Ñ½1½±MÑÉ¥¹ ¥ôk?//
-+ûeìô(±Í±¹ÍÑå±¹¥ÍÁ±äô¹½¹ì((½¹ÍÐõ½Õµ¹Ð¹Ñ±µ¹Ñ	å%  µ½±Ì¤ì(¹¥¹¹É!Q50õÌ¹½±Ì¹±¹Ñ üÌ¹½±Ì¹µÀ¡ôùì(½¹ÍÐÁÐõ¹ÑÉÐý5Ñ ¹µ¥¸ ÄÀÀ±5Ñ ¹É½Õ¹¡¹ÕÉÉ¹Ð½¹ÑÉÐ¨ÄÀÀ¤¤èÀì(ÉÑÕÉ¸ñ¥Ø±ÍÌôÉÍÑå±ôÁ¥¹èÄÉÁàÄÙÁàìø(ñ¥Ø±ÍÌôÍÍÑå±ôµÉ¥¸µ½ÑÑ½´èÕÁàìø(ñ¥ØÍÑå±ô½¹ÐµÍ¥éèÄÑÁàí½¹ÐµÝ¥¡ÐèØÀÀìøí¹¹µôð½¥Øø(ñ¥ØÍÑå±ô½¹ÐµÍ¥éèÄÍÁàí½±½ÈéÙÈ ´µÐÈ¤ìû
-í¹ÕÉÉ¹Ð¹Ñ½1½±MÑÉ¥¹ ¥ô¼
-í¹ÑÉÐ¹Ñ½1½±MÑÉ¥¹ ¥ôð½¥Øø(ð½¥Øø(ñ¥Ø±ÍÌôÁÈøñ¥Ø±ÍÌôÁÈµÍÑå±ôÝ¥Ñ èíÁÑôí­É½Õ¹èí¹½±½Éôìøð½¥Øøð½¥Øø(ñ¥ØÍÑå±ô½¹ÐµÍ¥éèÄÅÁàí½±½ÈéÙÈ ´µÐÈ¤íµÉ¥¸µÑ½ÀèÑÁàíÑáÐµ±¥¸éÉ¥¡ÐìøíÁÑô¦S"@ð½¥Øø(ð½¥Øùì(ô¤¹©½¥¸ ¤èì((½¹ÍÐ¡ÍÑõÌ¹Ñá¹Ì¹±¹Ñ øÀì(½Õµ¹Ð¹Ñ±µ¹Ñ	å%  µµÁÑä¤¹ÍÑå±¹¥ÍÁ±äõ¡ÍÑü¹½¹è±½¬ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å%  µÉÑ¸¤¹ÍÑå±¹¥ÍÁ±äõ¡ÍÑü±½¬è¹½¹ì(¥ ¡ÍÑ¤ì½Õµ¹Ð¹Ñ±µ¹Ñ	å%  µÑÌ¤¹¥¹¹É!Q50ôìÉÑÕÉ¸ìô((½¹ÍÐÑá¹Ìõµ½¹Ñ¡Qá¹Ì¡Ì±å´¤°ÐõÑQ½Ñ±Ì¡Ñá¹Ì¤ì(½¹ÍÐÑ½Àõ=©Ð¹¹ÑÉ¥Ì¡Ð¤¹Í½ÉÐ ¡±¤ôùlÅtµlÅt¤¹Í±¥ À°Ô¤ì(¥ Ñ½À¹±¹Ñ ¤ì½Õµ¹Ð¹Ñ±µ¹Ñ	å%  µÑÌ¤¹¥¹¹É!Q50ôìÉÑÕÉ¸ìô(½Õµ¹Ð¹Ñ±µ¹Ñ	å%  µÑÌ¤¹¥¹¹É!Q50õñ¥Ø±ÍÌôÉø(ñ¥Ø±ÍÌôÍÑ¥½¸µ¡ûî+r Q=@Ô
-¯
-Ó¨ð½¥Øø(íÑ½À¹µÀ ¡m±t¤ôùì(½¹ÍÐõÌ¹ÑÍmuññíµ½Õ¹ÐèÀ±½±½Èè
-Üô°½ÙÈõ¹µ½Õ¹Ðù¹µ½Õ¹Ðì(½¹ÍÐÁÐõ¹µ½Õ¹Ðý5Ñ ¹µ¥¸ ÄÀÀ±5Ñ ¹É½Õ¹¡½¹µ½Õ¹Ð¨ÄÀÀ¤¤èÄÀÀì(ÉÑÕÉ¸ñ¥ØÍÑå±ôµÉ¥¸µ½ÑÑ½´èÄÁÁàìø(ñ¥Ø±ÍÌôÍÍÑå±ôµÉ¥¸µ½ÑÑ½´èÑÁàí½¹ÐµÍ¥éèÄÍÁàìø(ñÍÁ¸±ÍÌôÉ½ÜÍÑå±ôÀèÙÁàìøñÍÁ¸±ÍÌô½ÐÍÑå±ô­É½Õ¹èí¹½±½Éôìøð½ÍÁ¸øíôð½ÍÁ¸ø(ñÍÁ¸ÍÑå±ô½±½Èèí½ÙÈüÙÈ ´µÉÈ¤èÙÈ ´µÐ¤ôìû
-í¹Ñ½1½±MÑÉ¥¹ ¥ôí¹µ½Õ¹Ðý¼
-í¹µ½Õ¹Ð¹Ñ½1½±MÑÉ¥¹ ¥õèôð½ÍÁ¸ø(ð½¥Øø(ñ¥Ø±ÍÌôÁÈøñ¥Ø±ÍÌôÁÈµÍÑå±ôÝ¥Ñ èíÁÑôí­É½Õ¹èí½ÙÈüÙÈ ´µÉÈ¤é¹½±½Éôìøð½¥Øøð½¥Øø(ð½¥Øùì(ô¤¹©½¥¸ ¥ô(ð½¥Øùì)ô((¼¼RR I
-=IRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR )±ÐÕÉµÐô°Í±
-Ðô°Í±MÕõ¹Õ±°ì)Õ¹Ñ¥½¸É¹ÉI½É ¤ì(½¹ÍÐÌõÌ ¤ì(¥ Í±
-ÐñðÌ¹ÑÍmÍ±
-Ñt¤Í±
-Ðõ=©Ð¹­åÌ¡Ì¹ÑÌ¥lÁuñð
-ÏÏO,ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÈµÑ¤¹Ù±Õõ¹ÜÑ ¤¹Ñ½%M=MÑÉ¥¹ ¤¹Í±¥ À°ÄÀ¤ì(É¹É
-Ñ
-¡¥ÁÌ¡Ì¤ì(É¹ÉMÕ
-¡¥ÁÌ¡Ì¤ì(ÕÁÑ	ÕÐ¡Ì¤ì)ô)Õ¹Ñ¥½¸É¹É
-Ñ
-¡¥ÁÌ¡Ì¤ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÈµÑÌ¤¹¥¹¹É!Q50õ=©Ð¹¹ÑÉ¥Ì¡Ì¹ÑÌ¤¹µÀ ¡m±t¤ôø(ñÕÑÑ½¸±ÍÌô¡¥ÀíôôõÍ±
-Ðü½¸èô½¹±¥¬ôÁ¥­
-Ð íô¤ÍÑå±ôíôôõÍ±
-Ðüè½ÉÈµ±ÐèÍÁàÍ½±¥­¹½±½È¬¥µÁ½ÉÑ¹Ðôø(ñÍÁ¸±ÍÌô½ÐÍÑå±ô­É½Õ¹èí¹½±½ÉôíµÉ¥¸µÉ¥¡ÐèÑÁàìøð½ÍÁ¸øíô(ð½ÕÑÑ½¸ù¤¹©½¥¸ ¤ì)ô)Õ¹Ñ¥½¸É¹ÉMÕ
-¡¥ÁÌ¡Ì¤ì(½¹ÍÐõÌ¹ÑÍmÍ±
-Ñtì½¹ÍÐÍÕÌõü¹ÍÕÍññmtì(½¹ÍÐÝÉÀõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÈµÍÕÌµÝÉÀ¤ì(¥ ÍÕÌ¹±¹Ñ ¤ìÝÉÀ¹ÍÑå±¹¥ÍÁ±äô¹½¹ìÉÑÕÉ¸ìô(ÝÉÀ¹ÍÑå±¹¥ÍÁ±äô±½¬ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% È¥ÍÕÌ¤¹¥¹¹É!Q50ô(ñÕÑÑ½¸±ÍÌô¡¥À¡¥ÀµáÌìÍ±MÕü½¸èô½¹±¥¬ôÁ¥­MÕ¡¹Õ±°¤ûg÷ð½ÕÑÑ½¸ù¬(ÍÕÌ¹µÀ¡ÍÕôùñÕÑÑ½¸±ÍÌô¡¥À¡¥ÀµáÌíÍ±MÕôôõÍÕü½¸èô½¹±¥¬ôÁ¥­MÕ íÍÕô¤øíÍÕôð½ÕÑÑ½¸ù¤¹©½¥¸ ¤ì)ô)Õ¹Ñ¥½¸Á¥­
-Ð¡¤ìÍ±
-ÐõìÍ±MÕõ¹Õ±°ì½¹ÍÐÌõÌ ¤ìÉ¹É
-Ñ
-¡¥ÁÌ¡Ì¤ìÉ¹ÉMÕ
-¡¥ÁÌ¡Ì¤ìÕÁÑ	ÕÐ¡Ì¤ìô)Õ¹Ñ¥½¸Á¥­MÕ¡ÍÕ¤ìÍ±MÕõÍÕì½¹ÍÐÌõÌ ¤ìÉ¹ÉMÕ
-¡¥ÁÌ¡Ì¤ìô)Õ¹Ñ¥½¸ÕÁÑ	ÕÐ¡Ì¤ì(½¹ÍÐõÌ¹ÑÍmÍ±
-Ñtì¥ ü¹µ½Õ¹Ð¤ì½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÈµÉ¤¹ÍÑå±¹¥ÍÁ±äô¹½¹ìÉÑÕÉ¸ìô(½¹ÍÐå´õ¹ÜÑ ¤¹Ñ½%M=MÑÉ¥¹ ¤¹Í±¥ À°Ü¤ì(½¹ÍÐÍÁ¹Ðõµ½¹Ñ¡Qá¹Ì¡Ì±å´¤¹¥±ÑÈ¡ÐôùÐ¹ÐôôõÍ±
-Ð¤¹ÉÕ ¡±Ð¤ôù­Ð¹µ½Õ¹Ð°À¤ì(½¹ÍÐÉ´õ¹µ½Õ¹ÐµÍÁ¹Ð°ÁÐõ5Ñ ¹µ¥¸ ÄÀÀ±5Ñ ¹É½Õ¹¡ÍÁ¹Ð½¹µ½Õ¹Ð¨ÄÀÀ¤¤ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÈµÉ¤¹ÍÑå±¹¥ÍÁ±äô±½¬ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÈµÐ¤¹ÑáÑ
-½¹Ñ¹ÐõíÍ±
-Ñôî+r#»º/
-)ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÈµÉ´¤¹ÑáÑ
-½¹Ñ¹Ðõ
-í5Ñ ¹µà À±É´¤¹Ñ½1½±MÑÉ¥¹ ¥õì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÈµÕÍ¤¹ÑáÑ
-½¹Ñ¹ÐõöÿR 
-íÍÁ¹Ð¹Ñ½1½±MÑÉ¥¹ ¥ô¼
-í¹µ½Õ¹Ð¹Ñ½1½±MÑÉ¥¹ ¥õì(½¹ÍÐÈõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÈµÈ¤ì(È¹ÍÑå±¹Ý¥Ñ õÁÐ¬ì(È¹ÍÑå±¹­É½Õ¹õÁÐøäÀüÙÈ ´µÉÈ¤éÁÐøÜÀüÙÈ ´µÝ¸¤èÙÈ ´µ½¬¤ì)ô)Õ¹Ñ¥½¸Á¡Ø¤ì(¥¡Øôôô°¤ÕÉµÐõÕÉµÐ¹Í±¥ À°´Ä¤ì(±Íì¥¡ÕÉµÐ¹±¹Ñ øôÜ¤ÉÑÕÉ¸ìÕÉµÐ¬õØìô(½¹ÍÐ¸õÁÉÍ%¹Ð¡ÕÉµÐ¥ñðÀì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% Èµ¥ÍÀµ¹Õ´¤¹ÑáÑ
-½¹Ñ¹Ðõ¸¹Ñ½1½±MÑÉ¥¹ ¤ì(½¹ÍÐÌõÌ ¤ìÕÁÑ	ÕÐ¡Ì¤ì)ô((¼¼RR I
-=IQ	LRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR )Õ¹Ñ¥½¸ÍÝ¥Ñ¡I½ÉQ¡Ñ¤ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÉµÑµ¥¹ÁÕÐ¤¹ÍÑå±¹¥ÍÁ±äõÑôôô¥¹ÁÕÐü±½¬è¹½¹ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÉµÑµ±¥ÍÐ¤¹ÍÑå±¹¥ÍÁ±äõÑôôô±¥ÍÐü±½¬è¹½¹ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÉÑµ¥¹ÁÕÐ¤¹±ÍÍ1¥ÍÐ¹Ñ½± ½¸±Ñôôô¥¹ÁÕÐ¤ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÉÑµ±¥ÍÐ¤¹±ÍÍ1¥ÍÐ¹Ñ½± ½¸±Ñôôô±¥ÍÐ¤ì(¥¡Ñôôô±¥ÍÐ¤É¹ÉQ½å1¥ÍÐ ¤ì)ô)Õ¹Ñ¥½¸É¹ÉQ½å1¥ÍÐ ¤ì(½¹ÍÐÌõÌ ¤°Ñ½äõ¹ÜÑ ¤¹Ñ½%M=MÑÉ¥¹ ¤¹Í±¥ À°ÄÀ¤ì(½¹ÍÐÑá¹ÌõÌ¹Ñá¹Ì¹¥±ÑÈ¡ÐôùÐ¹ÑôôõÑ½ä¤¹Í½ÉÐ ¡±¤ôù¹¥¹±½±
-½µÁÉ¡¹¥¤¤ì(½¹ÍÐÝÉÀõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÉµÑ½äµÝÉÀ¤ì(¥ Ñá¹Ì¹±¹Ñ ¤ìÝÉÀ¹¥¹¹É!Q50ôñ¥Ø±ÍÌô¡¥¹ÐÍÑå±ôÑáÐµ±¥¸é¹ÑÈíÁ¥¹èÐÁÁàÀìûî+^»¢¢c¦2Ë¿û
-+ûo
-Lð½¥ØøìÉÑÕÉ¸ìô(½¹ÍÐÑ½Ñ°õÑá¹Ì¹¥±ÑÈ¡ÐôùÐ¹ÑåÁôôôáÁ¹Í¤¹ÉÕ ¡±Ð¤ôù­Ð¹µ½Õ¹Ð°À¤ì(ÝÉÀ¹¥¹¹É!Q50õ(ñ¥Ø±ÍÌôÉÍÑå±ôµÉ¥¸µ½ÑÑ½´èáÁàìø(ñ¥Ø±ÍÌôÍøñ¥ØÍÑå±ô½¹ÐµÝ¥¡ÐèØÀÀìûî+^»B#¢¢ ð½¥Øøñ¥ØÍÑå±ô½¹ÐµÍ¥éèÄáÁàí½¹ÐµÝ¥¡ÐèÜÀÀìû
-íÑ½Ñ°¹Ñ½1½±MÑÉ¥¹ ¥ôð½¥Øøð½¥Øø(ð½¥Øø(íÑá¹Ì¹µÀ¡Ðôùì(½¹ÍÐõÌ¹ÑÍmÐ¹Ñuññí½±½Èè
-Üôì(ÉÑÕÉ¸ñ¥Ø±ÍÌôÉÍÑå±ôÁ¥¹èÄÁÁàÄÑÁàíµÉ¥¸µ½ÑÑ½´èÙÁàìø(ñ¥Ø±ÍÌôÍø(ñ¥Ø±ÍÌôÉ½ÜÍÑå±ôÀèáÁàìø(ñÍÁ¸±ÍÌô½ÐÍÑå±ô­É½Õ¹èí¹½±½Éôìøð½ÍÁ¸ø(ñ¥Øø(ñ¥ØÍÑå±ô½¹ÐµÍ¥éèÄÑÁàí½¹ÐµÝ¥¡ÐèÔÀÀìøíÐ¹¹µññÐ¹Ñôð½¥Øø(ñ¥ØÍÑå±ô½¹ÐµÍ¥éèÄÅÁàí½±½ÈéÙÈ ´µÐÈ¤ìøíÐ¹ÑôíÐ¹ÍÕü
-Ü­Ð¹ÍÕèôð½¥Øø(ð½¥Øø(ð½¥Øø(ñ¥Ø±ÍÌôÉ½ÜÍÑå±ôÀèáÁàìø(ñ¥ØÍÑå±ô½¹ÐµÍ¥éèÄÕÁàí½¹ÐµÝ¥¡ÐèÜÀÀí½±½ÈèíÐ¹ÑåÁôôô¥¹½µüÙÈ ´µ½¬¤èÙÈ ´µÐ¤ôìøíÐ¹ÑåÁôôô¥¹½µü¬è÷
-íÐ¹µ½Õ¹Ð¹Ñ½1½±MÑÉ¥¹ ¥ôð½¥Øø(ñÕÑÑ½¸½¹±¥¬ô±ÑQá¸ íÐ¹¥ô¤ÍÑå±ô­É½Õ¹é¹½¹í½ÉÈé¹½¹íÕÉÍ½ÈéÁ½¥¹ÑÈí½±½ÈéÙÈ ´µÐÌ¤í½¹ÐµÍ¥éèÄÙÁàíÁ¥¹èÉÁàÑÁàìû\ð½ÕÑÑ½¸ø(ð½¥Øø(ð½¥Øø(ð½¥Øùì(ô¤¹©½¥¸ ¥õì)ô)Õ¹Ñ¥½¸±ÑQá¸¡¥¤ì(¥ ½¹¥É´ O»¢¢c¦2Ë
-K&+¦f_ûg/¾ò|¤¤ÉÑÕÉ¸ì(½¹ÍÐÌõÌ ¤ìÌ¹Ñá¹ÌõÌ¹Ñá¹Ì¹¥±ÑÈ¡ÐôùÐ¹¥ôõ¥¤ìÍÌ¡Ì¤ì(É¹ÉQ½å1¥ÍÐ ¤ìÉ¹É!½µ ¤ì)ô)Õ¹Ñ¥½¸I½É ¤ì(½¹ÍÐµÐõÁÉÍ%¹Ð¡ÕÉµÐ¥ñðÀì(¥ µÐ¤ì±ÉÐ ¦G¦7
-K*o_?W¤ìÉÑÕÉ¸ìô(½¹ÍÐÌõÌ ¤°µµ¼õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% Èµµµ¼¤¹Ù±Õ°Ñõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÈµÑ¤¹Ù±Õññ¹ÜÑ ¤¹Ñ½%M=MÑÉ¥¹ ¤¹Í±¥ À°ÄÀ¤ì(Ì¹Ñá¹Ì¹ÁÕÍ ¡ì¥éíÑ¹¹½Ü ¥õ°Ñ°¹µéµµ½ññÍ±
-Ð°µ½Õ¹ÐéµÐ°ÑåÁèáÁ¹Í°ÐéÍ±
-Ð°ÍÕéÍ±MÕ°ÍÉèµ¹Õ°ô¤ì(Ì¹ÍÑÉ¬¹±ÍÐõÑìÍÌ¡Ì¤ì(ÕÉµÐôì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% Èµ¥ÍÀ¤¹¥¹¹É!Q50õñÍÁ¸ÍÑå±ô½¹ÐµÍ¥éèÈÉÁàí½¹ÐµÝ¥¡ÐèÐÀÀí½±½ÈéÙÈ ´µÐÈ¤ìû
-ð½ÍÁ¸øÁì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% Èµµµ¼¤¹Ù±Õôì(Í±MÕõ¹Õ±°ìÉ¹ÉMÕ
-¡¥ÁÌ¡Ì¤ìÕÁÑ	ÕÐ¡Ì¤ì(½¹ÍÐõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% Èµ¤ì¹ÑáÑ
-½¹Ñ¹ÐõrL
-íµÐ¹Ñ½1½±MÑÉ¥¹ ¥ô
-K¢¢c¦2Ë_û_}ì(ÍÑQ¥µ½ÕÐ  ¤ôù¹ÑáÑ
-½¹Ñ¹Ðô°ÈÈÀÀ¤ì(É¹É!½µ ¤ì)ô((¼¼RR %5A=IPRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR )±ÐÁ¹¥¹õmt°Á¹¥¹	¹¬ôì)Õ¹Ñ¥½¸¡¹±¥±¡¥±¤ì(¥ ¥±¤ÉÑÕÉ¸ì(½¹ÍÐÑÉåAÉÍô¡ÑáÐ¤ôùì(ÑáÐõÑáÐ¹ÉÁ± ½{¾îü¼°¤ì(AÁ¹ÁÉÍ¡ÑáÐ±ì¡ÈéÑÉÕ°Í­¥ÁµÁÑå1¥¹ÌéÑÉÕ°½µÁ±Ñ¡È¤ì(¥ È¹Ñü¹±¹Ñ ¤ì±ÉÐ ó
-ÿ
-K¢ª·ÿ¢úó
-ûo
-O_|¤ìÉÑÕÉ¸ìô(½¹ÍÐ¹¬õÑÑ	¹¬¡È¹µÑ¹¥±Ì¤ì(Á¹¥¹	¹¬õ¹¬ìÁ¹¥¹õÁÉÍI½ÝÌ¡È¹Ñ°¹¬¤ì(Í¡½ÝAÉØ ¤ì(õô¤ì(ôì(½¹ÍÐÈÄõ¹Ü¥±IÈ ¤ì(ÈÄ¹½¹±½õôùì½¹ÍÐÑáÐõ¹ÑÉÐ¹ÉÍÕ±Ðì(¥ ½mqààÀµqàåt¼¹ÑÍÐ¡ÑáÐ¹Í±¥ À°ÐÀÀ¤¤¤ì(½¹ÍÐÈÈõ¹Ü¥±IÈ ¤ìÈÈ¹½¹±½õÈôùÑÉåAÉÍ¡È¹ÑÉÐ¹ÉÍÕ±Ð¤ìÈÈ¹ÉÍQáÐ¡¥±°Í¡¥Ðµ©¥Ì¤ì(ô±ÍÑÉåAÉÍ¡ÑáÐ¤ì(ôì(ÈÄ¹ÉÍQáÐ¡¥±°ÕÑ´à¤ì)ô)Õ¹Ñ¥½¸Í¡½ÝAÉØ ¤ì(½¹ÍÐÌõÌ ¤ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ¥µÀµÐ¤¹ÑáÑ
-½¹Ñ¹Ðõ¢«.W""¾òkW
-§ó{ íÁ¹¥¹	¹­õì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ¥µÀµ¹Ð¤¹ÑáÑ
-½¹Ñ¹ÐõíÁ¹¥¹¹±¹Ñ¡ôîÛ
-Kséì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ¥µÀµÁÉØ¤¹ÍÑå±¹¥ÍÁ±äô±½¬ì(½¹ÍÐÑ½äõ½Õµ¹Ð¹ÅÕÉåM±Ñ½È ¥µÀµÑ°Ñ½ä¤ìÑ½ä¹¥¹¹É!Q50ôì(Á¹¥¹¹Í±¥ À°ØÀ¤¹½É ¡Ðôùì(½¹ÍÐõÌ¹ÑÍmÐ¹Ñuññí½±½Èè
-Üôì(½¹ÍÐÑÈõ½Õµ¹Ð¹ÉÑ±µ¹Ð ÑÈ¤ì(ÑÈ¹¥¹¹É!Q50õñÑÍÑå±ôÝ¡¥ÑµÍÁé¹½ÝÉÀìøíÐ¹Ñôð½Ñø(ñÑÍÑå±ôµàµÝ¥Ñ èÄÀÁÁàí½ÙÉ±½Üé¡¥¸íÑáÐµ½ÙÉ±½Üé±±¥ÁÍ¥ÌíÝ¡¥ÑµÍÁé¹½ÝÉÜìøíÐ¹¹µôð½Ñø(ñÑÍÑå±ôÑáÐµ±¥¸éÉ¥¡ÐìíÐ¹ÑåÁôôô¥¹½µü½±½ÈéÙÈ ´µ½¬¤èôìû
-íÐ¹µ½Õ¹Ð¹Ñ½1½±MÑÉ¥¹ ¥ôð½Ñø(ñÑøñÍÁ¸±ÍÌô½ÐÍÑå±ô­É½Õ¹èí¹½±½ÉôíµÉ¥¸µÉ¥¡ÐèÑÁàìøð½ÍÁ¸øíÐ¹Ñôð½Ñùì(Ñ½ä¹ÁÁ¹
-¡¥±¡ÑÈ¤ì(ô¤ì)ô)Õ¹Ñ¥½¸½%µÁ½ÉÐ ¤ì(¥ Á¹¥¹¹±¹Ñ ¤ÉÑÕÉ¸ì(½¹ÍÐÌõÌ ¤°àõ¹ÜMÐ¡Ì¹Ñá¹Ì¹µÀ¡ÐôùÐ¹Ñ­Ð¹¹µ­Ð¹µ½Õ¹Ð¤¤ì(±ÐôÀì(½È¡½¹ÍÐÐ½Á¹¥¹¤ì¥ à¹¡Ì¡Ð¹Ñ­Ð¹¹µ­Ð¹µ½Õ¹Ð¤¤ìÌ¹Ñá¹Ì¹ÁÕÍ ¡Ð¤ì¬¬ìôô(ÍÌ¡Ì¤ìÁ¹¥¹õmtìÁ¹¥¹	¹¬ôì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ¥µÀµÁÉØ¤¹ÍÑå±¹¥ÍÁ±äô¹½¹ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% %¸¤¹Ù±Õôì(ÉÉÍ¡5½¹Ñ¡Ì ¤ìÉ¹É!½µ ¤ì(±ÉÐ¡íôîÛ
-K>[
-+¢úóÿû_}¤ì)ô)Õ¹Ñ¥½¸ÉÉÍ¡5½¹Ñ¡Ì ¤ì(½¹ÍÐÌõÌ ¤ì(½¹ÍÐµÌõl¸¸¹¹ÜMÐ¡Ì¹Ñá¹Ì¹µÀ¡ÐôùÐ¹Ñ¹Í±¥ À°Ü¤¤¥t¹Í½ÉÐ ¤¹ÉÙÉÍ ¤ì(½¹ÍÐ°õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ¥µÀµµ½¹Ñ¡Ì¤ì(°¹¥¹¹É!Q50õµÌ¹±¹Ñ üµÌ¹µÀ¡´ôùñÍÁ¸±ÍÌôÑÍÑå±ôµÉ¥¸èÉÁàìøíµôð½ÍÁ¸ù¤¹©½¥¸ ¤è«\ì)ô((¼¼RR IA=IPRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR )±ÐÉÁ
-¡ÉÐõ¹Õ±°°ÉÁe´õ¹Õ±°ì)Õ¹Ñ¥½¸Í¡¥Ñ5½¹Ñ ¡¤ì(½¹ÍÐmä±µtõÉÁe´¹ÍÁ±¥Ð ´¤¹µÀ¡9ÕµÈ¤ì(½¹ÍÐÐõ¹ÜÑ¡ä±´´Ä­°Ä¤ì(ÉÁe´õÐ¹Ñ½%M=MÑÉ¥¹ ¤¹Í±¥ À°Ü¤ì(É¹ÉIÁ½ÉÐ ¤ì)ô)Õ¹Ñ¥½¸É¹ÉIÁ½ÉÐ ¤ì(½¹ÍÐÌõÌ ¤°¹½Üõ¹ÜÑ ¤ì(¥ ÉÁe´¤ÉÁe´õ¹½Ü¹Ñ½%M=MÑÉ¥¹ ¤¹Í±¥ À°Ü¤ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÉÀµå´¤¹ÑáÑ
-½¹Ñ¹ÐõÉÁe´¹ÉÁ± ´°æÐ¤¬r ì((½¹ÍÐÍõ±M½É¡Ì±ÉÁe´¤°°õÍ½É
-½±½È¡Í¤ì(½¹ÍÐÉÍõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÉÀµÍ½É¤ìÉÍ¹ÑáÑ
-½¹Ñ¹ÐõÍüüPìÉÍ¹ÍÑå±¹½±½Èõ°ì(½¹ÍÐÉÍõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÉÀµÍÈ¤ìÉÍ¹ÍÑå±¹Ý¥Ñ ô¡ÍüüÀ¤¬ìÉÍ¹ÍÑå±¹­É½Õ¹õ°ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÉÀµµÍ¤¹ÑáÑ
-½¹Ñ¹ÐôÍüó
-ÿ3
-+ûo
-Lè(ÍøôàÀüÒfÓ
-'_¾ò¢Ê¿¦GöO¢Î«¯«ûdÂ~:$è(ÍøôØÀü¢&¿÷g
-â¶§¢Ê¿¦GöO¢Î«¬è(ÍøôÐÀü¦3k
-ê#º_
-K¢/nÓ_û_
-è/«
-+¢Ú¦;_ûg¢Î£?dì((É¹É
-±¹È¡Ì°ÉÁe´¤ì((½¹ÍÐÑá¹Ìõµ½¹Ñ¡Qá¹Ì¡Ì±ÉÁe´¤°ÐõÑQ½Ñ±Ì¡Ñá¹Ì¤ì(½¹ÍÐÍ½ÉÑõ=©Ð¹¹ÑÉ¥Ì¡Ð¤¹Í½ÉÐ ¡±¤ôùlÅtµlÅt¤ì(½¹ÍÐÑ½Ñ°õÑá¹Ì¹ÉÕ ¡±Ð¤ôù­Ð¹µ½Õ¹Ð°À¤ì((½¹ÍÐÑàõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÉÀµ¡ÉÐ¤¹Ñ
-½¹ÑáÐ É¤ì(¥¡ÉÁ
-¡ÉÐ¤ÉÁ
-¡ÉÐ¹ÍÑÉ½ä ¤ì(¥¡Í½ÉÑ¹±¹Ñ ¤ì(ÉÁ
-¡ÉÐõ¹Ü
-¡ÉÐ¡Ñà±ì(ÑåÁè½Õ¡¹ÕÐ°(Ñéì(±±ÌéÍ½ÉÑ¹µÀ ¡mt¤ôù¤°(ÑÍÑÌémìÑéÍ½ÉÑ¹µÀ ¡l±Ùt¤ôùØ¤°­É½Õ¹
-½±½ÈéÍ½ÉÑ¹µÀ ¡mt¤ôø¡Ì¹ÑÍmtü¹½±½È¥ñð
-Ü¤°½ÉÉ]¥Ñ èÀõt(ô°(½ÁÑ¥½¹ÌéìÉÍÁ½¹Í¥ÙéÑÉÕ°Á±Õ¥¹Ìéì±¹éìÁ½Í¥Ñ¥½¸è½ÑÑ½´°±±Ìéì½¹ÐéíÍ¥éèÄÅô°Á¥¹èà°½á]¥Ñ èÄÀôôôô(ô¤ì(ô((½¹ÍÐ°õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÉÀµ¤ì(°¹¥¹¹É!Q50õÍ½ÉÑ¹µÀ ¡m±t¤ôùì(½¹ÍÐõÌ¹ÑÍmuññíµ½Õ¹ÐèÀ±½±½Èè
-Üô°½ÙÈõ¹µ½Õ¹Ðù¹µ½Õ¹Ðì(½¹ÍÐÁÐõÑ½Ñ°ý5Ñ ¹É½Õ¹¡½Ñ½Ñ°¨ÄÀÀ¤èÀì(½¹ÍÐÁÐõ¹µ½Õ¹Ðý5Ñ ¹µ¥¸ ÄÀÀ±5Ñ ¹É½Õ¹¡½¹µ½Õ¹Ð¨ÄÀÀ¤¤èÀì(½¹ÍÐÍÕI½ÝÌõÌ¹Ñá¹Ì¹¥±ÑÈ¡ÐôùÐ¹Ñ¹ÍÑÉÑÍ]¥Ñ ¡ÉÁe´¤Ð¹ÐôôõÐ¹ÍÕ¤¹ÉÕ ¡È±Ð¤ôùíÉmÐ¹ÍÕtô¡ÉmÐ¹ÍÕuñðÀ¤­Ð¹µ½Õ¹ÐíÉÑÕÉ¸Èíô±íô¤ì(ÉÑÕÉ¸ñ¥ØÍÑå±ôÁ¥¹èÄÁÁàÀí½ÉÈµ½ÑÑ½´èÅÁàÍ½±¥ÙÈ ´µ¤ìø(ñ¥Ø±ÍÌôÍÍÑå±ôµÉ¥¸µ½ÑÑ½´èÕÁàìø(ñ¥Ø±ÍÌôÉ½ÜÍÑå±ôÀèÝÁàìøñÍÁ¸±ÍÌô½ÐÍÑå±ô­É½Õ¹èí¹½±½ÉôíÝ¥Ñ èÄÁÁàí¡¥¡ÐèÄÁÁàìøð½ÍÁ¸ø(ñ¥Øø(ñ¥ØÍÑå±ô½¹ÐµÍ¥éèÄÑÁàí½¹ÐµÝ¥¡ÐèÔÀÀìøíôð½¥Øø(í¹µ½Õ¹Ðýñ¥ØÍÑå±ô½¹ÐµÍ¥éèÄÅÁàí½±½Èèí½ÙÈüÙÈ ´µÉÈ¤èÙÈ ´µÐÈ¤ôìøí½ÙÈü¢Ú¦8èê#º_ô
-í¹µ½Õ¹Ð¹Ñ½1½±MÑÉ¥¹ ¥ôð½¥Øùèô(ð½¥Øø(ð½¥Øø(ñ¥ØÍÑå±ôÑáÐµ±¥¸éÉ¥¡Ðìø(ñ¥ØÍÑå±ô½¹ÐµÍ¥éèÄÕÁàí½¹ÐµÝ¥¡ÐèÜÀÀí½±½Èèí½ÙÈüÙÈ ´µÉÈ¤èÙÈ ´µÐ¤ôìû
-í¹Ñ½1½±MÑÉ¥¹ ¥ôð½¥Øø(ñ¥ØÍÑå±ô½¹ÐµÍ¥éèÄÅÁàí½±½ÈéÙÈ ´µÐÈ¤ìøíÁÑôð½¥Øø(ð½¥Øø(ð½¥Øø(í¹µ½Õ¹Ðýñ¥Ø±ÍÌôÁÈøñ¥Ø±ÍÌôÁÈµÍÑå±ôÝ¥Ñ èíÁÑôí­É½Õ¹èí½ÙÈüÙÈ ´µÉÈ¤é¹½±½Éôìøð½¥Øøð½¥Øùèô(í=©Ð¹­åÌ¡ÍÕI½ÝÌ¤¹±¹Ñ ýñ¥ØÍÑå±ôµÉ¥¸µÑ½ÀèÙÁàí¥ÍÁ±äé±àí±àµÝÉÀéÝÉÀíÀèÑÁàìøí=©Ð¹¹ÑÉ¥Ì¡ÍÕI½ÝÌ¤¹µÀ ¡mÍ±Ít¤ôùñÍÁ¸±ÍÌôÑøíÍô
-íÍ¹Ñ½1½±MÑÉ¥¹ ¥ôð½ÍÁ¸ù¤¹©½¥¸ ¥ôð½¥Øùèô(ð½¥Øùì(ô¤¹©½¥¸ ¥ñðñ¥Ø±ÍÌô¡¥¹ÐÍÑå±ôÑáÐµ±¥¸é¹ÑÈíÁ¥¹èÈÁÁàìûó
-ÿ3
-+ûo
-Lð½¥Øøì)ô()Õ¹Ñ¥½¸É¹É
-±¹È¡Ì°å´¤ì(½¹ÍÐ¡Í°õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÉÀµ°µ¡Ì¤°±°õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÉÀµ°¤ì(½¹ÍÐåÌõl^°r °¬°ÂÐ°r °¦D°r|tì(¡Í°¹¥¹¹É!Q50õåÌ¹µÀ¡ôùñ¥Ø±ÍÌô°µ¡øíôð½¥Øù¤¹©½¥¸ ¤ì((½¹ÍÐmåÈ±µ½¹Ñ¡tõå´¹ÍÁ±¥Ð ´¤¹µÀ¡9ÕµÈ¤ì(½¹ÍÐ¥ÉÍÑ½Üõ¹ÜÑ¡åÈ±µ½¹Ñ ´Ä°Ä¤¹Ñä ¤ì(½¹ÍÐ¥´õ¹ÜÑ¡åÈ±µ½¹Ñ °À¤¹ÑÑ ¤ì(½¹ÍÐÑ½äõ¹ÜÑ ¤¹Ñ½%M=MÑÉ¥¹ ¤¹Í±¥ À°ÄÀ¤ì((½¹ÍÐåÑõíôì(½È¡½¹ÍÐÐ½Ì¹Ñá¹Ì¹¥±ÑÈ¡ÐôùÐ¹Ñ¹ÍÑÉÑÍ]¥Ñ ¡å´¤Ð¹ÑåÁôôôáÁ¹Í¤¤ì(¥ åÑmÐ¹Ñt¤åÑmÐ¹Ñtõíµ½Õ¹ÐèÀ±µ¹Õ°é±Íôì(åÑmÐ¹Ñt¹µ½Õ¹Ð¬õÐ¹µ½Õ¹Ðì(¥¡Ð¹ÍÉôôôµ¹Õ°¤åÑmÐ¹Ñt¹µ¹Õ°õÑÉÕì(ô((½¹ÍÐµáµÐõ5Ñ ¹µà ¸¸¹=©Ð¹Ù±ÕÌ¡åÑ¤¹µÀ¡ØôùØ¹µ½Õ¹Ð¤°Ä¤ì(½¹ÍÐ±±Ìõmtì(½È¡±Ð¤ôÀí¤ñ¥ÉÍÑ½Üí¤¬¬¤±±Ì¹ÁÕÍ ¡ñ¥Ø±ÍÌô°µµÁÑäøð½¥Øù¤ì(½È¡±ÐôÄíðõ¥´í¬¬¤ì(½¹ÍÐÑMÑÈõíåµô´í¹Ñ½MÑÉ¥¹ ¤¹ÁMÑÉÐ È°À¥õì(½¹ÍÐÑõåÑmÑMÑÉtì(½¹ÍÐ¥ÍQ½äõÑMÑÈôôõÑ½äì(½¹ÍÐ¥¹Ñ¹Í¥ÑäõÑý5Ñ ¹É½Õ¹¡Ñ¹µ½Õ¹Ð½µáµÐ¨ÄÀÀ¤èÀì(½¹ÍÐõÑ
-½µÁÕÑMÑå±¡½Õµ¹Ð¹½Õµ¹Ñ±µ¹Ð¤¹ÑAÉ½ÁÉÑåY±Õ ´µ¤¹ÑÉ¥´ ¥ñðÑÝ
-ì(±ÐõÑý¡á±Á¡¡°5Ñ ¹µà ÄÔ±¥¹Ñ¹Í¥Ñä¤¨À¸Ü¼ÄÀÀ¤èÙÈ ´µÍÈ¤ì(±±Ì¹ÁÕÍ ¡ñ¥Ø±ÍÌô°µíÑüÉèôí¥ÍQ½äüÑ½äèôÑ¥Ñ±ôíÑMÑÉôíÑü
-­Ñ¹µ½Õ¹Ð¹Ñ½1½±MÑÉ¥¹ ¤èôø(íôíÑü¹µ¹Õ°ýñÍÁ¸±ÍÌôÉµ½Ðøð½ÍÁ¸ùèô(ð½¥Øù¤ì(ô(±°¹¥¹¹É!Q50õ±±Ì¹©½¥¸ ¤ì(¼¼ÁÁ±ä­É½Õ¹½±½ÈÙ¥¥ÉÐÍÑå±¡ÑÈÉ¹È¤(½¹ÍÐ±±åÌõ±°¹ÅÕÉåM±Ñ½É±° ¹°µ¹É¤ì(±Ð¤ÈôÀì(½È¡±ÐôÄíðõ¥´í¬¬¤ì(½¹ÍÐÑMÑÈõíåµô´í¹Ñ½MÑÉ¥¹ ¤¹ÁMÑÉÐ È°À¥õì(½¹ÍÐÑõåÑmÑMÑÉtì(¥¡Ñ¤ì(½¹ÍÐ°õ±±åÍm¤È¬­tì(½¹ÍÐÁÐõ5Ñ ¹µà À¸Àà°Ñ¹µ½Õ¹Ð½µáµÐ¤ì(½¹ÍÐÈõÑ
-½µÁÕÑMÑå±¡½Õµ¹Ð¹½Õµ¹Ñ±µ¹Ð¤¹ÑAÉ½ÁÉÑåY±Õ ´µ¤¹ÑÉ¥´ ¥ñðÑÝ
-ì(°¹ÍÑå±¹­É½Õ¹õ¡á±Á¡¡È°ÁÐ¨À¸ÜÔ¤ì(ô(ô)ô)Õ¹Ñ¥½¸¡á±Á¡¡¡à°±Á¡¤ì(½¹ÍÐÈõÁÉÍ%¹Ð¡¡à¹Í±¥ Ä°Ì¤°ÄØ¤°õÁÉÍ%¹Ð¡¡à¹Í±¥ Ì°Ô¤°ÄØ¤°õÁÉÍ%¹Ð¡¡à¹Í±¥ Ô°Ü¤°ÄØ¤ì(ÉÑÕÉ¸É íÉô°íô°íô°í5Ñ ¹µ¥¸ Ä±±Á¡¤¹Ñ½¥á È¥ô¥ì)ô((¼¼RR M!IRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR )Õ¹Ñ¥½¸Í¡ÉM½É ¤ì(½¹ÍÐÌõÌ ¤°å´õÉÁeµññ¹ÜÑ ¤¹Ñ½%M=MÑÉ¥¹ ¤¹Í±¥ À°Ü¤ì(½¹ÍÐÍõ±M½É¡Ì±å´¤üü´´°ÍÐõÌ¹ÍÑÉ¬¹½Õ¹Ðì(½¹ÍÐ¹ÙÌõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% Í µ¤ì(¹ÙÌ¹Ý¥Ñ ôØÀÀì¹ÙÌ¹¡¥¡ÐôÌàÀì¹ÙÌ¹ÍÑå±¹¥ÍÁ±äô±½¬ì(½¹ÍÐÑàõ¹ÙÌ¹Ñ
-½¹ÑáÐ É¤ì(Ñà¹¥±±MÑå±õ½Õµ¹Ð¹½Õµ¹Ñ±µ¹Ð¹ÑÑÑÉ¥ÕÑ ÑµÑ¡µ¤ôôôÉ¬üÄäÄäÄäèÝÝÔì(Ñà¹¥±±IÐ À°À°ØÀÀ°ÌàÀ¤ì(Ñà¹ÑáÑ±¥¸ô¹ÑÈì(Ñà¹¥±±MÑå±õ½Õµ¹Ð¹½Õµ¹Ñ±µ¹Ð¹ÑÑÑÉ¥ÕÑ ÑµÑ¡µ¤ôôôÉ¬üèÅÅÅì(Ñà¹½¹Ðô½±ÈÙÁàµÁÁ±µÍåÍÑ´±Í¹ÌµÍÉ¥ìÑà¹¥±±QáÐ {7
-ç
-Ì°ÌÀÀ°ØÐ¤ì(Ñà¹¥±±MÑå±ôÜàÜÜÜÐìÑà¹½¹ÐôÄÙÁàµÁÁ±µÍåÍÑ´±Í¹ÌµÍÉ¥ì(Ñà¹¥±±QáÐ¡å´¹ÉÁ± ´°æÐ¤¬r £
-ç
-Ï
-°ÌÀÀ°äØ¤ì(½¹ÍÐ½°õÑåÁ½Íôôô¹ÕµÈü¡ÍøôàÀüÉåÕéÍøôØÀüÑÝ
-éÍøôÐÀüàÜÈÁèÐÌÌØ¤èÜàÜÜÜÐì(Ñà¹¥±±MÑå±õ½°ìÑà¹½¹Ðô½±ÄÄÁÁàµÁÁ±µÍåÍÑ´±Í¹ÌµÍÉ¥ìÑà¹¥±±QáÐ¡Í°ÌÀÀ°ÈÐÈ¤ì(Ñà¹¥±±MÑå±ôÜàÜÜÜÐìÑà¹½¹ÐôÄáÁàµÁÁ±µÍåÍÑ´±Í¹ÌµÍÉ¥ìÑà¹¥±±QáÐ 
-ä¼ÄÀÃ
-ä°ÌÀÀ°ÈÜà¤ì(Ñà¹¥±±MÑå±ôàÜÈÁìÑà¹½¹ÐôÄÕÁàµÁÁ±µÍåÍÑ´±Í¹ÌµÍÉ¥ì(Ñà¹¥±±QáÐ¡Â~RíÍÑ÷^¦Úk¢¢c¦2Ëâµ°ÌÀÀ°ÌÈØ¤ì(½¹ÍÐõ½Õµ¹Ð¹ÉÑ±µ¹Ð ¤ì¹½Ý¹±½õµ¹Í½|íåµô¹Á¹ì¹¡Éõ¹ÙÌ¹Ñ½ÑUI0 ¤ì¹±¥¬ ¤ì(¹ÙÌ¹ÍÑå±¹¥ÍÁ±äô¹½¹ì)ô((¼¼RR MQQ%9LRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR )±ÐÝ­¹AÉô½Éì)Õ¹Ñ¥½¸ÕÁÑAååU$ ¤ì(½¹ÍÐØõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÌµÁ¤¹Ù±Õì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÌµÁµÕÍÑ½´¤¹ÍÑå±¹¥ÍÁ±äõØôôôÕÍÑ½´ü±½¬è¹½¹ì)ô)Õ¹Ñ¥½¸Á¥­]­¹¡Ø¤ì(Ý­¹AÉõØì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% Áµ½É¤¹±ÍÍ1¥ÍÐ¹Ñ½± ½¸±Øôôô½É¤ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÁµÑÈ¤¹±ÍÍ1¥ÍÐ¹Ñ½± ½¸±ØôôôÑÈ¤ì)ô)Õ¹Ñ¥½¸ÍÙ	Í¥ ¤ì(½¹ÍÐÌõÌ ¤°Í°õÁÉÍ%¹Ð¡½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÌµÍ°¤¹Ù±Õ¥ññÌ¹ÍÑÑ¥¹Ì¹Í±Éäì(½¹ÍÐÁõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÌµÁ¤¹Ù±Õì(½¹ÍÐÁõÁôôôÕÍÑ½´ýÁÉÍ%¹Ð¡½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÌµÁµä¤¹Ù±Õ¥ñðÈÜé¹Õ±°ì(Ì¹ÍÑÑ¥¹Ìõì¸¸¹Ì¹ÍÑÑ¥¹Ì°Í±ÉäéÍ°°ÁåäéÁ°Áåå
-ÕÍÑ½´éÁ°Áåå]­¹éÝ­¹AÉôì(ÍÌ¡Ì¤ì±ÉÐ þw¶c_û_|¤ì)ô()Õ¹Ñ¥½¸É¹ÉMÑÑ¥¹Ì ¤ì(½¹ÍÐÌõÌ ¤ì(¼¼Q¡µÑ½±Ì(½¹ÍÐÉ¬õÌ¹ÍÑÑ¥¹Ì¹Ñ¡µôôôÉ¬ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÌµÉ¬µÑ½±¤¹±ÍÍ1¥ÍÐ¹Ñ½± ½¸±É¬¤ì(¼¼¹Ð(½Õµ¹Ð¹ÅÕÉåM±Ñ½É±° mÑµt¤¹½É ¡°ôù°¹±ÍÍ1¥ÍÐ¹Ñ½± ½¸±°¹ÑÍÐ¹ôôõÌ¹ÍÑÑ¥¹Ì¹¹Ð¤¤ì(¼¼Aåä(½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÌµÍ°¤¹Ù±ÕõÌ¹ÍÑÑ¥¹Ì¹Í±Éåñðì(½¹ÍÐÁõÌ¹ÍÑÑ¥¹Ì¹ÁååñðÈÜì(½¹ÍÐÍ°õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÌµÁ¤ì(Í°¹Ù±Õõl±ÍÐ°¥ÉÍÐ°Ô°ÄÀ°ÄÔ°ÈÀ°ÈÔ°ÈÜ°ÕÍÑ½´t¹¥¹±ÕÌ¡Á¤ýÁèÕÍÑ½´ì(¥¡ÁôôôÕÍÑ½´¤ì½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÌµÁµÕÍÑ½´¤¹ÍÑå±¹¥ÍÁ±äô±½¬ì½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÌµÁµä¤¹Ù±ÕõÌ¹ÍÑÑ¥¹Ì¹Áåå
-ÕÍÑ½µñðìô(Ý­¹AÉõÌ¹ÍÑÑ¥¹Ì¹Áåå]­¹ñð½ÉìÁ¥­]­¹¡Ý­¹AÉ¤ì(¼¼9½Ñ¥¥Ñ¥½¹Ì(½¹ÍÐ¹½Ñ¥=¸õÌ¹ÍÑÑ¥¹Ì¹¹½Ñ¥¥Ñ¥½¹Ì9½Ñ¥¥Ñ¥½¸¹ÁÉµ¥ÍÍ¥½¸ôôôÉ¹Ñì(½¹ÍÐ¹Ðõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% Ìµ¹½Ñ¥µÑ½±¤ì¥¡¹Ð¤¹Ð¹±ÍÍ1¥ÍÐ¹Ñ½± ½¸±¹½Ñ¥=¸¤ì(½¹ÍÐ¹Ìõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% Ìµ¹½Ñ¥µÍÑÑÕÌ¤ì(¥¡¹Ì¤ì(¥  9½Ñ¥¥Ñ¥½¸¥¸Ý¥¹½Ü¤¤¹Ì¹ÑáÑ
-½¹Ñ¹ÐôO»[§
-
-Û¿¦v{¾ûþpì(±Í¥¡9½Ñ¥¥Ñ¥½¸¹ÁÉµ¥ÍÍ¥½¸ôôô¹¥¤¹Ì¹ÑáÑ
-½¹Ñ¹Ðôj¾â<[§
-
-Û¦k~3[·
-¿W
-3ûdì(±Í¥¡¹½Ñ¥=¸¤¹Ì¹ÑáÑ
-½¹Ñ¹ÐõrL¾;^íÌ¹ÍÑÑ¥¹Ì¹¹½Ñ¥Q¥µñðÈÄèÀÀ÷¯¦k~_ûeì(±Í¹Ì¹ÑáÑ
-½¹Ñ¹Ðôì(ô(½¹ÍÐÑÈõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% Ìµ¹½Ñ¥µÑ¥µµÉ½Ü¤ì¥¡ÑÈ¤ÑÈ¹ÍÑå±¹¥ÍÁ±äõ¹½Ñ¥=¸ü±½¬è¹½¹ì(½¹ÍÐÑ¤õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% Ìµ¹½Ñ¥µÑ¥µ¤ì¥¡Ñ¤¤Ñ¤¹Ù±ÕõÌ¹ÍÑÑ¥¹Ì¹¹½Ñ¥Q¥µñðÈÄèÀÀì(¼¼¹ÐÁÉÙ¥Ü(½¹ÍÐõÌ¹ÍÑÑ¥¹Ì¹¹ÑñðÜÜÔØì(½¹ÍÐÁÈõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% µÁÉÙ¥Ü¤ì¥¡ÁÈ¤ÁÈ¹ÍÑå±¹­É½Õ¹õì(½¹ÍÐ¡õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% µ¡à¤ì¥¡¡¤¡¹ÑáÑ
-½¹Ñ¹Ðõì(¼¼	­ÕÀ¥¹¼(½¹ÍÐ¤õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% Ìµ­ÕÀµ¥¹¼¤ì(¥¡¤¤ì(¥¡Ì¹}áÁ½ÉÑÐ¤ì(½¹ÍÐåÌõ5Ñ ¹±½½È ¡Ñ¹¹½Ü ¤µ¹ÜÑ¡Ì¹}áÁ½ÉÑÐ¤¤¼àØÐÀÀÀÀÀ¤ì(¤¹ÑáÑ
-½¹Ñ¹ÐõåÌôôôÀürLî+^C
-¿
-_â#üérÖC
-¿
-_¾òhíåÍ÷^&5ì(¤¹ÍÑå±¹½±½ÈõåÌøôÜüÙÈ ´µÝ¸¤èÙÈ ´µ½¬¤ì(ô±Íì¤¹ÑáÑ
-½¹Ñ¹Ðôr«C
-¿
-\ì¤¹ÍÑå±¹½±½ÈôÙÈ ´µÝ¸¤ìô(ô(¼¼
-Ñ½É¥Ì(É¹ÉMÑÑ¥¹Í
-ÑÌ¡Ì¤ì(¼¼½±Ì(É¹ÉMÑÑ¥¹Í½±Ì¡Ì¤ì)ô()Õ¹Ñ¥½¸É¹ÉMÑÑ¥¹Í
-ÑÌ¡Ì¤ì(½¹ÍÐ°õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÌµÑÌ¤ì(°¹¥¹¹É!Q50õ=©Ð¹¹ÑÉ¥Ì¡Ì¹ÑÌ¤¹µÀ ¡m±t¤ôù(ñ¥ØÍÑå±ô½ÉÈèÅÁàÍ½±¥ÙÈ ´µ¤í½ÉÈµÉ¥ÕÌéÙÈ ´µÈ¤íÁ¥¹èÄÉÁàíµÉ¥¸µ½ÑÑ½´èáÁàì¥ôÉ´í
-ML¹ÍÁ¡¥ôø(ñ¥Ø±ÍÌôÍø(ñ¥Ø±ÍÌôÉ½ÜÍÑå±ôÀèáÁàí±àèÄìø(ñÍÁ¸±ÍÌô½ÐÍÑå±ô­É½Õ¹èí¹½±½ÉôíÝ¥Ñ èÄÑÁàí¡¥¡ÐèÄÑÁàíÕÉÍ½ÈéÁ½¥¹ÑÈí±àµÍ¡É¥¹¬èÀì(½¹±¥¬ôÍ¡½Ý
-½±½ÉA¥­È¡Õ¹Ñ¥½¸¡½°¥íÍÑ
-Ñ
-½±½È íô±½°¤íô°í¹½±½Éô°Ñ¡¥Ì¤øð½ÍÁ¸ø(ñÍÁ¸ÍÑå±ô½¹ÐµÝ¥¡ÐèÔÀÀíÕÉÍ½ÈéÁ½¥¹ÑÈì½¹±¥¬ôÑ½±
-Ñ¥Ð íô¤øíôð½ÍÁ¸ø(ð½¥Øø(ñ¥Ø±ÍÌôÉ½ÜÍÑå±ôÀèÑÁàìø(ñÕÑÑ½¸±ÍÌôÑ¸Ñ¸µÍ´Ñ¸µÍÑå±ôÁ¥¹èÑÁàáÁàì½¹±¥¬ô©ÕÍÑ
-ÑµÐ íô°´ÄÀÀÀ¤û"Hð½ÕÑÑ½¸ø(ñÍÁ¸ÍÑå±ô½¹ÐµÍ¥éèÄÑÁàí½¹ÐµÝ¥¡ÐèØÀÀíµ¥¸µÝ¥Ñ èÜÁÁàíÑáÐµ±¥¸é¹ÑÈì¥ô¤µ¥ÍÀ´íôû
-í¹µ½Õ¹Ð¹Ñ½1½±MÑÉ¥¹ ¥ôð½ÍÁ¸ø(ñÕÑÑ½¸±ÍÌôÑ¸Ñ¸µÍ´Ñ¸µÍÑå±ôÁ¥¹èÑÁàáÁàì½¹±¥¬ô©ÕÍÑ
-ÑµÐ íô°ÄÀÀÀ¤û¾ò,ð½ÕÑÑ½¸ø(ñÕÑÑ½¸±ÍÌôÑ¸Ñ¸µÍ´Ñ¸µÍÑå±ôÁ¥¹èÑÁàáÁàí½¹ÐµÍ¥éèÄÉÁàíµÉ¥¸µ±ÐèÑÁàì½¹±¥¬ô±Ñ
-Ð íô¤û\ð½ÕÑÑ½¸ø(ð½¥Øø(ð½¥Øø(ñ¥Ø¥ô¥Ð´í
-ML¹ÍÁ¡¥ôÍÑå±ô¥ÍÁ±äé¹½¹íµÉ¥¸µÑ½ÀèÄÁÁàìø(ñ¥Ø±ÍÌô±°ûê#º_¦7¾ò#nÓ:*o¾ò$ð½¥Øø(ñ¥¹ÁÕÐÑåÁô¹ÕµÈ¥ô¤´íôÙ±Õôí¹µ½Õ¹ÑôÍÑå±ôµÉ¥¸µ½ÑÑ½´èÄÁÁàì½¹¡¹ôÍÙ
-Ñµ½Õ¹Ð íô¤ø(ñ¥Ø±ÍÌô±°û
-×[
-¯
-Ó¨ð½¥Øø(ñ¥Ø¥ôÍÕÌ´í
-ML¹ÍÁ¡¥ôÍÑå±ô¥ÍÁ±äé±àí±àµÝÉÀéÝÉÀíÀèÕÁàíµÉ¥¸µ½ÑÑ½´èáÁàìø(ì¡¹ÍÕÍññmt¤¹µÀ¡ÍÕôùñÍÁ¸±ÍÌôÑøíÍÕôñÕÑÑ½¸½¹±¥¬ôÉµ½ÙMÕ íô°íÍÕô¤ÍÑå±ôµÉ¥¸µ±ÐèÑÁàí­É½Õ¹é¹½¹í½ÉÈé¹½¹íÕÉÍ½ÈéÁ½¥¹ÑÈí½±½ÈéÙÈ ´µÐÈ¤í½¹ÐµÍ¥éèÄÉÁàìû\ð½ÕÑÑ½¸øð½ÍÁ¸ù¤¹©½¥¸ ¥ô(ð½¥Øø(ñ¥Ø±ÍÌôÉ½ÜÍÑå±ôÀèÙÁàìø(ñ¥¹ÁÕÐÑåÁôÑáÐ¥ôÍÕ´íôÁ±¡½±Èô
-×[
-¯
-Ó«B4ÍÑå±ô±àèÄí½¹ÐµÍ¥éèÄÍÁàíÁ¥¹èÙÁàÄÁÁàìø(ñÕÑÑ½¸±ÍÌôÑ¸Ñ¸µÍ´½¹±¥¬ôMÕ íô¤û¢þ÷*ð½ÕÑÑ½¸ø(ð½¥Øø(ð½¥Øø(ð½¥Øù¤¹©½¥¸ ¤¬(ñ¥Ø±ÍÌô¥àµÍ¥ô¹ÜµÐµ½É´ÍÑå±ô¥ÍÁ±äé¹½¹ìø(ñ¥Ø±ÍÌô±°û
-¯
-Ó«B4ð½¥Øø(ñ¥¹ÁÕÐÑåÁôÑáÐ¥ô¹ÜµÐµ¹µÁ±¡½±Èôú/¾òkê¦jo¢ÊìÍÑå±ôµÉ¥¸µ½ÑÑ½´èÙÁàìø(ñ¥Ø±ÍÌô±°ûê#º_¦4ð½¥Øø(ñ¥¹ÁÕÐÑåÁô¹ÕµÈ¥ô¹ÜµÐµµÐÁ±¡½±ÈôÔÀÀÀÍÑå±ôµÉ¥¸µ½ÑÑ½´èÙÁàìø(ñÕÑÑ½¸±ÍÌôÑ¸Ñ¸µÀÑ¸µÕ±°Ñ¸µÍ´½¹±¥¬ô½¹¥Éµ
-Ð ¤û¢þ÷*g
-,ð½ÕÑÑ½¸ø(ñÕÑÑ½¸±ÍÌôÑ¸Ñ¸µÑ¸µÕ±°Ñ¸µÍ´½¹±¥¬ô½Õµ¹Ð¹Ñ±µ¹Ñ	å% ¹ÜµÐµ½É´¤¹ÍÑå±¹¥ÍÁ±äô¹½¹ÍÑå±ôµÉ¥¸µÑ½ÀèÑÁàìû
-·Ï
-ï¬ð½ÕÑÑ½¸ø(ð½¥Øùì)ô)Õ¹Ñ¥½¸Ñ½±
-Ñ¥Ð¡¤ì(½¹ÍÐ°õ½Õµ¹Ð¹Ñ±µ¹Ñ	å%¡¥Ð´í
-ML¹ÍÁ¡¥õ¤ì(°¹ÍÑå±¹¥ÍÁ±äõ°¹ÍÑå±¹¥ÍÁ±äôôô¹½¹ü±½¬è¹½¹ì(¼¼MÙµ½Õ¹Ð½¸±½Í(¥¡°¹ÍÑå±¹¥ÍÁ±äôôô¹½¹¤ÍÙ
-Ñµ½Õ¹Ð¡¤ì)ô)Õ¹Ñ¥½¸ÍÙ
-Ñµ½Õ¹Ð¡¤ì(½¹ÍÐÌõÌ ¤°¥¹Àõ½Õµ¹Ð¹Ñ±µ¹Ñ	å%¡¤´íõ¤ì(¥¡¥¹ÀÌ¹ÑÍmt¤ìÌ¹ÑÍmt¹µ½Õ¹ÐõÁÉÍ%¹Ð¡¥¹À¹Ù±Õ¥ñðÀìÍÌ¡Ì¤ìô)ô)Õ¹Ñ¥½¸ÍÑ
-Ñ
-½±½È¡°½±½È¤ì(½¹ÍÐÌõÌ ¤ì¥ Ì¹ÑÍmt¤ÉÑÕÉ¸ì(Ì¹ÑÍmt¹½±½Èõ½±½ÈìÍÌ¡Ì¤ì(½¹ÍÐ½Ðõ½Õµ¹Ð¹ÅÕÉåM±Ñ½È¡É´í
-ML¹ÍÁ¡¥ô¹½Ñ¤ì¥¡½Ð¤½Ð¹ÍÑå±¹­É½Õ¹õ½±½Èì)ô)Õ¹Ñ¥½¸©ÕÍÑ
-ÑµÐ¡°±Ñ¤ì(½¹ÍÐÌõÌ ¤ì¥ Ì¹ÑÍmt¤ÉÑÕÉ¸ì(Ì¹ÑÍmt¹µ½Õ¹Ðõ5Ñ ¹µà À°¡Ì¹ÑÍmt¹µ½Õ¹ÑñðÀ¤­±Ñ¤ìÍÌ¡Ì¤ì(½¹ÍÐ¥ÍÀõ½Õµ¹Ð¹Ñ±µ¹Ñ	å%¡¤µ¥ÍÀ´íõ¤ì¥¡¥ÍÀ¤¥ÍÀ¹ÑáÑ
-½¹Ñ¹Ðõ
-íÌ¹ÑÍmt¹µ½Õ¹Ð¹Ñ½1½±MÑÉ¥¹ ¥õì(½¹ÍÐ¥¹Àõ½Õµ¹Ð¹Ñ±µ¹Ñ	å%¡¤´íõ¤ì¥¡¥¹À¤¥¹À¹Ù±ÕõÌ¹ÑÍmt¹µ½Õ¹Ðì)ô)Õ¹Ñ¥½¸MÕ¡¤ì(½¹ÍÐ¥¹Àõ½Õµ¹Ð¹Ñ±µ¹Ñ	å%¡ÍÕ´íõ¤ì¥ ¥¹À¤ÉÑÕÉ¸ì(½¹ÍÐÙ°õ¥¹À¹Ù±Õ¹ÑÉ¥´ ¤ì¥ Ù°¤ÉÑÕÉ¸ì(½¹ÍÐÌõÌ ¤ì¥ Ì¹ÑÍmt¤ÉÑÕÉ¸ì(¥ Ì¹ÑÍmt¹ÍÕÌ¹¥¹±ÕÌ¡Ù°¤¤Ì¹ÑÍmt¹ÍÕÌ¹ÁÕÍ ¡Ù°¤ì(ÍÌ¡Ì¤ì¥¹À¹Ù±Õôì(½¹ÍÐÍÕ°õ½Õµ¹Ð¹Ñ±µ¹Ñ	å%¡ÍÕÌ´í
-ML¹ÍÁ¡¥õ¤ì(¥¡ÍÕ°¤ÍÕ°¹¥¹¹É!Q50õÌ¹ÑÍmt¹ÍÕÌ¹µÀ¡ÍÕôùñÍÁ¸±ÍÌôÑøíÍÕôñÕÑÑ½¸½¹±¥¬ôÉµ½ÙMÕ íô°íÍÕô¤ÍÑå±ôµÉ¥¸µ±ÐèÑÁàí­É½Õ¹é¹½¹í½ÉÈé¹½¹íÕÉÍ½ÈéÁ½¥¹ÑÈí½±½ÈéÙÈ ´µÐÈ¤í½¹ÐµÍ¥éèÄÉÁàìû\ð½ÕÑÑ½¸øð½ÍÁ¸ù¤¹©½¥¸ ¤ì)ô)Õ¹Ñ¥½¸Éµ½ÙMÕ¡°ÍÕ¤ì(½¹ÍÐÌõÌ ¤ì¥ Ì¹ÑÍmt¤ÉÑÕÉ¸ì(Ì¹ÑÍmt¹ÍÕÌõÌ¹ÑÍmt¹ÍÕÌ¹¥±ÑÈ¡àôùàôõÍÕ¤ìÍÌ¡Ì¤ì(½¹ÍÐÍÕ°õ½Õµ¹Ð¹Ñ±µ¹Ñ	å%¡ÍÕÌ´í
-ML¹ÍÁ¡¥õ¤ì(¥¡ÍÕ°¤ÍÕ°¹¥¹¹É!Q50õÌ¹ÑÍmt¹ÍÕÌ¹µÀ¡ÍØôùñÍÁ¸±ÍÌôÑøíÍÙôñÕÑÑ½¸½¹±¥¬ôÉµ½ÙMÕ íô°íÍÙô¤ÍÑå±ôµÉ¥¸µ±ÐèÑÁàí­É½Õ¹é¹½¹í½ÉÈé¹½¹íÕÉÍ½ÈéÁ½¥¹ÑÈí½±½ÈéÙÈ ´µÐÈ¤í½¹ÐµÍ¥éèÄÉÁàìû\ð½ÕÑÑ½¸øð½ÍÁ¸ù¤¹©½¥¸ ¤ì)ô)Õ¹Ñ¥½¸±Ñ
-Ð¡¤ì(¥ ½¹¥É´¡0í÷7
-K&+¦f_ûg/¾ò}¤¤ÉÑÕÉ¸ì(½¹ÍÐÌõÌ ¤ì±ÑÌ¹ÑÍmtìÍÌ¡Ì¤ìÉ¹ÉMÑÑ¥¹Í
-ÑÌ¡Ì¤ì)ô)Õ¹Ñ¥½¸
-Ð ¤ì(½¹ÍÐ½É´õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ¹ÜµÐµ½É´¤ì(¥¡½É´¤ì½É´¹ÍÑå±¹¥ÍÁ±äõ½É´¹ÍÑå±¹¥ÍÁ±äôôô¹½¹ü±½¬è¹½¹ìô)ô)Õ¹Ñ¥½¸½¹¥Éµ
-Ð ¤ì(½¹ÍÐ¹µô¡½Õµ¹Ð¹Ñ±µ¹Ñ	å% ¹ÜµÐµ¹µ¤ü¹Ù±Õñð¤¹ÑÉ¥´ ¤ì(¥ ¹µ¤ì±ÉÐ 
-¯
-Ó«B7
-K*o_?W¤ìÉÑÕÉ¸ìô(½¹ÍÐµÐõÁÉÍ%¹Ð¡½Õµ¹Ð¹Ñ±µ¹Ñ	å% ¹ÜµÐµµÐ¤ü¹Ù±Õ¥ñðÌÀÀÀì(½¹ÍÐÌõÌ ¤ì(¥¡Ì¹ÑÍm¹µt¤ì±ÉÐ B3cB7&7»
-¯
-Ó«3^¯
-+ûd¤ìÉÑÕÉ¸ìô(Ì¹ÑÍm¹µtõìµ½Õ¹ÐéµÐ°½±½ÈèÜÜÔØ°ÍÕÌémtôì(ÍÌ¡Ì¤ìÉ¹ÉMÑÑ¥¹Í
-ÑÌ¡Ì¤ì)ô)Õ¹Ñ¥½¸ÍÙ
-ÑÍ±° ¤ì(½¹ÍÐÌõÌ ¤ì(½È¡½¹ÍÐ½=©Ð¹­åÌ¡Ì¹ÑÌ¤¤ì(½¹ÍÐ¥¹Àõ½Õµ¹Ð¹Ñ±µ¹Ñ	å%¡¤´íõ¤ì(¥¡¥¹À¤Ì¹ÑÍmt¹µ½Õ¹ÐõÁÉÍ%¹Ð¡¥¹À¹Ù±Õ¥ñðÀì(ô(ÍÌ¡Ì¤ì±ÉÐ ê#º_
-Kþw¶c_û_|¤ì)ô()Õ¹Ñ¥½¸É¹ÉMÑÑ¥¹Í½±Ì¡Ì¤ì(½¹ÍÐ°õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% Ìµ½±Ì¤ì(°¹¥¹¹É!Q50õÌ¹½±Ì¹µÀ¡ôù(ñ¥ØÍÑå±ô½ÉÈèÅÁàÍ½±¥ÙÈ ´µ¤í½ÉÈµÉ¥ÕÌéÙÈ ´µÈ¤íÁ¥¹èÄÉÁàíµÉ¥¸µ½ÑÑ½´èáÁàì¥ôÉ´í¹¥ôø(ñ¥Ø±ÍÌôÍÍÑå±ôµÉ¥¸µ½ÑÑ½´èÄÁÁàìø(ñ¥Ø±ÍÌôÉ½ÜÍÑå±ôÀèÝÁàìø(ñÍÁ¸±ÍÌô½ÐÍÑå±ô­É½Õ¹èí¹½±½ÉôíÝ¥Ñ èÄÑÁàí¡¥¡ÐèÄÑÁàíÕÉÍ½ÈéÁ½¥¹ÑÈì½¹±¥¬ôÍ¡½Ý
-½±½ÉA¥­È¡Õ¹Ñ¥½¸¡¥íÍÑ½±
-½±½È í¹¥ô±¤íô°í¹½±½Éô°Ñ¡¥Ì¤øð½ÍÁ¸ø(ñøí¹¹µôð½ø(ð½¥Øø(ñÕÑÑ½¸±ÍÌôÑ¸Ñ¸µÍ´Ñ¸µÍÑå±ôÁ¥¹èÑÁàáÁàí½¹ÐµÍ¥éèÄÉÁàì½¹±¥¬ô±Ñ½° í¹¥ô¤û\ð½ÕÑÑ½¸ø(ð½¥Øø(ñ¥Ø±ÍÌôÉ½ÜÍÑå±ôÀèáÁàíµÉ¥¸µ½ÑÑ½´èáÁàìø(ñ¥ØÍÑå±ô±àèÄìøñ¥Ø±ÍÌô±°ûn»¢gB4ð½¥Øøñ¥¹ÁÕÐÑåÁôÑáÐ¥ô¸´í¹¥ôÙ±Õôí¹¹µôÍÑå±ô½¹ÐµÍ¥éèÄÍÁàíÁ¥¹èÙÁàÄÁÁàìøð½¥Øø(ð½¥Øø(ñ¥Ø±ÍÌôÉ½ÜÍÑå±ôÀèáÁàíµÉ¥¸µ½ÑÑ½´èáÁàìø(ñ¥ØÍÑå±ô±àèÄìøñ¥Ø±ÍÌô±°ûn»¢g¦G¦4ð½¥Øøñ¥¹ÁÕÐÑåÁô¹ÕµÈ¥ôÐ´í¹¥ôÙ±Õôí¹ÑÉÑôÍÑå±ô½¹ÐµÍ¥éèÄÍÁàíÁ¥¹èÙÁàÄÁÁàìøð½¥Øø(ñ¥ØÍÑå±ô±àèÄìøñ¥Ø±ÍÌô±°û>ûr£»¢Ê¿¦Dð½¥Øøñ¥¹ÁÕÐÑåÁô¹ÕµÈ¥ô´í¹¥ôÙ±Õôí¹ÕÉÉ¹ÑôÍÑå±ô½¹ÐµÍ¥éèÄÍÁàíÁ¥¹èÙÁàÄÁÁàìøð½¥Øø(ð½¥Øø(ñÕÑÑ½¸±ÍÌôÑ¸Ñ¸µÀÑ¸µÕ±°Ñ¸µÍ´½¹±¥¬ôÍÙ½° í¹¥ô¤ûO»n»¢g
-Kþw¶`ð½ÕÑÑ½¸ø(ð½¥Øù¤¹©½¥¸ ¥ñðñ¥Ø±ÍÌô¡¥¹Ðûn»¢g¿û
-+ûo
-Lð½¥Øøì)ô)Õ¹Ñ¥½¸½° ¤ì(½¹ÍÐÌõÌ ¤ì(½¹ÍÐ¥ô­Ñ¹¹½Ü ¤ì(Ì¹½±Ì¹ÁÕÍ ¡ì¥°¹µèZÃ_n»¢d°ÑÉÐèÄÀÀÀÀÀÀ°ÕÉÉ¹ÐèÀ°½±½ÈèÑÝ
-ô¤ì(ÍÌ¡Ì¤ìÉ¹ÉMÑÑ¥¹Í½±Ì¡Ì¤ì)ô)Õ¹Ñ¥½¸ÍÙ½°¡¥¤ì(½¹ÍÐÌõÌ ¤°õÌ¹½±Ì¹¥¹¡àôùà¹¥ôôõ¥¤ì¥ ¤ÉÑÕÉ¸ì(¹¹µõ½Õµ¹Ð¹Ñ±µ¹Ñ	å%¡¸´í¥õ¤ü¹Ù±Õññ¹¹µì(¹ÑÉÐõÁÉÍ%¹Ð¡½Õµ¹Ð¹Ñ±µ¹Ñ	å%¡Ð´í¥õ¤ü¹Ù±Õ¥ññ¹ÑÉÐì(¹ÕÉÉ¹ÐõÁÉÍ%¹Ð¡½Õµ¹Ð¹Ñ±µ¹Ñ	å%¡´í¥õ¤ü¹Ù±Õ¥ñðÀì(ÍÌ¡Ì¤ìÉ¹É!½µ ¤ì±ÉÐ n»¢g
-Kþw¶c_û_|¤ì)ô)Õ¹Ñ¥½¸ÍÑ½±
-½±½È¡¥°½±½È¤ì(½¹ÍÐÌõÌ ¤°õÌ¹½±Ì¹¥¹¡àôùà¹¥ôôõ¥¤ì¥ ¤ÉÑÕÉ¸ì(¹½±½Èõ½±½ÈìÍÌ¡Ì¤ì(½¹ÍÐ½Ðõ½Õµ¹Ð¹ÅÕÉåM±Ñ½È¡É´í¥ô¹½Ñ¤ì¥¡½Ð¤½Ð¹ÍÑå±¹­É½Õ¹õ½±½Èì)ô)Õ¹Ñ¥½¸±Ñ½°¡¥¤ì(¥ ½¹¥É´ O»n»¢g
-K&+¦f_ûg/¾ò|¤¤ÉÑÕÉ¸ì(½¹ÍÐÌõÌ ¤ìÌ¹½±ÌõÌ¹½±Ì¹¥±ÑÈ¡ôù¹¥ôõ¥¤ìÍÌ¡Ì¤ìÉ¹ÉMÑÑ¥¹Í½±Ì¡Ì¤ì)ô()Õ¹Ñ¥½¸ÍÑ¹Ð¡¡à¤ì(½¹ÍÐÌõÌ ¤ìÌ¹ÍÑÑ¥¹Ì¹¹Ðõ¡àìÍÌ¡Ì¤ì(ÁÁ±åQ¡µ¡Ì¤ì(½¹ÍÐÁÈõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% µÁÉÙ¥Ü¤ì¥¡ÁÈ¤ÁÈ¹ÍÑå±¹­É½Õ¹õ¡àì(½¹ÍÐ¡õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% µ¡à¤ì¥¡¡¤¡¹ÑáÑ
-½¹Ñ¹Ðõ¡àì)ô)Õ¹Ñ¥½¸Ñ½±Q¡µ ¤ì(½¹ÍÐÌõÌ ¤°É¬õÌ¹ÍÑÑ¥¹Ì¹Ñ¡µôôôÉ¬ì(Ì¹ÍÑÑ¥¹Ì¹Ñ¡µõÉ¬ü±¥¡ÐèÉ¬ìÍÌ¡Ì¤ì(ÁÁ±åQ¡µ¡Ì¤ì)ô)Õ¹Ñ¥½¸ÁÁ±åQ¡µ¡Ì¤ì(¥ Ì¤ÌõÌ ¤ì(½¹ÍÐÉ¬õÌ¹ÍÑÑ¥¹Ì¹Ñ¡µôôôÉ¬ì(½Õµ¹Ð¹½Õµ¹Ñ±µ¹Ð¹ÍÑÑÑÉ¥ÕÑ ÑµÑ¡µ±É¬üÉ¬è±¥¡Ð¤ì(½¹ÍÐõÌ¹ÍÑÑ¥¹Ì¹¹ÑñðÜÜÔØì(½Õµ¹Ð¹½Õµ¹Ñ±µ¹Ð¹Éµ½ÙÑÑÉ¥ÕÑ Ñµ¹Ð¤ì(½¹ÍÐÈõÁÉÍ%¹Ð¡¹Í±¥ Ä°Ì¤°ÄØ¥ñðÈÄà°õÁÉÍ%¹Ð¡¹Í±¥ Ì°Ô¤°ÄØ¥ñðÄÄä°õÁÉÍ%¹Ð¡¹Í±¥ Ô°Ü¤°ÄØ¥ñðàØì(½Õµ¹Ð¹½Õµ¹Ñ±µ¹Ð¹ÍÑå±¹ÍÑAÉ½ÁÉÑä ´µ±¤ì(½Õµ¹Ð¹½Õµ¹Ñ±µ¹Ð¹ÍÑå±¹ÍÑAÉ½ÁÉÑä ´µÌ±É íÉô°íô°íô°¸ÄÈ¥¤ì(½¹ÍÐÑõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% Ñ¡µµÑ¸¤ì¥¡Ñ¤Ñ¹ÑáÑ
-½¹Ñ¹ÐõÉ¬üb¾â<èÂ~2dì(½¹ÍÐÐõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÌµÉ¬µÑ½±¤ì¥¡Ð¤Ð¹±ÍÍ1¥ÍÐ¹Ñ½± ½¸±É¬¤ì)ô((¼¼RR 
-=1=HA%
--HRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR )±ÐÁ
-õ¹Õ±°ì)Õ¹Ñ¥½¸Õ¥±
-½±½ÉÉ¥ ¤ì(½¹ÍÐÉ¥õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÀµÉ¥¤ì¥ É¥ññÉ¥¹¡¥±É¸¹±¹Ñ ¤ÉÑÕÉ¸ì(
-=1=IL¹½É ¡ôùì(½¹ÍÐõ½Õµ¹Ð¹ÉÑ±µ¹Ð ÕÑÑ½¸¤ì(¹±ÍÍ9µôÀµÍÜì¹ÍÑå±¹­É½Õ¹õì¹ÑÍÐ¹½±½Èõì(¹Ñ¥Ñ±õì(¹½¹±¥¬ô ¤ôùÍ±Ñ
-½±½ÉA¥­È¡¤ì(É¥¹ÁÁ¹
-¡¥±¡¤ì(ô¤ì)ô)Õ¹Ñ¥½¸Í¡½Ý
-½±½ÉA¥­È¡°ÕÉÉ¹Ñ
-½±½È°¹¡½É°¤ì(Õ¥±
-½±½ÉÉ¥ ¤ì(Á
-õì(½¹ÍÐµ½°õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% Àµµ½°¤ì(µ½°¹ÍÑå±¹¥ÍÁ±äô±½¬ì(½¹ÍÐ¤õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ÀµÕÍÑ½´¤ì¥¡¤¤¤¹Ù±ÕõÕÉÉ¹Ñ
-½±½ÉñðÜÜÔØì(½¹ÍÐ õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% Àµ¡à¤ì¥¡ ¤ ¹ÑáÑ
-½¹Ñ¹ÐõÕÉÉ¹Ñ
-½±½Éñðì(µ½°¹ÅÕÉåM±Ñ½É±° ¹ÀµÍÜ¤¹½É  ¡ÍÜ¤ôùÍÜ¹±ÍÍ1¥ÍÐ¹Ñ½± ½¸±ÍÜ¹ÑÍÐ¹½±½ÈôôõÕÉÉ¹Ñ
-½±½È¤¤ì)ô)Õ¹Ñ¥½¸Í±Ñ
-½±½ÉA¥­È¡½±½È¤ì(½¹ÍÐ õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% Àµ¡à¤ì¥¡ ¤ ¹ÑáÑ
-½¹Ñ¹Ðõ½±½Èì(½Õµ¹Ð¹ÅÕÉåM±Ñ½É±° ¹ÀµÍÜ¤¹½É ¡ÍÜôùÍÜ¹±ÍÍ1¥ÍÐ¹Ñ½± ½¸±ÍÜ¹ÑÍÐ¹½±½Èôôõ½±½È¤¤ì(¥¡Á
-¤ìÁ
-¡½±½È¤ìô(±½Í
-½±½ÉA¥­È ¤ì)ô)Õ¹Ñ¥½¸±½Í
-½±½ÉA¥­È ¤ì(½Õµ¹Ð¹Ñ±µ¹Ñ	å% Àµµ½°¤¹ÍÑå±¹¥ÍÁ±äô¹½¹ì(Á
-õ¹Õ±°ì)ô)Õ¹Ñ¥½¸áÁ½ÉÑÑ ¤ì(½¹ÍÐÌõÌ ¤ì(Ì¹}áÁ½ÉÑÐõ¹ÜÑ ¤¹Ñ½%M=MÑÉ¥¹ ¤ì(ÍÌ¡Ì¤ì(½¹ÍÐõ¹Ü	±½¡m)M=8¹ÍÑÉ¥¹¥ä¡Ì±¹Õ±°°È¥t±íÑåÁèÁÁ±¥Ñ¥½¸½©Í½¸ô¤ì(½¹ÍÐõ½Õµ¹Ð¹ÉÑ±µ¹Ð ¤ì(¹½Ý¹±½õµ½¹åÍ}­ÕÁ|í¹ÜÑ ¤¹Ñ½%M=MÑÉ¥¹ ¤¹Í±¥ À°ÄÀ¥ô¹©Í½¹ì(¹¡ÉõUI0¹ÉÑ=©ÑUI0¡¤ì¹±¥¬ ¤ì(É¹ÉMÑÑ¥¹Ì ¤ì(É¹É!½µ ¤ì)ô)Õ¹Ñ¥½¸¥µÁ½ÉÑÑ ¤ì(½¹ÍÐ¥¹Àõ½Õµ¹Ð¹ÉÑ±µ¹Ð ¥¹ÁÕÐ¤ì(¥¹À¹ÑåÁô¥±ì¥¹À¹ÁÐô¹©Í½¸ì(¥¹À¹½¹¡¹õôùì(½¹ÍÐ¥±õ¹ÑÉÐ¹¥±ÍlÁtì¥ ¥±¤ÉÑÕÉ¸ì(½¹ÍÐÉÈõ¹Ü¥±IÈ ¤ì(ÉÈ¹½¹±½õØôùì(ÑÉäì(½¹ÍÐÑõ)M=8¹ÁÉÍ¡Ø¹ÑÉÐ¹ÉÍÕ±Ð¤ì(¥ Ñ¹Ñá¹Ì¤Ñ¡É½Ü¹ÜÉÉ½È ¥¹Ù±¥¤ì(¥ ½¹¥É´¡íÑ¹Ñá¹Ì¹±¹Ñ¡÷îÛ»ó
-ÿ
-Kú§_ûg>ûr£»ó
-ÿ¿â+o
-7W
-3ûg	Ï
-#_g+þò}¤¤ÉÑÕÉ¸ì(±½±MÑ½É¹ÍÑ%Ñ´¡-d°)Í=8¹ÍÑÉ¥¹¥ä¡Ñ¤¤ì(±½Ñ¥½¸¹É±½ ¤ì(ôÑ ¡¤ì±ÉÐ C
-¿
-_W
-
-¯3¶_?
-+ûo
-L¤ìô(ôì(ÉÈ¹ÉÍQáÐ¡¥±¤ì(ôì(¥¹À¹±¥¬ ¤ì)ô)Õ¹Ñ¥½¸±É±° ¤ì(½¹ÍÐ½¬Äõ½¹¥É´ j¾â<£ó
-¿
-K&+¦f_ûg/¾ò}q»O»:B7¿>[â+ºcg¤ì(¥ ½¬Ä¤ÉÑÕÉ¸ì(½¹ÍÐ½¬Èõ½¹¥É´ r³öO¯f+¦f_ûg/¾ò}q»¢¶ºj{
-¿
-¯â¢g3gçZ#ûg¤ì(¥¡½¬È¤ì±½±MÑ½É¹Éµ½Ù%Ñ´¡-d¤ì±½Ñ¥½¸¹É±½ ¤ìô)ô((¼¼RR =9	=I%9RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR )Õ¹Ñ¥½¸¥¹¥Ñ=¹½É¥¹ ¤ì(½¹ÍÐÌõÌ ¤ì(½¹ÍÐ½õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ½µ½ÙÉ±ä¤ì(¼¼^¶có
-Ûó¾ò!Ñá¹Ï
-(½Èb;ëj­½¹½Éâ#ÿ¾ò'¿
-ç
-·\(¥¡Ì¹½¹½ÉñðÌ¹Ñá¹Ì¹±¹Ñ øÀ¤ì½¹ÍÑå±¹¥ÍÁ±äô¹½¹ìÉÑÕÉ¸ìô(½¹ÍÑå±¹¥ÍÁ±äô±àì)ô)Õ¹Ñ¥½¸½MÑÀ¡¸¤ì(lÄ°È°Ít¹½É ¡¤ôùì(½¹ÍÐ°õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ½´­¤¤ì(¥¡°¤°¹ÍÑå±¹¥ÍÁ±äõ¤ôôõ¸ü±½¬è¹½¹ì(ô¤ì(¥¡¸ôôôÈ¤ì(½¹ÍÐÌõÌ ¤ì(½¹ÍÐ¥¹Àõ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ½µÍ°¤ì(¥¡¥¹ÀÌ¹ÍÑÑ¥¹Ì¹Í±Éä¤¥¹À¹Ù±ÕõÌ¹ÍÑÑ¥¹Ì¹Í±Éäì(ô(¥¡¸ôôôÌ¤ì(½¹ÍÐÍ°õÁÉÍ%¹Ð¡½Õµ¹Ð¹Ñ±µ¹Ñ	å% ½µÍ°¤ü¹Ù±Õ¤ì(¥¡Í°¤ì½¹ÍÐÌõÌ ¤ìÌ¹ÍÑÑ¥¹Ì¹Í±ÉäõÍ°ìÍÌ¡Ì¤ìô(ô)ô)Õ¹Ñ¥½¸½M­¥À ¤ì(½¹ÍÐÌõÌ ¤ìÌ¹½¹½ÉõÑÉÕìÍÌ¡Ì¤ì(½¹ÍÐ½õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ½µ½ÙÉ±ä¤ì(½¹ÍÑå±¹½Á¥ÑäôÀì(ÍÑQ¥µ½ÕÐ  ¤ôùì½¹ÍÑå±¹¥ÍÁ±äô¹½¹ìô°ÌÀÀ¤ì)ô)Õ¹Ñ¥½¸½¥¹¥Í ¡ÍÐ¤ì(½¹ÍÐÌõÌ ¤ìÌ¹½¹½ÉõÑÉÕìÍÌ¡Ì¤ì(½¹ÍÐ½õ½Õµ¹Ð¹Ñ±µ¹Ñ	å% ½µ½ÙÉ±ä¤ì(½¹ÍÑå±¹½Á¥ÑäôÀì(ÍÑQ¥µ½ÕÐ  ¤ôùì½¹ÍÑå±¹¥ÍÁ±äô¹½¹ì¹Ø¡ÍÐ¤ìô°ÌÀÀ¤ì)ô((¼¼RR 9=Q%%
-Q%=9LRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR )Íå¹Õ¹Ñ¥½¸Ñ½±9½Ñ¥¥Ñ¥½¹Ì ¤ì(½¹ÍÐÌõÌ ¤ì(¥¡Ì¹ÍÑÑ¥¹Ì¹¹½Ñ¥¥Ñ¥½¹Ì¤ì(Ì¹ÍÑÑ¥¹Ì¹¹½Ñ¥¥Ñ¥½¹Ìõ±ÍìÍÌ¡Ì¤ìÉ¹ÉMÑÑ¥¹Ì ¤ìÉÑÕÉ¸ì(ô(¥  9½Ñ¥¥Ñ¥½¸¥¸Ý¥¹½Ü¤¤ì(±ÉÐ O»[§
-
-Û¿¦k~¯¾ûþs_ûo
-L¤ìÉÑÕÉ¸ì(ô(½¹ÍÐÁÉ´õÝ¥Ð9½Ñ¥¥Ñ¥½¸¹ÉÅÕÍÑAÉµ¥ÍÍ¥½¸ ¤ì(¥¡ÁÉ´ôôôÉ¹Ñ¤ì(Ì¹ÍÑÑ¥¹Ì¹¹½Ñ¥¥Ñ¥½¹ÌõÑÉÕìÍÌ¡Ì¤ì(Í¡Õ±Iµ¥¹È ¤ì(É¹ÉMÑÑ¥¹Ì ¤ì(ô±Íì(±ÉÐ ¦k~3¢¢Ç>¿W
-3ûo
-O_	q»[§
-
-Û»¢¢·ºk/
-'¢¢Ç>¿_?W¤ì(ô)ô)±ÐÉµ¥¹ÉQ¥µÈõ¹Õ±°ì)Õ¹Ñ¥½¸Í¡Õ±Iµ¥¹È ¤ì(½¹ÍÐÌõÌ ¤ì(¥ Ì¹ÍÑÑ¥¹Ì¹¹½Ñ¥¥Ñ¥½¹Ìñð9½Ñ¥¥Ñ¥½¸¹ÁÉµ¥ÍÍ¥½¸ôôÉ¹Ñ¤ÉÑÕÉ¸ì(¥¡Éµ¥¹ÉQ¥µÈ¤±ÉQ¥µ½ÕÐ¡Éµ¥¹ÉQ¥µÈ¤ì(½¹ÍÐm¡ ±µµtô¡Ì¹ÍÑÑ¥¹Ì¹¹½Ñ¥Q¥µñðÈÄèÀÀ¤¹ÍÁ±¥Ð è¤¹µÀ¡9ÕµÈ¤ì(½¹ÍÐ¹½Üõ¹ÜÑ ¤°ÑÉÐõ¹ÜÑ ¤ì(ÑÉÐ¹ÍÑ!½ÕÉÌ¡¡ ±µ´°À°À¤ì(¥¡ÑÉÐðõ¹½Ü¤ÑÉÐ¹ÍÑÑ¡ÑÉÐ¹ÑÑ ¤¬Ä¤ì(½¹ÍÐµÌõÑÉÐµ¹½Üì(Éµ¥¹ÉQ¥µÈõÍÑQ¥µ½ÕÐ  ¤ôùì(½¹ÍÐÑ½äõ¹ÜÑ ¤¹Ñ½%M=MÑÉ¥¹ ¤¹Í±¥ À°ÄÀ¤ì(½¹ÍÐÌÈõÌ ¤ì(½¹ÍÐ¡ÍQ½äõÌÈ¹Ñá¹Ì¹Í½µ¡ÐôùÐ¹ÑôôõÑ½ä¤ì(¥ ¡ÍQ½äÌÈ¹ÍÑÑ¥¹Ì¹¹½Ñ¥¥Ñ¥½¹Ì¤ì(¹Ü9½Ñ¥¥Ñ¥½¸ 5½¹äMÂ~2Ä±í½äèî+^»R¿ë
-Kû¢¢c¦2Ë_ûo
-Lð',tag:'daily-reminder'});
+      'コンビニ':    { amount:3000,  color:'#E8720C', subs:[] },
+      '外食・カフェ': { amount:8000,  color:'#EB4336', subs:['ランチ','カフェ','ディナー','テイクアウト'] },
+      '食材・スーパー':{ amount:25000, color:'#2D9B5A', subs:[] },
+      'ガソリン':    { amount:8000,  color:'#787774', subs:[] },
+      '美容・理容':  { amount:4000,  color:'#D94F6B', subs:[] },
+      '医療・薬':    { amount:2000,  color:'#0B6E99', subs:[] },
+      '日用品':      { amount:5000,  color:'#7B52D9', subs:[] },
+      '娯楽':        { amount:3000,  color:'#4F7CFF', subs:['映画','ゲーム','趣味'] },
+      'サブスク':    { amount:5240,  color:'#4D7EBF', subs:[] },
+      'その他':      { amount:3000,  color:'#AFACA7', subs:[] },
+    },
+    goals: [
+      { id:'g1', name:'マイホーム頭金', target:3000000, current:0, color:'#2D9B5A' }
+    ],
+    fixedExpenses: [],
+    settings: {
+      salary:346832, payday:'27', paydayCustom:null,
+      paydayWeekend:'before', theme:'light', accent:'#DA7756', notifications:false, notifTime:'21:00'
+    }
+  };
+}
+function gs() { try { return JSON.parse(localStorage.getItem(KEY)) || dfState(); } catch(e) { return dfState(); } }
+function ss(s) { localStorage.setItem(KEY, JSON.stringify(s)); }
+
+// ── UTILITIES ──────────────────────────────────────
+function categorize(name) {
+  if (!name) return 'その他';
+  const u = name.toUpperCase();
+  for (const [c, kws] of Object.entries(KW)) {
+    for (const k of kws) if (u.includes(k.toUpperCase())) return c;
+  }
+  return 'その他';
+}
+function pDate(v) {
+  if (!v) return null;
+  const s = v.toString().trim();
+  let m;
+  if ((m = s.match(/(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/)))
+    return `${m[1]}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`;
+  if ((m = s.match(/令和(\d+)年\s*(\d+)月\s*(\d+)日/)))
+    return `${2018+parseInt(m[1])}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`;
+  if ((m = s.match(/平成(\d+)年\s*(\d+)月\s*(\d+)日/)))
+    return `${1988+parseInt(m[1])}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`;
+  if ((m = s.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/)))
+    return `${m[3]}-${m[1].padStart(2,'0')}-${m[2].padStart(2,'0')}`;
+  return null;
+}
+function pAmt(v) {
+  if (v == null) return 0;
+  return parseInt(v.toString().replace(/[¥,円\s]/g,'').replace(/[－▲−−]/,'-')) || 0;
+}
+function detectBank(fields) {
+  const h = (fields||[]).map(f=>(f||'').toString()).join(',').toUpperCase();
+  if (h.includes('利用店名') && h.includes('利用金額'))   return 'A';
+  if (h.includes('お支払金額') || h.includes('お預り金額')) return 'B';
+  if (h.includes('入出金') && h.includes('残高'))         return 'C';
+  if (h.includes('利用先') && (h.includes('手数料')||h.includes('ご利用'))) return 'D';
+  if (h.includes('摘要') || h.includes('取引内容'))        return 'E';
+  return 'Z';
+}
+function parseRows(rows, bank) {
+  const res = [];
+  for (const row of rows) {
+    const v = Object.values(row);
+    let date, name, amount, type='expense';
+    if (bank==='A') { date=pDate(v[0]); name=v[1]||''; amount=pAmt(v[4]||v[2]); }
+    else if (bank==='B') {
+      date=pDate(v[0]); name=v[1]||'';
+      const out=pAmt(v[2]), inc=pAmt(v[3]);
+      if (out>0) { amount=out; } else { amount=inc; type='income'; }
+    }
+    else if (bank==='C') {
+      date=pDate(v[0]); const mv=pAmt(v[1]); name=v[3]||v[2]||'';
+      if (mv<0) { amount=Math.abs(mv); } else { amount=mv; type='income'; }
+    }
+    else if (bank==='D') { date=pDate(v[0]); name=v[1]||''; amount=pAmt(v[2]); }
+    else if (bank==='E') {
+      date=pDate(v[0]); name=v[1]||v[2]||'';
+      const out=pAmt(v[3]), inc=pAmt(v[4]);
+      if (out>0) { amount=out; } else { amount=inc; type='income'; }
+    }
+    else { date=pDate(v[0]); name=(v[1]||'').toString(); amount=pAmt(v[2]); }
+    if (!date||!amount) continue;
+    const cat = type==='income' ? '収入' : categorize(name);
+    res.push({ id:`${Date.now()}_${Math.random()}`, date, name:name.trim(), amount, type, cat, sub:null, src:'csv' });
+  }
+  return res;
+}
+
+// ── BUSINESS LOGIC ─────────────────────────────────
+function monthTxns(s, ym) { return s.txns.filter(t=>t.date.startsWith(ym) && t.type==='expense'); }
+function catTotals(txns) {
+  const r={};
+  for (const t of txns) r[t.cat]=(r[t.cat]||0)+t.amount;
+  return r;
+}
+function calcScore(s, ym) {
+  const txns = monthTxns(s, ym);
+  if (!txns.length) return null;
+  const ct = catTotals(txns);
+  let ded=0;
+  for (const c of WASTE) {
+    const sp=ct[c]||0, bud=(s.cats[c]?.amount)||3000;
+    if (sp>bud) ded+=Math.min((sp-bud)/bud*18, 22);
+  }
+  for (const [c, cfg] of Object.entries(s.cats)) {
+    if ((ct[c]||0)>cfg.amount) ded+=2;
+  }
+  return Math.max(20, Math.round(100-ded));
+}
+function scoreColor(sc) {
+  if (sc===null) return 'var(--ac)';
+  if (sc>=80) return 'var(--ok)';
+  if (sc>=60) return 'var(--ac)';
+  if (sc>=40) return 'var(--wn)';
+  return 'var(--err)';
+}
+function projDiff(s) {
+  const now=new Date(), ym=now.toISOString().slice(0,7), day=now.getDate();
+  const dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+  const cur=monthTxns(s,ym).reduce((a,t)=>a+t.amount,0);
+  const proj=Math.round(cur/day*dim);
+  const ly=new Date(now.getFullYear(),now.getMonth()-1,1);
+  const last=monthTxns(s,ly.toISOString().slice(0,7)).reduce((a,t)=>a+t.amount,0);
+  return last>0 ? proj-last : 0;
+}
+function tickStreak(s) {
+  const today=new Date().toISOString().slice(0,10);
+  if (s.streak.last===today) return;
+  const yd=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  s.streak.count = s.streak.last===yd ? s.streak.count+1 : 1;
+  s.streak.last=today; ss(s);
+}
+
+// ── HOME ───────────────────────────────────────────
+function renderHome() {
+  const s=gs(), now=new Date(), ym=now.toISOString().slice(0,7);
+  const MN=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  document.getElementById('h-ym').textContent=`${now.getFullYear()}年${MN[now.getMonth()]}`;
+  tickStreak(s);
+  document.getElementById('h-streak').textContent=`🔥 ${s.streak.count}日`;
+
+  const sc=calcScore(s,ym), cl=scoreColor(sc);
+  const se=document.getElementById('h-score');
+  se.textContent=sc??'—'; se.style.color=cl;
+  const sbar=document.getElementById('h-sbar');
+  sbar.style.width=(sc??0)+'%'; sbar.style.background=cl;
+  const de=document.getElementById('h-delta');
+  if (sc!==null) {
+    const ly=new Date(now.getFullYear(),now.getMonth()-1,1);
+    const ls=calcScore(s,ly.toISOString().slice(0,7));
+    if (ls) { const d=sc-ls; de.textContent=`先月 ${ls}点 → ${d>=0?'▲':'▼'}${Math.abs(d)}点`; de.style.color=d>=0?'var(--ok)':'var(--err)'; }
+    else de.textContent='';
+  } else { de.textContent='CSVを取り込むとスコアが表示されます'; de.style.color='var(--t2)'; }
+
+  // Backup warning
+  const bwEl=document.getElementById('h-backup-warn');
+  if (s._exportedAt) {
+    const days=Math.floor((Date.now()-new Date(s._exportedAt))/86400000);
+    if (days>=7) {
+      bwEl.style.display='block';
+      bwEl.innerHTML=`<div class="card" style="background:var(--wns);border-color:var(--wn);padding:10px 14px;">
+        <div style="font-size:13px;font-weight:600;color:var(--wn);">⚠️ バックアップが${days}日前です</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:2px;">設定からバックアップを保存してください</div>
+      </div>`;
+    } else bwEl.style.display='none';
+  } else if (s.txns.length>10) {
+    bwEl.style.display='block';
+    bwEl.innerHTML=`<div class="card" style="background:var(--wns);border-color:var(--wn);padding:10px 14px;">
+      <div style="font-size:13px;font-weight:600;color:var(--wn);">⚠️ バックアップが未保存です</div>
+      <div style="font-size:12px;color:var(--t2);margin-top:2px;">機種変更やブラウザリセットでデータが消えます</div>
+    </div>`;
+  } else bwEl.style.display='none';
+
+  const diff=projDiff(s), lc=document.getElementById('h-loss');
+  if (diff>500) { lc.style.display='block'; document.getElementById('h-lamt').textContent=`¥${diff.toLocaleString()} 多くかかります`; }
+  else lc.style.display='none';
+
+  const gc=document.getElementById('h-goals');
+  gc.innerHTML=s.goals.length ? s.goals.map(g=>{
+    const pct=g.target?Math.min(100,Math.round(g.current/g.target*100)):0;
+    return `<div class="card" style="padding:12px 16px;">
+      <div class="sb" style="margin-bottom:5px;">
+        <div style="font-size:14px;font-weight:600;">${g.name}</div>
+        <div style="font-size:13px;color:var(--t2);">¥${g.current.toLocaleString()} / ¥${g.target.toLocaleString()}</div>
+      </div>
+      <div class="pbar"><div class="pbar-f" style="width:${pct}%;background:${g.color};"></div></div>
+      <div style="font-size:11px;color:var(--t2);margin-top:4px;text-align:right;">${pct}% 達成</div>
+    </div>`;
+  }).join('') : '';
+
+  const hasData=s.txns.length>0;
+  document.getElementById('h-empty').style.display=hasData?'none':'block';
+  document.getElementById('h-rbtn').style.display=hasData?'block':'none';
+  if (!hasData) { document.getElementById('h-cats').innerHTML=''; return; }
+
+  const txns=monthTxns(s,ym), ct=catTotals(txns);
+  const top=Object.entries(ct).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  if (!top.length) { document.getElementById('h-cats').innerHTML=''; return; }
+  document.getElementById('h-cats').innerHTML=`<div class="card">
+    <div class="section-hd">今月 TOP5 カテゴリ</div>
+    ${top.map(([c,a])=>{
+      const cfg=s.cats[c]||{amount:0,color:'#AFACA7'}, over=cfg.amount&&a>cfg.amount;
+      const pct=cfg.amount?Math.min(100,Math.round(a/cfg.amount*100)):100;
+      return `<div style="margin-bottom:10px;">
+        <div class="sb" style="margin-bottom:4px;font-size:13px;">
+          <span class="row" style="gap:6px;"><span class="dot" style="background:${cfg.color};"></span>${c}</span>
+          <span style="color:${over?'var(--err)':'var(--t)'};">¥${a.toLocaleString()}${cfg.amount?` / ¥${cfg.amount.toLocaleString()}`:''}</span>
+        </div>
+        <div class="pbar"><div class="pbar-f" style="width:${pct}%;background:${over?'var(--err)':cfg.color};"></div></div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+// ── RECORD ─────────────────────────────────────────
+let curAmt='', selCat='', selSub=null;
+function renderRecord() {
+  const s=gs();
+  if (!selCat || !s.cats[selCat]) selCat=Object.keys(s.cats)[0]||'コンビニ';
+  document.getElementById('r-date').value=new Date().toISOString().slice(0,10);
+  renderCatChips(s);
+  renderSubChips(s);
+  updateBudget(s);
+}
+function renderCatChips(s) {
+  document.getElementById('r-cats').innerHTML=Object.entries(s.cats).map(([c,cfg])=>
+    `<button class="chip${c===selCat?' on':''}" onclick="pickCat('${c}')" style="${c===selCat?'':'border-left:3px solid '+cfg.color+'!important'}">
+      <span class="dot" style="background:${cfg.color};margin-right:4px;"></span>${c}
+    </button>`).join('');
+}
+function renderSubChips(s) {
+  const cfg=s.cats[selCat]; const subs=cfg?.subs||[];
+  const wrap=document.getElementById('r-subs-wrap');
+  if (!subs.length) { wrap.style.display='none'; return; }
+  wrap.style.display='block';
+  document.getElementById('r-subs').innerHTML=
+    `<button class="chip chip-xs${!selSub?' on':''}" onclick="pickSub(null)">すべて</button>`+
+    subs.map(sub=>`<button class="chip chip-xs${selSub===sub?' on':''}" onclick="pickSub('${sub}')">${sub}</button>`).join('');
+}
+function pickCat(c) { selCat=c; selSub=null; const s=gs(); renderCatChips(s); renderSubChips(s); updateBudget(s); }
+function pickSub(sub) { selSub=sub; const s=gs(); renderSubChips(s); }
+function updateBudget(s) {
+  const cfg=s.cats[selCat]; if (!cfg?.amount) { document.getElementById('r-bcard').style.display='none'; return; }
+  const ym=new Date().toISOString().slice(0,7);
+  const spent=monthTxns(s,ym).filter(t=>t.cat===selCat).reduce((a,t)=>a+t.amount,0);
+  const rem=cfg.amount-spent, pct=Math.min(100,Math.round(spent/cfg.amount*100));
+  document.getElementById('r-bcard').style.display='block';
+  document.getElementById('r-bcat').textContent=`${selCat} 今月の残り`;
+  document.getElementById('r-brem').textContent=`¥${Math.max(0,rem).toLocaleString()}`;
+  document.getElementById('r-bused').textContent=`使用 ¥${spent.toLocaleString()} / ¥${cfg.amount.toLocaleString()}`;
+  const bar=document.getElementById('r-bbar');
+  bar.style.width=pct+'%';
+  bar.style.background=pct>90?'var(--err)':pct>70?'var(--wn)':'var(--ok)';
+}
+function pad(v) {
+  if (v==='del') curAmt=curAmt.slice(0,-1);
+  else { if (curAmt.length>=7) return; curAmt+=v; }
+  const n=parseInt(curAmt)||0;
+  document.getElementById('r-disp-num').textContent=n.toLocaleString();
+  const s=gs(); updateBudget(s);
+}
+
+// ── RECORD TABS ────────────────────────────────────
+function switchRecordTab(tab) {
+  document.getElementById('rec-tab-input').style.display=tab==='input'?'block':'none';
+  document.getElementById('rec-tab-list').style.display=tab==='list'?'block':'none';
+  document.getElementById('rtab-input').classList.toggle('on',tab==='input');
+  document.getElementById('rtab-list').classList.toggle('on',tab==='list');
+  if (tab==='list') renderTodayList();
+}
+function renderTodayList() {
+  const s=gs(), today=new Date().toISOString().slice(0,10);
+  const txns=s.txns.filter(t=>t.date===today).sort((a,b)=>b.id.localeCompare(a.id));
+  const wrap=document.getElementById('rec-today-wrap');
+  if (!txns.length) { wrap.innerHTML='<div class="hint" style="text-align:center;padding:40px 0;">今日の記録はまだありません</div>'; return; }
+  const total=txns.filter(t=>t.type==='expense').reduce((a,t)=>a+t.amount,0);
+  wrap.innerHTML=`
+    <div class="card" style="margin-bottom:8px;">
+      <div class="sb"><div style="font-weight:600;">今日の合計</div><div style="font-size:18px;font-weight:700;">¥${total.toLocaleString()}</div></div>
+    </div>
+    ${txns.map(t=>{
+      const cfg=s.cats[t.cat]||{color:'#AFACA7'};
+      return `<div class="card" style="padding:10px 14px;margin-bottom:6px;">
+        <div class="sb">
+          <div class="row" style="gap:8px;">
+            <span class="dot" style="background:${cfg.color};"></span>
+            <div>
+              <div style="font-size:14px;font-weight:500;">${t.name||t.cat}</div>
+              <div style="font-size:11px;color:var(--t2);">${t.cat}${t.sub?' · '+t.sub:''}</div>
+            </div>
+          </div>
+          <div class="row" style="gap:8px;">
+            <div style="font-size:15px;font-weight:700;color:${t.type==='income'?'var(--ok)':'var(--t)'};">${t.type==='income'?'+':''}¥${t.amount.toLocaleString()}</div>
+            <button onclick="deleteTxn('${t.id}')" style="background:none;border:none;cursor:pointer;color:var(--t3);font-size:16px;padding:2px 4px;">×</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('')}`;
+}
+function deleteTxn(id) {
+  if (!confirm('この記録を削除しますか？')) return;
+  const s=gs(); s.txns=s.txns.filter(t=>t.id!==id); ss(s);
+  renderTodayList(); renderHome();
+}
+function addRecord() {
+  const amt=parseInt(curAmt)||0;
+  if (!amt) { alert('金額を入力してください'); return; }
+  const s=gs(), memo=document.getElementById('r-memo').value, date=document.getElementById('r-date').value||new Date().toISOString().slice(0,10);
+  s.txns.push({ id:`${Date.now()}`, date, name:memo||selCat, amount:amt, type:'expense', cat:selCat, sub:selSub, src:'manual' });
+  s.streak.last=date; ss(s);
+  curAmt='';
+  document.getElementById('r-disp').innerHTML=`<span style="font-size:22px;font-weight:400;color:var(--t2);">¥</span>0`;
+  document.getElementById('r-memo').value='';
+  selSub=null; renderSubChips(s); updateBudget(s);
+  const fb=document.getElementById('r-fb'); fb.textContent=`✓ ¥${amt.toLocaleString()} を記録しました`;
+  setTimeout(()=>fb.textContent='', 2200);
+  renderHome();
+}
+
+// ── IMPORT ─────────────────────────────────────────
+let pending=[], pendingBank='';
+function handleFile(file) {
+  if (!file) return;
+  const tryParse=(text)=>{
+    text=text.replace(/^﻿/,'');
+    Papa.parse(text,{ header:true, skipEmptyLines:true, complete(r) {
+      if (!r.data?.length) { alert('データを読み込めませんでした'); return; }
+      const bank=detectBank(r.meta.fields);
+      pendingBank=bank; pending=parseRows(r.data, bank);
+      showPrev();
+    }});
+  };
+  const r1=new FileReader();
+  r1.onload=e=>{ const txt=e.target.result;
+    if (/[\x80-\x9f]/.test(txt.slice(0,400))) {
+      const r2=new FileReader(); r2.onload=e2=>tryParse(e2.target.result); r2.readAsText(file,'shift-jis');
+    } else tryParse(txt);
+  };
+  r1.readAsText(file,'utf-8');
+}
+function showPrev() {
+  const s=gs();
+  document.getElementById('imp-det').textContent=`自動判別：フォーマット ${pendingBank}`;
+  document.getElementById('imp-cnt').textContent=`${pending.length} 件を検出`;
+  document.getElementById('imp-prev').style.display='block';
+  const tbody=document.querySelector('#imp-tbl tbody'); tbody.innerHTML='';
+  pending.slice(0,60).forEach(t=>{
+    const cfg=s.cats[t.cat]||{color:'#AFACA7'};
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td style="white-space:nowrap;">${t.date}</td>
+      <td style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${t.name}</td>
+      <td style="text-align:right;${t.type==='income'?'color:var(--ok)':''};">¥${t.amount.toLocaleString()}</td>
+      <td><span class="dot" style="background:${cfg.color};margin-right:4px;"></span>${t.cat}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+function doImport() {
+  if (!pending.length) return;
+  const s=gs(), ex=new Set(s.txns.map(t=>t.date+t.name+t.amount));
+  let added=0;
+  for (const t of pending) { if (!ex.has(t.date+t.name+t.amount)) { s.txns.push(t); added++; } }
+  ss(s); pending=[]; pendingBank='';
+  document.getElementById('imp-prev').style.display='none';
+  document.getElementById('fIn').value='';
+  refreshMonths(); renderHome();
+  alert(`${added} 件を取り込みました`);
+}
+function refreshMonths() {
+  const s=gs();
+  const ms=[...new Set(s.txns.map(t=>t.date.slice(0,7)))].sort().reverse();
+  const el=document.getElementById('imp-months');
+  el.innerHTML=ms.length ? ms.map(m=>`<span class="tag" style="margin:2px;">${m}</span>`).join('') : 'なし';
+}
+
+// ── REPORT ─────────────────────────────────────────
+let rpChart=null, rpYm=null;
+function shiftMonth(d) {
+  const [y,m]=rpYm.split('-').map(Number);
+  const dt=new Date(y,m-1+d,1);
+  rpYm=dt.toISOString().slice(0,7);
+  renderReport();
+}
+function renderReport() {
+  const s=gs(), now=new Date();
+  if (!rpYm) rpYm=now.toISOString().slice(0,7);
+  document.getElementById('rp-ym').textContent=rpYm.replace('-','年')+'月';
+
+  const sc=calcScore(s,rpYm), cl=scoreColor(sc);
+  const rse=document.getElementById('rp-score'); rse.textContent=sc??'—'; rse.style.color=cl;
+  const rsb=document.getElementById('rp-sbar'); rsb.style.width=(sc??0)+'%'; rsb.style.background=cl;
+  document.getElementById('rp-msg').textContent=!sc?'データがありません':
+    sc>=80?'素晴らしい！貯金体質になっています 🎉':
+    sc>=60?'良好です。もう一歩で貯金体質に':
+    sc>=40?'無駄が多め。予算を見直しましょう':'かなり超過しています。要注意です';
+
+  renderCalendar(s, rpYm);
+
+  const txns=monthTxns(s,rpYm), ct=catTotals(txns);
+  const sorted=Object.entries(ct).sort((a,b)=>b[1]-a[1]);
+  const total=txns.reduce((a,t)=>a+t.amount,0);
+
+  const ctx=document.getElementById('rp-chart').getContext('2d');
+  if (rpChart) rpChart.destroy();
+  if (sorted.length) {
+    rpChart=new Chart(ctx,{
+      type:'doughnut',
+      data:{
+        labels:sorted.map(([c])=>c),
+        datasets:[{ data:sorted.map(([,v])=>v), backgroundColor:sorted.map(([c])=>(s.cats[c]?.color)||'#AFACA7'), borderWidth:0 }]
+      },
+      options:{ responsive:true, plugins:{ legend:{ position:'bottom', labels:{ font:{size:11}, padding:8, boxWidth:10 } } } }
+    });
+  }
+
+  const el=document.getElementById('rp-bd');
+  el.innerHTML=sorted.map(([c,a])=>{
+    const cfg=s.cats[c]||{amount:0,color:'#AFACA7'}, over=cfg.amount&&a>cfg.amount;
+    const pct=total?Math.round(a/total*100):0;
+    const bpct=cfg.amount?Math.min(100,Math.round(a/cfg.amount*100)):0;
+    const subRows=s.txns.filter(t=>t.date.startsWith(rpYm)&&t.cat===c&&t.sub).reduce((r,t)=>{r[t.sub]=(r[t.sub]||0)+t.amount;return r;},{});
+    return `<div style="padding:10px 0;border-bottom:1px solid var(--d);">
+      <div class="sb" style="margin-bottom:5px;">
+        <div class="row" style="gap:7px;"><span class="dot" style="background:${cfg.color};width:10px;height:10px;"></span>
+          <div>
+            <div style="font-size:14px;font-weight:500;">${c}</div>
+            ${cfg.amount?`<div style="font-size:11px;color:${over?'var(--err)':'var(--t2)'};">${over?'超過':'予算内'} ¥${cfg.amount.toLocaleString()}</div>`:''}
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:15px;font-weight:700;color:${over?'var(--err)':'var(--t)'};">¥${a.toLocaleString()}</div>
+          <div style="font-size:11px;color:var(--t2);">${pct}%</div>
+        </div>
+      </div>
+      ${cfg.amount?`<div class="pbar"><div class="pbar-f" style="width:${bpct}%;background:${over?'var(--err)':cfg.color};"></div></div>`:''}
+      ${Object.keys(subRows).length?`<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;">${Object.entries(subRows).map(([sb,sa])=>`<span class="tag">${sb} ¥${sa.toLocaleString()}</span>`).join('')}</div>`:''}
+    </div>`;
+  }).join('')||'<div class="hint" style="text-align:center;padding:20px;">データがありません</div>';
+}
+
+function renderCalendar(s, ym) {
+  const hdsEl=document.getElementById('rp-cal-hds'), calEl=document.getElementById('rp-cal');
+  const days=['日','月','火','水','木','金','土'];
+  hdsEl.innerHTML=days.map(d=>`<div class="cal-hd">${d}</div>`).join('');
+
+  const [year,month]=ym.split('-').map(Number);
+  const firstDow=new Date(year,month-1,1).getDay();
+  const dim=new Date(year,month,0).getDate();
+  const today=new Date().toISOString().slice(0,10);
+
+  const byDate={};
+  for (const t of s.txns.filter(t=>t.date.startsWith(ym)&&t.type==='expense')) {
+    if (!byDate[t.date]) byDate[t.date]={amount:0,manual:false};
+    byDate[t.date].amount+=t.amount;
+    if (t.src==='manual') byDate[t.date].manual=true;
+  }
+
+  const maxAmt=Math.max(...Object.values(byDate).map(v=>v.amount),1);
+  const cells=[];
+  for (let i=0;i<firstDow;i++) cells.push(`<div class="cal-d empty"></div>`);
+  for (let d=1;d<=dim;d++) {
+    const dateStr=`${ym}-${d.toString().padStart(2,'0')}`;
+    const data=byDate[dateStr];
+    const isToday=dateStr===today;
+    const intensity=data?Math.round(data.amount/maxAmt*100):0;
+    const ac=getComputedStyle(document.documentElement).getPropertyValue('--ac').trim()||'#4F7CFF';
+    let bg=data?hexAlpha(ac, Math.max(15,intensity)*0.7/100):'var(--sf2)';
+    cells.push(`<div class="cal-d${data?' rec':''}${isToday?' today':''}" title="${dateStr}${data?' ¥'+data.amount.toLocaleString():''}">
+      ${d}${data?.manual?`<span class="rec-dot"></span>`:''}
+    </div>`);
+  }
+  calEl.innerHTML=cells.join('');
+  // Apply background color via direct style (after render)
+  const allDays=calEl.querySelectorAll('.cal-d.rec');
+  let i2=0;
+  for (let d=1;d<=dim;d++) {
+    const dateStr=`${ym}-${d.toString().padStart(2,'0')}`;
+    const data=byDate[dateStr];
+    if (data) {
+      const el=allDays[i2++];
+      const pct=Math.max(0.08, data.amount/maxAmt);
+      const ac2=getComputedStyle(document.documentElement).getPropertyValue('--ac').trim()||'#4F7CFF';
+      el.style.background=hexAlpha(ac2, pct*0.75);
+    }
+  }
+}
+function hexAlpha(hex, alpha) {
+  const r=parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${Math.min(1,alpha).toFixed(2)})`;
+}
+
+// ── SHARE ──────────────────────────────────────────
+function shareScore() {
+  const s=gs(), ym=rpYm||new Date().toISOString().slice(0,7);
+  const sc=calcScore(s,ym)??'--', st=s.streak.count;
+  const canvas=document.getElementById('sh-c');
+  canvas.width=600; canvas.height=380; canvas.style.display='block';
+  const ctx=canvas.getContext('2d');
+  ctx.fillStyle=document.documentElement.getAttribute('data-theme')==='dark'?'#191919':'#F7F7F5';
+  ctx.fillRect(0,0,600,380);
+  ctx.textAlign='center';
+  ctx.fillStyle=document.documentElement.getAttribute('data-theme')==='dark'?'#EFEFEF':'#1A1A1A';
+  ctx.font='bold 26px -apple-system,sans-serif'; ctx.fillText('マネスコ',300,64);
+  ctx.fillStyle='#787774'; ctx.font='16px -apple-system,sans-serif';
+  ctx.fillText(ym.replace('-','年')+'月 健全スコア',300,96);
+  const col=typeof sc==='number'?(sc>=80?'#2D9B5A':sc>=60?'#4F7CFF':sc>=40?'#E8720C':'#EB4336'):'#787774';
+  ctx.fillStyle=col; ctx.font='bold 110px -apple-system,sans-serif'; ctx.fillText(sc,300,242);
+  ctx.fillStyle='#787774'; ctx.font='18px -apple-system,sans-serif'; ctx.fillText('点 / 100点',300,278);
+  ctx.fillStyle='#E8720C'; ctx.font='15px -apple-system,sans-serif';
+  ctx.fillText(`🔥 ${st}日連続記録中`,300,326);
+  const a=document.createElement('a'); a.download=`manesco_${ym}.png`; a.href=canvas.toDataURL(); a.click();
+  canvas.style.display='none';
+}
+
+// ── SETTINGS ───────────────────────────────────────
+let weekendPref='before';
+function updatePaydayUI() {
+  const v=document.getElementById('s-pd').value;
+  document.getElementById('s-pd-custom').style.display=v==='custom'?'block':'none';
+}
+function pickWeekend(v) {
+  weekendPref=v;
+  document.getElementById('pd-before').classList.toggle('on',v==='before');
+  document.getElementById('pd-after').classList.toggle('on',v==='after');
+}
+function saveBasic() {
+  const s=gs(), sal=parseInt(document.getElementById('s-sal').value)||s.settings.salary;
+  const pd=document.getElementById('s-pd').value;
+  const pdc=pd==='custom'?parseInt(document.getElementById('s-pd-day').value)||27:null;
+  s.settings={...s.settings, salary:sal, payday:pd, paydayCustom:pdc, paydayWeekend:weekendPref};
+  ss(s); alert('保存しました');
+}
+
+function renderSettings() {
+  const s=gs();
+  // Theme toggles
+  const dark=s.settings.theme==='dark';
+  document.getElementById('s-dark-toggle').classList.toggle('on',dark);
+  // Accent
+  document.querySelectorAll('[data-a]').forEach(el=>el.classList.toggle('on',el.dataset.a===s.settings.accent));
+  // Payday
+  document.getElementById('s-sal').value=s.settings.salary||'';
+  const pd=s.settings.payday||'27';
+  const sel=document.getElementById('s-pd');
+  sel.value=['last','first','5','10','15','20','25','27','custom'].includes(pd)?pd:'custom';
+  if (pd==='custom') { document.getElementById('s-pd-custom').style.display='block'; document.getElementById('s-pd-day').value=s.settings.paydayCustom||''; }
+  weekendPref=s.settings.paydayWeekend||'before'; pickWeekend(weekendPref);
+  // Notifications
+  const notifOn=s.settings.notifications && Notification.permission==='granted';
+  const nt=document.getElementById('s-notif-toggle'); if (nt) nt.classList.toggle('on',notifOn);
+  const ns=document.getElementById('s-notif-status');
+  if (ns) {
+    if (!('Notification' in window)) ns.textContent='このブラウザは非対応';
+    else if (Notification.permission==='denied') ns.textContent='⚠️ ブラウザで通知がブロックされています';
+    else if (notifOn) ns.textContent=`✓ 毎日${s.settings.notifTime||'21:00'}に通知します`;
+    else ns.textContent='';
+  }
+  const tr=document.getElementById('s-notif-time-row'); if (tr) tr.style.display=notifOn?'block':'none';
+  const ti=document.getElementById('s-notif-time'); if (ti) ti.value=s.settings.notifTime||'21:00';
+  // Accent preview
+  const ac=s.settings.accent||'#DA7756';
+  const pr=document.getElementById('ac-preview'); if (pr) pr.style.background=ac;
+  const he=document.getElementById('ac-hex'); if (he) he.textContent=ac;
+  // Backup info
+  const bi=document.getElementById('s-backup-info');
+  if (bi) {
+    if (s._exportedAt) {
+      const days=Math.floor((Date.now()-new Date(s._exportedAt))/86400000);
+      bi.textContent=days===0?'✓ 今日バックアップ済み':`最終バックアップ：${days}日前`;
+      bi.style.color=days>=7?'var(--wn)':'var(--ok)';
+    } else { bi.textContent='未バックアップ'; bi.style.color='var(--wn)'; }
+  }
+  // Categories
+  renderSettingsCats(s);
+  // Goals
+  renderSettingsGoals(s);
+}
+
+function renderSettingsCats(s) {
+  const el=document.getElementById('s-cats');
+  el.innerHTML=Object.entries(s.cats).map(([c,cfg])=>`
+    <div style="border:1px solid var(--d);border-radius:var(--r);padding:12px;margin-bottom:8px;" id="ccard-${CSS.escape(c)}">
+      <div class="sb">
+        <div class="row" style="gap:8px;flex:1;">
+          <span class="dot" style="background:${cfg.color};width:14px;height:14px;cursor:pointer;flex-shrink:0;"
+            onclick="showColorPicker(function(col){setCatColor('${c}',col);}, '${cfg.color}', this)"></span>
+          <span style="font-weight:500;cursor:pointer;" onclick="toggleCatEdit('${c}')">${c}</span>
+        </div>
+        <div class="row" style="gap:4px;">
+          <button class="btn btn-sm btn-g" style="padding:4px 8px;" onclick="adjustCatAmt('${c}',-1000)">−</button>
+          <span style="font-size:14px;font-weight:600;min-width:70px;text-align:center;" id="ci-disp-${c}">¥${cfg.amount.toLocaleString()}</span>
+          <button class="btn btn-sm btn-g" style="padding:4px 8px;" onclick="adjustCatAmt('${c}',1000)">＋</button>
+          <button class="btn btn-sm btn-d" style="padding:4px 8px;font-size:12px;margin-left:4px;" onclick="deleteCat('${c}')">×</button>
+        </div>
+      </div>
+      <div id="cedit-${CSS.escape(c)}" style="display:none;margin-top:10px;">
+        <div class="lbl">予算額（直接入力）</div>
+        <input type="number" id="ci-${c}" value="${cfg.amount}" style="margin-bottom:10px;" onchange="saveCatAmount('${c}')">
+        <div class="lbl">サブカテゴリ</div>
+        <div id="subs-${CSS.escape(c)}" style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">
+          ${(cfg.subs||[]).map(sub=>`<span class="tag">${sub}<button onclick="removeSub('${c}','${sub}')" style="margin-left:4px;background:none;border:none;cursor:pointer;color:var(--t2);font-size:12px;">×</button></span>`).join('')}
+        </div>
+        <div class="row" style="gap:6px;">
+          <input type="text" id="subadd-${c}" placeholder="サブカテゴリ名" style="flex:1;font-size:13px;padding:6px 10px;">
+          <button class="btn btn-sm" onclick="addSub('${c}')">追加</button>
+        </div>
+      </div>
+    </div>`).join('') +
+    `<div class="fix-sec" id="new-cat-form" style="display:none;">
+      <div class="lbl">カテゴリ名</div>
+      <input type="text" id="new-cat-name" placeholder="例：交際費" style="margin-bottom:6px;">
+      <div class="lbl">予算額</div>
+      <input type="number" id="new-cat-amt" placeholder="5000" style="margin-bottom:6px;">
+      <button class="btn btn-p btn-full btn-sm" onclick="confirmAddCat()">追加する</button>
+      <button class="btn btn-g btn-full btn-sm" onclick="document.getElementById('new-cat-form').style.display='none'" style="margin-top:4px;">キャンセル</button>
+    </div>`;
+}
+function toggleCatEdit(c) {
+  const el=document.getElementById(`cedit-${CSS.escape(c)}`);
+  el.style.display=el.style.display==='none'?'block':'none';
+  // Save amount on close
+  if (el.style.display==='none') saveCatAmount(c);
+}
+function saveCatAmount(c) {
+  const s=gs(), inp=document.getElementById(`ci-${c}`);
+  if (inp && s.cats[c]) { s.cats[c].amount=parseInt(inp.value)||0; ss(s); }
+}
+function setCatColor(c, color) {
+  const s=gs(); if (!s.cats[c]) return;
+  s.cats[c].color=color; ss(s);
+  const dot=document.querySelector(`#ccard-${CSS.escape(c)} .dot`); if (dot) dot.style.background=color;
+}
+function adjustCatAmt(c, delta) {
+  const s=gs(); if (!s.cats[c]) return;
+  s.cats[c].amount=Math.max(0,(s.cats[c].amount||0)+delta); ss(s);
+  const disp=document.getElementById(`ci-disp-${c}`); if (disp) disp.textContent=`¥${s.cats[c].amount.toLocaleString()}`;
+  const inp=document.getElementById(`ci-${c}`); if (inp) inp.value=s.cats[c].amount;
+}
+function addSub(c) {
+  const inp=document.getElementById(`subadd-${c}`); if (!inp) return;
+  const val=inp.value.trim(); if (!val) return;
+  const s=gs(); if (!s.cats[c]) return;
+  if (!s.cats[c].subs.includes(val)) s.cats[c].subs.push(val);
+  ss(s); inp.value='';
+  const subEl=document.getElementById(`subs-${CSS.escape(c)}`);
+  if (subEl) subEl.innerHTML=s.cats[c].subs.map(sub=>`<span class="tag">${sub}<button onclick="removeSub('${c}','${sub}')" style="margin-left:4px;background:none;border:none;cursor:pointer;color:var(--t2);font-size:12px;">×</button></span>`).join('');
+}
+function removeSub(c, sub) {
+  const s=gs(); if (!s.cats[c]) return;
+  s.cats[c].subs=s.cats[c].subs.filter(x=>x!==sub); ss(s);
+  const subEl=document.getElementById(`subs-${CSS.escape(c)}`);
+  if (subEl) subEl.innerHTML=s.cats[c].subs.map(sv=>`<span class="tag">${sv}<button onclick="removeSub('${c}','${sv}')" style="margin-left:4px;background:none;border:none;cursor:pointer;color:var(--t2);font-size:12px;">×</button></span>`).join('');
+}
+function deleteCat(c) {
+  if (!confirm(`「${c}」を削除しますか？`)) return;
+  const s=gs(); delete s.cats[c]; ss(s); renderSettingsCats(s);
+}
+function addCat() {
+  const form=document.getElementById('new-cat-form');
+  if (form) { form.style.display=form.style.display==='none'?'block':'none'; }
+}
+function confirmAddCat() {
+  const name=(document.getElementById('new-cat-name')?.value||'').trim();
+  if (!name) { alert('カテゴリ名を入力してください'); return; }
+  const amt=parseInt(document.getElementById('new-cat-amt')?.value)||3000;
+  const s=gs();
+  if (s.cats[name]) { alert('同じ名前のカテゴリが既にあります'); return; }
+  s.cats[name]={ amount:amt, color:'#DA7756', subs:[] };
+  ss(s); renderSettingsCats(s);
+}
+function saveCatsAll() {
+  const s=gs();
+  for (const c of Object.keys(s.cats)) {
+    const inp=document.getElementById(`ci-${c}`);
+    if (inp) s.cats[c].amount=parseInt(inp.value)||0;
+  }
+  ss(s); alert('予算を保存しました');
+}
+
+function renderSettingsGoals(s) {
+  const el=document.getElementById('s-goals');
+  el.innerHTML=s.goals.map(g=>`
+    <div style="border:1px solid var(--d);border-radius:var(--r);padding:12px;margin-bottom:8px;" id="gcard-${g.id}">
+      <div class="sb" style="margin-bottom:10px;">
+        <div class="row" style="gap:7px;">
+          <span class="dot" style="background:${g.color};width:14px;height:14px;cursor:pointer;" onclick="showColorPicker(function(c){setGoalColor('${g.id}',c);}, '${g.color}', this)"></span>
+          <b>${g.name}</b>
+        </div>
+        <button class="btn btn-sm btn-d" style="padding:4px 8px;font-size:12px;" onclick="deleteGoal('${g.id}')">×</button>
+      </div>
+      <div class="row" style="gap:8px;margin-bottom:8px;">
+        <div style="flex:1;"><div class="lbl">目標名</div><input type="text" id="gn-${g.id}" value="${g.name}" style="font-size:13px;padding:6px 10px;"></div>
+      </div>
+      <div class="row" style="gap:8px;margin-bottom:8px;">
+        <div style="flex:1;"><div class="lbl">目標金額</div><input type="number" id="gt-${g.id}" value="${g.target}" style="font-size:13px;padding:6px 10px;"></div>
+        <div style="flex:1;"><div class="lbl">現在の貯金</div><input type="number" id="gc-${g.id}" value="${g.current}" style="font-size:13px;padding:6px 10px;"></div>
+      </div>
+      <button class="btn btn-p btn-full btn-sm" onclick="saveGoal('${g.id}')">この目標を保存</button>
+    </div>`).join('')||'<div class="hint">目標はまだありません</div>';
+}
+function addGoal() {
+  const s=gs();
+  const id='g'+Date.now();
+  s.goals.push({ id, name:'新しい目標', target:1000000, current:0, color:'#4F7CFF' });
+  ss(s); renderSettingsGoals(s);
+}
+function saveGoal(id) {
+  const s=gs(), g=s.goals.find(x=>x.id===id); if (!g) return;
+  g.name=document.getElementById(`gn-${id}`)?.value||g.name;
+  g.target=parseInt(document.getElementById(`gt-${id}`)?.value)||g.target;
+  g.current=parseInt(document.getElementById(`gc-${id}`)?.value)||0;
+  ss(s); renderHome(); alert('目標を保存しました');
+}
+function setGoalColor(id, color) {
+  const s=gs(), g=s.goals.find(x=>x.id===id); if (!g) return;
+  g.color=color; ss(s);
+  const dot=document.querySelector(`#gcard-${id} .dot`); if (dot) dot.style.background=color;
+}
+function deleteGoal(id) {
+  if (!confirm('この目標を削除しますか？')) return;
+  const s=gs(); s.goals=s.goals.filter(g=>g.id!==id); ss(s); renderSettingsGoals(s);
+}
+
+function setAccent(hex) {
+  const s=gs(); s.settings.accent=hex; ss(s);
+  applyTheme(s);
+  const pr=document.getElementById('ac-preview'); if (pr) pr.style.background=hex;
+  const he=document.getElementById('ac-hex'); if (he) he.textContent=hex;
+}
+function toggleTheme() {
+  const s=gs(), dark=s.settings.theme==='dark';
+  s.settings.theme=dark?'light':'dark'; ss(s);
+  applyTheme(s);
+}
+function applyTheme(s) {
+  if (!s) s=gs();
+  const dark=s.settings.theme==='dark';
+  document.documentElement.setAttribute('data-theme',dark?'dark':'light');
+  const ac=s.settings.accent||'#DA7756';
+  document.documentElement.removeAttribute('data-accent');
+  const r=parseInt(ac.slice(1,3),16)||218, g=parseInt(ac.slice(3,5),16)||119, b=parseInt(ac.slice(5,7),16)||86;
+  document.documentElement.style.setProperty('--ac',ac);
+  document.documentElement.style.setProperty('--acs',`rgba(${r},${g},${b},.12)`);
+  const tb=document.getElementById('theme-btn'); if (tb) tb.textContent=dark?'☀️':'🌙';
+  const dt=document.getElementById('s-dark-toggle'); if (dt) dt.classList.toggle('on',dark);
+}
+
+// ── COLOR PICKER ───────────────────────────────────
+let cpCb=null;
+function buildColorGrid() {
+  const grid=document.getElementById('cp-grid'); if (!grid||grid.children.length) return;
+  GCOLORS.forEach(c=>{
+    const b=document.createElement('button');
+    b.className='cp-sw'; b.style.background=c; b.dataset.color=c;
+    b.title=c;
+    b.onclick=()=>selectColorPicker(c);
+    grid.appendChild(b);
+  });
+}
+function showColorPicker(cb, currentColor, anchorEl) {
+  buildColorGrid();
+  cpCb=cb;
+  const modal=document.getElementById('cp-modal');
+  modal.style.display='block';
+  const ci=document.getElementById('cp-custom'); if (ci) ci.value=currentColor||'#DA7756';
+  const ch=document.getElementById('cp-hex'); if (ch) ch.textContent=currentColor||'';
+  modal.querySelectorAll('.cp-sw').forEach(sw=>sw.classList.toggle('on',sw.dataset.color===currentColor));
+}
+function selectColorPicker(color) {
+  const ch=document.getElementById('cp-hex'); if (ch) ch.textContent=color;
+  document.querySelectorAll('.cp-sw').forEach(sw=>sw.classList.toggle('on',sw.dataset.color===color));
+  if (cpCb) { cpCb(color); }
+  closeColorPicker();
+}
+function closeColorPicker() {
+  document.getElementById('cp-modal').style.display='none';
+  cpCb=null;
+}
+function exportData() {
+  const s=gs();
+  s._exportedAt=new Date().toISOString();
+  ss(s);
+  const b=new Blob([JSON.stringify(s,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.download=`moneyseed_backup_${new Date().toISOString().slice(0,10)}.json`;
+  a.href=URL.createObjectURL(b); a.click();
+  renderSettings();
+  renderHome();
+}
+function importData() {
+  const inp=document.createElement('input');
+  inp.type='file'; inp.accept='.json';
+  inp.onchange=e=>{
+    const file=e.target.files[0]; if (!file) return;
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      try {
+        const data=JSON.parse(ev.target.result);
+        if (!data.txns) throw new Error('invalid');
+        if (!confirm(`${data.txns.length}件のデータを復元します。現在のデータは上書きされます。よろしいですか？`)) return;
+        localStorage.setItem(KEY, JSON.stringify(data));
+        location.reload();
+      } catch(e) { alert('バックアップファイルが正しくありません'); }
+    };
+    reader.readAsText(file);
+  };
+  inp.click();
+}
+function clearAll() {
+  const ok1=confirm('⚠️ 全データを削除しますか？\nこの操作は取り消せません。');
+  if (!ok1) return;
+  const ok2=confirm('本当に削除しますか？\n記録・設定・目標がすべて消えます。');
+  if (ok2) { localStorage.removeItem(KEY); location.reload(); }
+}
+
+// ── ONBOARDING ─────────────────────────────────────
+function initOnboarding() {
+  const s=gs();
+  const ob=document.getElementById('ob-overlay');
+  // 既存ユーザー（txnsあり or 明示的にonboarded済み）はスキップ
+  if (s.onboarded || s.txns.length>0) { ob.style.display='none'; return; }
+  ob.style.display='flex';
+}
+function obStep(n) {
+  [1,2,3].forEach(i=>{
+    const el=document.getElementById('ob-'+i);
+    if (el) el.style.display=i===n?'block':'none';
+  });
+  if (n===2) {
+    const s=gs();
+    const inp=document.getElementById('ob-sal');
+    if (inp && s.settings.salary) inp.value=s.settings.salary;
+  }
+  if (n===3) {
+    const sal=parseInt(document.getElementById('ob-sal')?.value);
+    if (sal) { const s=gs(); s.settings.salary=sal; ss(s); }
+  }
+}
+function obSkip() {
+  const s=gs(); s.onboarded=true; ss(s);
+  const ob=document.getElementById('ob-overlay');
+  ob.style.opacity='0';
+  setTimeout(()=>{ ob.style.display='none'; },300);
+}
+function obFinish(dest) {
+  const s=gs(); s.onboarded=true; ss(s);
+  const ob=document.getElementById('ob-overlay');
+  ob.style.opacity='0';
+  setTimeout(()=>{ ob.style.display='none'; nav(dest); },300);
+}
+
+// ── NOTIFICATIONS ──────────────────────────────────
+async function toggleNotifications() {
+  const s=gs();
+  if (s.settings.notifications) {
+    s.settings.notifications=false; ss(s); renderSettings(); return;
+  }
+  if (!('Notification' in window)) {
+    alert('このブラウザは通知に対応していません'); return;
+  }
+  const perm=await Notification.requestPermission();
+  if (perm==='granted') {
+    s.settings.notifications=true; ss(s);
+    scheduleReminder();
+    renderSettings();
+  } else {
+    alert('通知が許可されませんでした。\nブラウザの設定から許可してください。');
+  }
+}
+let reminderTimer=null;
+function scheduleReminder() {
+  const s=gs();
+  if (!s.settings.notifications || Notification.permission!=='granted') return;
+  if (reminderTimer) clearTimeout(reminderTimer);
+  const [hh,mm]=(s.settings.notifTime||'21:00').split(':').map(Number);
+  const now=new Date(), target=new Date();
+  target.setHours(hh,mm,0,0);
+  if (target<=now) target.setDate(target.getDate()+1);
+  const ms=target-now;
+  reminderTimer=setTimeout(()=>{
+    const today=new Date().toISOString().slice(0,10);
+    const s2=gs();
+    const hasToday=s2.txns.some(t=>t.date===today);
+    if (!hasToday && s2.settings.notifications) {
+      new Notification('Money Seed 🌱',{body:'今日の支出をまだ記録していません 📝',tag:'daily-reminder'});
     }
     scheduleReminder();
   },ms);
@@ -834,13 +1410,13 @@ function saveNotifTime() {
   scheduleReminder();
 }
 
-// ââ FIXED EXPENSES âââââââââââââââââââââââââââââââââ
+// ── FIXED EXPENSES ─────────────────────────────────
 function toggleFixedSection() {
   const sec=document.getElementById('fix-section');
   const btn=document.getElementById('fix-toggle-btn');
   const open=sec.style.display!=='none';
   sec.style.display=open?'none':'block';
-  btn.textContent=open?'â¼ å±é':'â² éãã';
+  btn.textContent=open?'▼ 展開':'▲ 閉じる';
   if (!open) {
     const s=gs();
     const sel=document.getElementById('fix-cat');
@@ -856,18 +1432,18 @@ function renderFixedList(s) {
       <div class="sb">
         <div>
           <div style="font-size:14px;font-weight:500;">${fe.name}</div>
-          <div style="font-size:12px;color:var(--t2);">æ¯æ${fe.day}æ¥ Â· Â¥${fe.amount.toLocaleString()} Â· ${fe.cat}</div>
+          <div style="font-size:12px;color:var(--t2);">毎月${fe.day}日 · ¥${fe.amount.toLocaleString()} · ${fe.cat}</div>
         </div>
-        <button class="btn btn-sm btn-d" style="padding:4px 8px;" onclick="deleteFixed('${fe.id}')">Ã</button>
+        <button class="btn btn-sm btn-d" style="padding:4px 8px;" onclick="deleteFixed('${fe.id}')">×</button>
       </div>
-    </div>`).join('') : '<div class="hint" style="font-size:12px;">åºå®è²»ã¯ã¾ã ããã¾ãã</div>';
+    </div>`).join('') : '<div class="hint" style="font-size:12px;">固定費はまだありません</div>';
 }
 function addFixedExpense() {
   const name=(document.getElementById('fix-name')?.value||'').trim();
   const amt=parseInt(document.getElementById('fix-amt')?.value)||0;
   const day=parseInt(document.getElementById('fix-day')?.value)||1;
-  const cat=document.getElementById('fix-cat')?.value||'ãã®ä»';
-  if (!name||!amt) { alert('åç§°ã¨éé¡ãå¥åãã¦ãã ãã'); return; }
+  const cat=document.getElementById('fix-cat')?.value||'その他';
+  if (!name||!amt) { alert('名称と金額を入力してください'); return; }
   const s=gs();
   if (!s.fixedExpenses) s.fixedExpenses=[];
   s.fixedExpenses.push({id:'fx'+Date.now(),name,amount:amt,cat,day:Math.min(28,Math.max(1,day))});
@@ -896,7 +1472,7 @@ function applyFixedExpenses(s) {
   return changed;
 }
 
-// ââ NAV ââââââââââââââââââââââââââââââââââââââââââââ
+// ── NAV ────────────────────────────────────────────
 function nav(p) {
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('.nv').forEach(el=>el.classList.remove('on'));
@@ -910,7 +1486,7 @@ function nav(p) {
   if (p==='settings') renderSettings();
 }
 
-// ââ INIT âââââââââââââââââââââââââââââââââââââââââââ
+// ── INIT ───────────────────────────────────────────
 if (!CanvasRenderingContext2D.prototype.roundRect) {
   CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){
     this.beginPath();this.moveTo(x+r,y);this.lineTo(x+w-r,y);this.quadraticCurveTo(x+w,y,x+w,y+r);
