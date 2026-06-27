@@ -895,11 +895,13 @@ function projDiff(s) {
   return last>0 ? proj-last : 0;
 }
 function tickStreak(s) {
+  // 今日の日付で記録した時だけインクリメント（renderHomeからは呼ばない）
   const today=new Date().toISOString().slice(0,10);
-  if (s.streak.last===today) return;
+  if (s.streak.last===today) return; // 今日すでに済み
   const yd=new Date(Date.now()-86400000).toISOString().slice(0,10);
   s.streak.count = s.streak.last===yd ? s.streak.count+1 : 1;
-  s.streak.last=today; ss(s);
+  s.streak.last=today;
+  // ss() は呼び出し元 (addRecord) で行う
 }
 
 // ── HOME ───────────────────────────────────────────
@@ -907,7 +909,6 @@ function renderHome() {
   const s=gs(), now=new Date(), ym=now.toISOString().slice(0,7);
   const MN=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
   document.getElementById('h-ym').textContent=`${now.getFullYear()}年${MN[now.getMonth()]}`;
-  tickStreak(s);
   const streakCount=s.streak.count;
   const seedEmoji=streakCount>=14?'🌳':streakCount>=7?'🪴':streakCount>=3?'🌿':streakCount>=1?'🌱':'';
   document.getElementById('h-streak').textContent=streakCount>0?`${seedEmoji} ${streakCount}日連続！`:'';
@@ -1105,7 +1106,10 @@ function addRecord() {
   const s=gs(), memo=document.getElementById('r-memo').value, date=document.getElementById('r-date').value||new Date().toISOString().slice(0,10);
   const catColor=(s.cats[selCat]?.color)||'var(--ac)';
   s.txns.push({ id:`${Date.now()}`, date, name:memo||selCat, amount:amt, type:'expense', cat:selCat, sub:selSub, src:'manual' });
-  s.streak.last=date; ss(s);
+  // 今日の日付の記録のみ streak を進める
+  const today=new Date().toISOString().slice(0,10);
+  if (date===today) tickStreak(s);
+  ss(s);
   haptic(40);
   showSaveAnim(catColor);
   curAmt='';
@@ -2351,8 +2355,9 @@ function renderDayPicker() {
   const base=inp.value?new Date(inp.value+'T00:00:00'):new Date();
   const yr=base.getFullYear(), mo=base.getMonth(), selDay=base.getDate();
   const daysInMonth=new Date(yr,mo+1,0).getDate();
+  const dow=['日','月','火','水','木','金','土'][base.getDay()];
   const dispEl=document.getElementById('r-date-disp');
-  if(dispEl) dispEl.textContent=`${yr}年${mo+1}月`;
+  if(dispEl) dispEl.innerHTML=`<span style="color:var(--t);font-size:15px;font-weight:700;">${yr}年${mo+1}月${selDay}日</span><span style="font-size:12px;color:var(--t2);margin-left:4px;">（${dow}）</span>`;
   const grid=document.getElementById('r-day-grid');
   if(!grid) return;
   let html='';
@@ -2360,8 +2365,6 @@ function renderDayPicker() {
     const on=i===selDay;
     html+=`<button onclick="pickDay(${i})" style="min-width:30px;padding:6px 2px;font-size:12px;font-weight:${on?'700':'500'};border-radius:5px;border:1px solid ${on?'transparent':'var(--d)'};background:${on?'var(--ac)':'var(--sf2)'};color:${on?'#fff':'var(--t3)'};cursor:pointer;font-family:inherit;text-align:center;">${i}</button>`;
   }
-  const lastOn=selDay===daysInMonth;
-  html+=`<button onclick="setDateLastDay()" style="padding:6px 8px;font-size:12px;font-weight:${lastOn?'700':'500'};border-radius:5px;border:1px solid ${lastOn?'transparent':'var(--d)'};background:${lastOn?'var(--ac)':'var(--sf2)'};color:${lastOn?'#fff':'var(--t2)'};cursor:pointer;font-family:inherit;">月末</button>`;
   grid.innerHTML=html;
 }
 
