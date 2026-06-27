@@ -1142,24 +1142,23 @@ function renderSettingsCats(s) {
   const el=document.getElementById('s-cats');
   el.innerHTML=Object.entries(s.cats).map(([c,cfg])=>`
     <div style="border:1px solid var(--d);border-radius:var(--r);padding:12px;margin-bottom:8px;" id="ccard-${CSS.escape(c)}">
-      <div class="sb">
-        <div class="row" style="gap:8px;flex:1;">
-          <span class="dot" style="background:${cfg.color};width:14px;height:14px;cursor:pointer;flex-shrink:0;"
-            onclick="showColorPicker(function(col){setCatColor('${c}',col);}, '${cfg.color}', this)"></span>
-          <span style="font-weight:500;cursor:pointer;" onclick="toggleCatEdit('${c}')">${c}</span>
+      <div class="sb" style="margin-bottom:10px;">
+        <div class="row" style="gap:8px;flex:1;min-width:0;">
+          <button onclick="showColorPicker(function(col){setCatColor('${c}',col);}, '${cfg.color}', this)"
+            style="width:28px;height:28px;border-radius:6px;background:${cfg.color};border:2px solid var(--d2);cursor:pointer;flex-shrink:0;" title="カラーを変更"></button>
+          <span style="font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c}</span>
         </div>
-        <div class="row" style="gap:4px;">
-          <button class="btn btn-sm btn-g" style="padding:4px 8px;" onclick="adjustCatAmt('${c}',-1000)">−</button>
-          <span style="font-size:14px;font-weight:600;min-width:70px;text-align:center;" id="ci-disp-${c}">¥${cfg.amount.toLocaleString()}</span>
-          <button class="btn btn-sm btn-g" style="padding:4px 8px;" onclick="adjustCatAmt('${c}',1000)">＋</button>
-          <button class="btn btn-sm btn-d" style="padding:4px 8px;font-size:12px;margin-left:4px;" onclick="deleteCat('${c}')">×</button>
-        </div>
+        <button class="btn btn-sm btn-d" style="padding:4px 10px;font-size:12px;margin-left:8px;flex-shrink:0;" onclick="deleteCat('${c}')">削除</button>
       </div>
-      <div id="cedit-${CSS.escape(c)}" style="display:none;margin-top:10px;">
-        <div class="lbl">予算額（直接入力）</div>
-        <input type="number" id="ci-${c}" value="${cfg.amount}" style="margin-bottom:10px;" onchange="saveCatAmount('${c}')">
-        <div class="lbl">サブカテゴリ</div>
-        <div id="subs-${CSS.escape(c)}" style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">
+      <div class="lbl" style="margin-bottom:4px;">月間予算（円）</div>
+      <div class="row" style="gap:6px;">
+        <input type="number" id="ci-${c}" value="${cfg.amount}" min="0" step="500"
+          style="flex:1;text-align:right;" oninput="saveCatAmount('${c}')">
+        <span style="color:var(--t2);font-size:13px;white-space:nowrap;">円 / 月</span>
+      </div>
+      <div style="margin-top:10px;">
+        <div class="lbl" style="margin-bottom:4px;">サブカテゴリ</div>
+        <div id="subs-${CSS.escape(c)}" style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;">
           ${(cfg.subs||[]).map(sub=>`<span class="tag">${sub}<button onclick="removeSub('${c}','${sub}')" style="margin-left:4px;background:none;border:none;cursor:pointer;color:var(--t2);font-size:12px;">×</button></span>`).join('')}
         </div>
         <div class="row" style="gap:6px;">
@@ -1168,14 +1167,24 @@ function renderSettingsCats(s) {
         </div>
       </div>
     </div>`).join('') +
-    `<div class="fix-sec" id="new-cat-form" style="display:none;">
-      <div class="lbl">カテゴリ名</div>
-      <input type="text" id="new-cat-name" placeholder="例：交際費" style="margin-bottom:6px;">
-      <div class="lbl">予算額</div>
-      <input type="number" id="new-cat-amt" placeholder="5000" style="margin-bottom:6px;">
-      <button class="btn btn-p btn-full btn-sm" onclick="confirmAddCat()">追加する</button>
-      <button class="btn btn-g btn-full btn-sm" onclick="document.getElementById('new-cat-form').style.display='none'" style="margin-top:4px;">キャンセル</button>
+    `<div style="border:1px dashed var(--d2);border-radius:var(--r);padding:14px;" id="new-cat-form" style="display:none;">
+      <div class="lbl">新しいカテゴリ</div>
+      <div class="row" style="gap:8px;margin-bottom:8px;">
+        <button id="new-cat-color-btn" onclick="showColorPicker(function(c){document.getElementById('new-cat-color-btn').style.background=c;document.getElementById('new-cat-color-val').value=c;}, '#DA7756', this)"
+          style="width:36px;height:36px;border-radius:8px;background:#DA7756;border:2px solid var(--d2);cursor:pointer;flex-shrink:0;" title="カラーを選ぶ"></button>
+        <input type="hidden" id="new-cat-color-val" value="#DA7756">
+        <input type="text" id="new-cat-name" placeholder="カテゴリ名（例：交際費）" style="flex:1;">
+      </div>
+      <div class="lbl" style="margin-bottom:4px;">月間予算（円）</div>
+      <input type="number" id="new-cat-amt" placeholder="例：5000" style="margin-bottom:10px;">
+      <div class="row" style="gap:6px;">
+        <button class="btn btn-p btn-sm" style="flex:1;" onclick="confirmAddCat()">追加する</button>
+        <button class="btn btn-g btn-sm" style="flex:1;" onclick="document.getElementById('new-cat-form').style.display='none'">キャンセル</button>
+      </div>
     </div>`;
+  // Show new-cat-form with correct initial display
+  const form=document.getElementById('new-cat-form');
+  if(form) form.style.display='none';
 }
 function toggleCatEdit(c) {
   const el=document.getElementById(`cedit-${CSS.escape(c)}`);
@@ -1185,12 +1194,16 @@ function toggleCatEdit(c) {
 }
 function saveCatAmount(c) {
   const s=gs(), inp=document.getElementById(`ci-${c}`);
-  if (inp && s.cats[c]) { s.cats[c].amount=parseInt(inp.value)||0; ss(s); }
+  if (inp && s.cats[c]) { s.cats[c].amount=parseInt(inp.value)||0; ss(s); renderRecord && renderRecord(); }
 }
 function setCatColor(c, color) {
   const s=gs(); if (!s.cats[c]) return;
   s.cats[c].color=color; ss(s);
-  const dot=document.querySelector(`#ccard-${CSS.escape(c)} .dot`); if (dot) dot.style.background=color;
+  // カードのカラーボタンを即時更新
+  const btn=document.querySelector(`#ccard-${CSS.escape(c)} button[title="カラーを変更"]`);
+  if (btn) btn.style.background=color;
+  // 記録画面のチップも即時更新
+  renderCatChips && renderCatChips(gs());
 }
 function adjustCatAmt(c, delta) {
   const s=gs(); if (!s.cats[c]) return;
@@ -1225,9 +1238,10 @@ function confirmAddCat() {
   const name=(document.getElementById('new-cat-name')?.value||'').trim();
   if (!name) { alert('カテゴリ名を入力してください'); return; }
   const amt=parseInt(document.getElementById('new-cat-amt')?.value)||3000;
+  const color=document.getElementById('new-cat-color-val')?.value||'#DA7756';
   const s=gs();
   if (s.cats[name]) { alert('同じ名前のカテゴリが既にあります'); return; }
-  s.cats[name]={ amount:amt, color:'#DA7756', subs:[] };
+  s.cats[name]={ amount:amt, color, subs:[] };
   ss(s); renderSettingsCats(s);
 }
 function saveCatsAll() {
