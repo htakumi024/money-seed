@@ -257,11 +257,20 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
         <div style="font-weight:600;" id="imp-det"></div>
         <div class="hint" id="imp-cnt"></div>
       </div>
-      <button class="btn btn-p btn-sm" onclick="doImport()">取り込む</button>
+      <button class="btn btn-p btn-sm" onclick="doImport()">照合して取り込む ✨</button>
+    </div>
+    <div id="imp-merge-preview" style="display:none;margin-bottom:10px;padding:10px;background:var(--oks);border-radius:6px;border:1px solid var(--ok);">
+      <div style="font-size:13px;font-weight:600;color:var(--ok);" id="imp-merge-msg"></div>
+      <div style="font-size:12px;color:var(--t2);margin-top:3px;" id="imp-merge-sub"></div>
     </div>
     <div style="overflow:auto;max-height:240px;">
       <table id="imp-tbl"><thead><tr><th>日付</th><th>内容</th><th style="text-align:right;">金額</th><th>カテゴリ</th></tr></thead><tbody></tbody></table>
     </div>
+  </div>
+
+  <div class="card" id="imp-result" style="display:none;">
+    <div style="font-size:15px;font-weight:700;margin-bottom:8px;">✅ 精算レポート</div>
+    <div id="imp-result-body"></div>
   </div>
 
   <div class="card">
@@ -429,6 +438,14 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
     <div id="s-backup-info" class="hint" style="margin-bottom:12px;font-size:12px;"></div>
     <button class="btn btn-full" onclick="exportData()" style="margin-bottom:8px;">📤 バックアップを保存（JSON）</button>
     <button class="btn btn-full" onclick="importData()">📥 バックアップから復元</button>
+  </div>
+
+  <!-- AI解析用エクスポート -->
+  <div class="card">
+    <div class="section-hd">🤖 AI解析用エクスポート</div>
+    <div class="hint" style="margin-bottom:12px;font-size:12px;">ChatGPT / Claudeのデータ分析に最適化した構造化データを出力します。</div>
+    <button class="btn btn-full" onclick="exportForAI('csv')" style="margin-bottom:8px;">📊 CSV形式でエクスポート</button>
+    <button class="btn btn-full" onclick="exportForAI('json')">🧠 JSON形式でエクスポート</button>
   </div>
 
   <!-- Fixed Expenses -->
@@ -612,11 +629,16 @@ function budgetColor(pct, catColor) {
 }
 
 function showSaveAnim(color) {
+  const s=gs();
+  const streak=s.streak.count||0;
+  const seedEmoji=streak>=14?'🌳':streak>=7?'🪴':streak>=3?'🌿':streak>=1?'🌱':'✓';
   const el=document.createElement('div');
-  el.style.cssText='position:fixed;inset:0;z-index:999;pointer-events:none;display:flex;align-items:center;justify-content:center;';
-  el.innerHTML=`<div style="width:76px;height:76px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-size:34px;animation:saveFlash .65s ease forwards;">✓</div>`;
+  el.style.cssText='position:fixed;inset:0;z-index:999;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;';
+  el.innerHTML=`
+    <div style="width:80px;height:80px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-size:38px;animation:saveFlash .7s ease forwards;">${seedEmoji}</div>
+    <div style="font-size:13px;font-weight:700;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.4);animation:saveFlash .7s ease forwards;">記録完了！</div>`;
   document.body.appendChild(el);
-  setTimeout(()=>el.remove(), 700);
+  setTimeout(()=>el.remove(), 750);
 }
 
 function padAdd(v) {
@@ -1042,12 +1064,34 @@ function showPrev() {
   document.getElementById('imp-det').textContent=`自動判別：フォーマット ${pendingBank}`;
   document.getElementById('imp-cnt').textContent=`${pending.length} 件を検出`;
   document.getElementById('imp-prev').style.display='block';
+  document.getElementById('imp-result').style.display='none';
+
+  // 照合プレビュー（手入力 ↔ CSV の日付+金額一致）
+  const manualKeys=new Set(s.txns.filter(t=>t.src==='manual'&&t.type==='expense').map(t=>`${t.date}_${t.amount}`));
+  const strictKeys=new Set(s.txns.map(t=>`${t.date}_${t.amount}_${t.name}`));
+  let matchCount=0;
+  pending.forEach(t=>{
+    if (manualKeys.has(`${t.date}_${t.amount}`)&&!strictKeys.has(`${t.date}_${t.amount}_${t.name}`)) matchCount++;
+  });
+  const mpEl=document.getElementById('imp-merge-preview');
+  const mmEl=document.getElementById('imp-merge-msg');
+  const msEl=document.getElementById('imp-merge-sub');
+  if (matchCount>0) {
+    mpEl.style.display='block';
+    mmEl.textContent=`✨ ${matchCount}件の手入力と照合できます`;
+    msEl.textContent='「照合して取り込む」でメモが自動確定 → CSVと統合されます';
+  } else {
+    mpEl.style.display='none';
+  }
+
   const tbody=document.querySelector('#imp-tbl tbody'); tbody.innerHTML='';
   pending.slice(0,60).forEach(t=>{
     const cfg=s.cats[t.cat]||{color:'#AFACA7'};
+    const isMatch=manualKeys.has(`${t.date}_${t.amount}`);
     const tr=document.createElement('tr');
+    tr.style.background=isMatch?'var(--oks)':'';
     tr.innerHTML=`<td style="white-space:nowrap;">${t.date}</td>
-      <td style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${t.name}</td>
+      <td style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${t.name}${isMatch?'<span style="margin-left:4px;font-size:10px;color:var(--ok);">✓手入力と照合</span>':''}</td>
       <td style="text-align:right;${t.type==='income'?'color:var(--ok)':''};">¥${t.amount.toLocaleString()}</td>
       <td><span class="dot" style="background:${cfg.color};margin-right:4px;"></span>${t.cat}</td>`;
     tbody.appendChild(tr);
@@ -1055,14 +1099,58 @@ function showPrev() {
 }
 function doImport() {
   if (!pending.length) return;
-  const s=gs(), ex=new Set(s.txns.map(t=>t.date+t.name+t.amount));
-  let added=0;
-  for (const t of pending) { if (!ex.has(t.date+t.name+t.amount)) { s.txns.push(t); added++; } }
+  const s=gs();
+
+  // スマート照合エンジン
+  // manual × CSV: 日付+金額一致 → 手入力を「照合済み」にマーク、CSV側は新規追加しない
+  const manualByKey={};
+  s.txns.filter(t=>t.src==='manual'&&t.type==='expense').forEach(t=>{
+    const k=`${t.date}_${t.amount}`;
+    if (!manualByKey[k]) manualByKey[k]=t;
+  });
+  const strictEx=new Set(s.txns.map(t=>`${t.date}_${t.amount}_${t.name}`));
+
+  let added=0, reconciled=0, skipped=0;
+  for (const t of pending) {
+    const strictKey=`${t.date}_${t.amount}_${t.name}`;
+    if (strictEx.has(strictKey)) { skipped++; continue; } // 完全重複
+    const matchKey=`${t.date}_${t.amount}`;
+    if (manualByKey[matchKey] && !manualByKey[matchKey].reconciled) {
+      // 手入力をCSVで確定済みにマーク
+      manualByKey[matchKey].reconciled=true;
+      manualByKey[matchKey].csvName=t.name; // CSV側の店名を保存
+      reconciled++;
+    } else {
+      s.txns.push({...t, id:`${Date.now()}_${Math.random()}`}); added++;
+    }
+  }
   ss(s); pending=[]; pendingBank='';
   document.getElementById('imp-prev').style.display='none';
   document.getElementById('fIn').value='';
   refreshMonths(); renderHome();
-  alert(`${added} 件を取り込みました`);
+
+  // 精算レポート表示
+  const resEl=document.getElementById('imp-result');
+  const resBody=document.getElementById('imp-result-body');
+  resEl.style.display='block';
+  resBody.innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;">
+      <div style="text-align:center;padding:10px;background:var(--oks);border-radius:8px;">
+        <div style="font-size:22px;font-weight:800;color:var(--ok);">${reconciled}</div>
+        <div style="font-size:11px;color:var(--t2);margin-top:2px;">照合済み</div>
+      </div>
+      <div style="text-align:center;padding:10px;background:var(--acs);border-radius:8px;">
+        <div style="font-size:22px;font-weight:800;color:var(--ac);">${added}</div>
+        <div style="font-size:11px;color:var(--t2);margin-top:2px;">新規追加</div>
+      </div>
+      <div style="text-align:center;padding:10px;background:var(--sf2);border-radius:8px;">
+        <div style="font-size:22px;font-weight:800;color:var(--t2);">${skipped}</div>
+        <div style="font-size:11px;color:var(--t2);margin-top:2px;">重複スキップ</div>
+      </div>
+    </div>
+    ${reconciled>0?`<div style="font-size:12px;color:var(--t2);background:var(--oks);border-radius:6px;padding:8px 10px;">🌱 ${reconciled}件のメモがCSVと照合され確定されました。重複は自動削除されています。</div>`:''}
+  `;
+  haptic(30);
 }
 function refreshMonths() {
   const s=gs();
@@ -1174,13 +1262,16 @@ function renderDailyBreakdown() {
     const dayNum=d.getDate();
     const itemsHtml=data.items.sort((a,b)=>b.amount-a.amount).map(t=>{
       const cfg=s.cats[t.cat]||{color:'#AFACA7'};
-      const label=[t.cat,t.sub,t.memo].filter(Boolean).join(' › ');
-      return `<div class="sb" style="padding:4px 0;">
+      const label=[t.cat,t.sub,t.name&&t.name!==t.cat?t.name:''].filter(Boolean).join(' › ');
+      return `<div class="sb" style="padding:4px 0;" id="rp-txn-${t.id}">
         <div class="row" style="gap:5px;flex:1;min-width:0;">
           <span style="width:8px;height:8px;border-radius:50%;background:${cfg.color};flex-shrink:0;display:inline-block;"></span>
           <span style="font-size:12px;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${label}</span>
         </div>
-        <span style="font-size:12px;font-weight:600;flex-shrink:0;margin-left:8px;">¥${t.amount.toLocaleString()}</span>
+        <div class="row" style="gap:6px;flex-shrink:0;margin-left:8px;">
+          <span style="font-size:12px;font-weight:600;">¥${t.amount.toLocaleString()}</span>
+          <button onclick="deleteRpTxn('${t.id}')" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--t3);padding:0 2px;" title="削除">✕</button>
+        </div>
       </div>`;
     }).join('');
     return `<div style="padding:10px 0;border-bottom:1px solid var(--d);">
@@ -1191,6 +1282,11 @@ function renderDailyBreakdown() {
       ${itemsHtml}
     </div>`;
   }).join('')||'<div class="hint" style="text-align:center;padding:20px;">データがありません</div>';
+}
+function deleteRpTxn(id) {
+  if (!confirm('この記録を削除しますか？')) return;
+  const s=gs(); s.txns=s.txns.filter(t=>t.id!==id); ss(s);
+  renderReport(); renderHome();
 }
 function renderCalendar(s, ym) {
   const hdsEl=document.getElementById('rp-cal-hds'), calEl=document.getElementById('rp-cal');
@@ -1608,6 +1704,45 @@ function closeColorPicker() {
   document.getElementById('cp-modal').style.display='none';
   cpCb=null;
 }
+function exportForAI(fmt) {
+  const s=gs();
+  const now=new Date(), ym=now.toISOString().slice(0,7);
+  // 全トランザクションを整形
+  const txns=s.txns.map(t=>({
+    date:t.date, category:t.cat, subcategory:t.sub||'', memo:t.name||'',
+    amount:t.amount, type:t.type||'expense',
+    source:t.src||'manual', reconciled:t.reconciled||false
+  })).sort((a,b)=>a.date.localeCompare(b.date));
+
+  // 月次サマリー
+  const months={};
+  txns.filter(t=>t.type==='expense').forEach(t=>{
+    const m=t.date.slice(0,7);
+    if(!months[m]) months[m]={total:0,cats:{}};
+    months[m].total+=t.amount;
+    months[m].cats[t.category]=(months[m].cats[t.category]||0)+t.amount;
+  });
+
+  if (fmt==='csv') {
+    const rows=[['日付','カテゴリ','サブカテゴリ','メモ','金額','種別','入力元','照合済み']];
+    txns.forEach(t=>rows.push([t.date,t.category,t.subcategory,t.memo,t.amount,t.type,t.source,t.reconciled?'YES':'NO']));
+    const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+    const bom='﻿';
+    const b=new Blob([bom+csv],{type:'text/csv;charset=utf-8'});
+    const a=document.createElement('a'); a.download=`moneyseed_ai_${ym}.csv`; a.href=URL.createObjectURL(b); a.click();
+  } else {
+    const payload={
+      exportedAt:new Date().toISOString(),
+      summary:{salary:s.settings.salary||0, months},
+      budgets:Object.fromEntries(Object.entries(s.cats).map(([c,cfg])=>([c,{budget:cfg.amount,color:cfg.color}]))),
+      goals:s.goals||[],
+      transactions:txns
+    };
+    const b=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+    const a=document.createElement('a'); a.download=`moneyseed_ai_${ym}.json`; a.href=URL.createObjectURL(b); a.click();
+  }
+}
+
 function exportData() {
   const s=gs();
   s._exportedAt=new Date().toISOString();
