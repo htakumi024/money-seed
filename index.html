@@ -12,7 +12,68 @@
 <title>Money Seed</title>
 <link rel="icon" href="icon.png">
 <link rel="apple-touch-icon" href="icon.png">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js">
+// ── CATEGORY MODAL ─────────────────────────────────────────────
+function showCatModal() {
+  const m=document.getElementById('cat-add-modal');
+  m.style.display='flex';
+  setTimeout(()=>document.getElementById('modal-cat-name')?.focus(),80);
+}
+function closeCatModal() {
+  document.getElementById('cat-add-modal').style.display='none';
+}
+function confirmAddCatModal() {
+  const name=(document.getElementById('modal-cat-name')?.value||'').trim();
+  if (!name) { alert('カテゴリ名を入力してください'); return; }
+  const amt=parseInt(document.getElementById('modal-cat-amt')?.value)||3000;
+  const s=gs();
+  if (s.cats[name]) { alert('同じ名前のカテゴリがすでにあります'); return; }
+  s.cats[name]={amount:amt,color:'#DA7756',subs:[]};
+  ss(s); selCat=name; closeCatModal();
+  document.getElementById('modal-cat-name').value='';
+  document.getElementById('modal-cat-amt').value='';
+  renderRecord(); renderSettingsCats(gs());
+}
+
+// ── SWIPE TO DELETE ─────────────────────────────────────────────
+const _sw={};
+function swStart(e,id){
+  _sw[id]={x:e.touches[0].clientX,open:!!_sw[id]?.open};
+  const el=document.querySelector(`#sw-${CSS.escape(id)} .swipe-inner`);
+  if(el) el.style.transition='none';
+}
+function swMove(e,id){
+  const d=_sw[id]; if(!d) return;
+  const dx=e.touches[0].clientX-d.x;
+  const base=d.open?-76:0;
+  const x=Math.max(-76,Math.min(0,base+dx));
+  _sw[id].cur=x;
+  const el=document.querySelector(`#sw-${CSS.escape(id)} .swipe-inner`);
+  if(el) el.style.transform=`translateX(${x}px)`;
+}
+function swEnd(e,id){
+  const d=_sw[id]; if(!d) return;
+  const cur=d.cur??0;
+  const open=cur<-38;
+  _sw[id].open=open;
+  const el=document.querySelector(`#sw-${CSS.escape(id)} .swipe-inner`);
+  if(el){el.style.transition='transform .2s';el.style.transform=open?'translateX(-76px)':'translateX(0)';}
+  // Close all others
+  if(open) Object.keys(_sw).forEach(k=>{
+    if(k!==id&&_sw[k]?.open){
+      _sw[k].open=false;
+      const o=document.querySelector(`#sw-${CSS.escape(k)} .swipe-inner`);
+      if(o){o.style.transition='transform .2s';o.style.transform='translateX(0)';}
+    }
+  });
+}
+function confirmDeleteTxn(id){
+  if(!confirm('この記録を削除しますか？')) return;
+  const s=gs(); s.txns=s.txns.filter(t=>t.id!==id); ss(s);
+  renderTodayList(); renderHome();
+}
+
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -101,6 +162,11 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
 .score-num{font-size:68px;font-weight:800;letter-spacing:-3px;line-height:1;}
 .tag{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:4px;font-size:12px;background:var(--sf2);border:1px solid var(--d);color:var(--t2);}
 .section-hd{font-size:13px;font-weight:600;color:var(--t2);margin-bottom:10px;}
+
+.swipe-wrap{position:relative;overflow:hidden;margin-bottom:6px;border-radius:var(--r);}
+.swipe-del{position:absolute;right:0;top:0;bottom:0;width:76px;background:var(--err);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:600;cursor:pointer;border-radius:0 var(--r) var(--r) 0;}
+.swipe-inner{position:relative;background:var(--sf);border:1px solid var(--d);border-radius:var(--r);padding:10px 14px;touch-action:pan-y;}
+
 </style>
 </head>
 <body>
@@ -320,7 +386,7 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
       </div>
       <button class="toggle" id="s-notif-toggle" onclick="toggleNotifications()"></button>
     </div>
-    <div id="s-notif-time-row" style="display:none;">
+    <div id="s-notif-time-row">
       <div class="lbl">通知時刻</div>
       <input type="time" id="s-notif-time" value="21:00" style="width:auto;" onchange="saveNotifTime()">
     </div>
@@ -744,7 +810,7 @@ function renderCatChips(s) {
   document.getElementById('r-cats').innerHTML=Object.entries(s.cats).map(([c,cfg])=>
     `<button class="chip${c===selCat?' on':''}" onclick="pickCat('${c}')" style="${c===selCat?'':'border-left:3px solid '+cfg.color+'!important'}">
       <span class="dot" style="background:${cfg.color};margin-right:4px;"></span>${c}
-    </button>`).join('');
+    </button>`).join('')+'<button class="chip" onclick="showCatModal()" style="border-style:dashed;color:var(--t2);">＋</button>';
 }
 function renderSubChips(s) {
   const cfg=s.cats[selCat]; const subs=cfg?.subs||[];
@@ -798,18 +864,22 @@ function renderTodayList() {
     </div>
     ${txns.map(t=>{
       const cfg=s.cats[t.cat]||{color:'#AFACA7'};
-      return `<div class="card" style="padding:10px 14px;margin-bottom:6px;">
-        <div class="sb">
-          <div class="row" style="gap:8px;">
-            <span class="dot" style="background:${cfg.color};"></span>
-            <div>
-              <div style="font-size:14px;font-weight:500;">${t.name||t.cat}</div>
-              <div style="font-size:11px;color:var(--t2);">${t.cat}${t.sub?' · '+t.sub:''}</div>
+      const sid=CSS.escape(t.id);
+      return `<div class="swipe-wrap" id="sw-${t.id}">
+        <div class="swipe-del" onclick="confirmDeleteTxn('${t.id}')">削除</div>
+        <div class="swipe-inner"
+          ontouchstart="swStart(event,'${t.id}')"
+          ontouchmove="swMove(event,'${t.id}')"
+          ontouchend="swEnd(event,'${t.id}')">
+          <div class="sb">
+            <div class="row" style="gap:8px;">
+              <span class="dot" style="background:${cfg.color};"></span>
+              <div>
+                <div style="font-size:14px;font-weight:500;">${t.name||t.cat}</div>
+                <div style="font-size:11px;color:var(--t2);">${t.cat}${t.sub?' · '+t.sub:''}</div>
+              </div>
             </div>
-          </div>
-          <div class="row" style="gap:8px;">
             <div style="font-size:15px;font-weight:700;color:${t.type==='income'?'var(--ok)':'var(--t)'};">${t.type==='income'?'+':''}¥${t.amount.toLocaleString()}</div>
-            <button onclick="deleteTxn('${t.id}')" style="background:none;border:none;cursor:pointer;color:var(--t3);font-size:16px;padding:2px 4px;">×</button>
           </div>
         </div>
       </div>`;
@@ -1072,7 +1142,7 @@ function renderSettings() {
     else if (notifOn) ns.textContent=`✓ 毎日${s.settings.notifTime||'21:00'}に通知します`;
     else ns.textContent='';
   }
-  const tr=document.getElementById('s-notif-time-row'); if (tr) tr.style.display=notifOn?'block':'none';
+  // notif-time-row always visible
   const ti=document.getElementById('s-notif-time'); if (ti) ti.value=s.settings.notifTime||'21:00';
   // Accent preview
   const ac=s.settings.accent||'#DA7756';
@@ -1506,5 +1576,19 @@ initOnboarding();
 scheduleReminder();
 buildColorGrid();
 </script>
+
+<!-- ── CATEGORY ADD MODAL ──────────────────────── -->
+<div id="cat-add-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:600;align-items:flex-end;justify-content:center;" onclick="if(event.target===this)closeCatModal()">
+  <div style="background:var(--sf);border-radius:16px 16px 0 0;padding:24px;width:100%;max-width:430px;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));">
+    <div style="font-size:15px;font-weight:700;margin-bottom:14px;">カテゴリを追加</div>
+    <div class="lbl">カテゴリ名</div>
+    <input type="text" id="modal-cat-name" placeholder="例：外食" style="margin-bottom:10px;">
+    <div class="lbl">月の予算（任意）</div>
+    <input type="number" id="modal-cat-amt" placeholder="例：5000" style="margin-bottom:14px;">
+    <button class="btn btn-p btn-full" onclick="confirmAddCatModal()" style="margin-bottom:8px;">追加する</button>
+    <button class="btn btn-g btn-full" onclick="closeCatModal()">キャンセル</button>
+  </div>
+</div>
+
 </body>
 </html>
