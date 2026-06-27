@@ -299,8 +299,15 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
   </div>
 
   <div class="card">
-    <div class="section-hd">内訳と予算対比</div>
+    <div class="sb" style="margin-bottom:12px;">
+      <div class="section-hd" style="margin:0;">内訳</div>
+      <div class="row" style="gap:0;border:1px solid var(--d);border-radius:6px;overflow:hidden;">
+        <button id="rp-tab-cat" onclick="switchRpTab('cat')" style="padding:5px 12px;font-size:12px;font-family:inherit;background:var(--ac);color:#fff;border:none;cursor:pointer;">カテゴリ別</button>
+        <button id="rp-tab-day" onclick="switchRpTab('day')" style="padding:5px 12px;font-size:12px;font-family:inherit;background:var(--sf2);color:var(--t2);border:none;cursor:pointer;">日付別</button>
+      </div>
+    </div>
     <div id="rp-bd"></div>
+    <div id="rp-daily" style="display:none;"></div>
   </div>
 
   <div class="card" style="text-align:center;padding:18px;">
@@ -975,7 +982,7 @@ function refreshMonths() {
 }
 
 // ── REPORT ─────────────────────────────────────────
-let rpChart=null, rpYm=null;
+let rpChart=null, rpYm=null, rpTab='cat';
 function shiftMonth(d) {
   const [y,m]=rpYm.split('-').map(Number);
   const dt=new Date(y,m-1+d,1);
@@ -1037,8 +1044,64 @@ function renderReport() {
       ${Object.keys(subRows).length?`<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;">${Object.entries(subRows).map(([sb,sa])=>`<span class="tag">${sb} ¥${sa.toLocaleString()}</span>`).join('')}</div>`:''}
     </div>`;
   }).join('')||'<div class="hint" style="text-align:center;padding:20px;">データがありません</div>';
+  // restore tab state after re-render
+  switchRpTab(rpTab);
 }
 
+function switchRpTab(tab) {
+  rpTab=tab;
+  const catBtn=document.getElementById('rp-tab-cat');
+  const dayBtn=document.getElementById('rp-tab-day');
+  const bdEl=document.getElementById('rp-bd');
+  const dailyEl=document.getElementById('rp-daily');
+  if (!catBtn||!dayBtn||!bdEl||!dailyEl) return;
+  if (tab==='cat') {
+    catBtn.style.background='var(--ac)'; catBtn.style.color='#fff';
+    dayBtn.style.background='var(--sf2)'; dayBtn.style.color='var(--t2)';
+    bdEl.style.display=''; dailyEl.style.display='none';
+  } else {
+    dayBtn.style.background='var(--ac)'; dayBtn.style.color='#fff';
+    catBtn.style.background='var(--sf2)'; catBtn.style.color='var(--t2)';
+    bdEl.style.display='none'; dailyEl.style.display='';
+    renderDailyBreakdown();
+  }
+}
+function renderDailyBreakdown() {
+  const s=gs();
+  const txns=monthTxns(s,rpYm).filter(t=>t.type==='expense'||(t.type==null&&t.amount>0));
+  const byDate={};
+  for (const t of txns) {
+    if (!byDate[t.date]) byDate[t.date]={total:0,items:[]};
+    byDate[t.date].total+=t.amount;
+    byDate[t.date].items.push(t);
+  }
+  const sorted=Object.entries(byDate).sort((a,b)=>b[0].localeCompare(a[0]));
+  const el=document.getElementById('rp-daily');
+  if (!el) return;
+  el.innerHTML=sorted.map(([date,data])=>{
+    const d=new Date(date+'T00:00:00');
+    const dow=['日','月','火','水','木','金','土'][d.getDay()];
+    const dayNum=d.getDate();
+    const itemsHtml=data.items.sort((a,b)=>b.amount-a.amount).map(t=>{
+      const cfg=s.cats[t.cat]||{color:'#AFACA7'};
+      const label=[t.cat,t.sub,t.memo].filter(Boolean).join(' › ');
+      return `<div class="sb" style="padding:4px 0;">
+        <div class="row" style="gap:5px;flex:1;min-width:0;">
+          <span style="width:8px;height:8px;border-radius:50%;background:${cfg.color};flex-shrink:0;display:inline-block;"></span>
+          <span style="font-size:12px;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${label}</span>
+        </div>
+        <span style="font-size:12px;font-weight:600;flex-shrink:0;margin-left:8px;">¥${t.amount.toLocaleString()}</span>
+      </div>`;
+    }).join('');
+    return `<div style="padding:10px 0;border-bottom:1px solid var(--d);">
+      <div class="sb" style="margin-bottom:${data.items.length?'6':'0'}px;">
+        <div style="font-size:14px;font-weight:600;">${dayNum}日（${dow}）</div>
+        <div style="font-size:15px;font-weight:700;">¥${data.total.toLocaleString()}</div>
+      </div>
+      ${itemsHtml}
+    </div>`;
+  }).join('')||'<div class="hint" style="text-align:center;padding:20px;">データがありません</div>';
+}
 function renderCalendar(s, ym) {
   const hdsEl=document.getElementById('rp-cal-hds'), calEl=document.getElementById('rp-cal');
   const days=['日','月','火','水','木','金','土'];
