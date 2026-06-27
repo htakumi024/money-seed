@@ -12,68 +12,7 @@
 <title>Money Seed</title>
 <link rel="icon" href="icon.png">
 <link rel="apple-touch-icon" href="icon.png">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js">
-// ── CATEGORY MODAL ─────────────────────────────────────────────
-function showCatModal() {
-  const m=document.getElementById('cat-add-modal');
-  m.style.display='flex';
-  setTimeout(()=>document.getElementById('modal-cat-name')?.focus(),80);
-}
-function closeCatModal() {
-  document.getElementById('cat-add-modal').style.display='none';
-}
-function confirmAddCatModal() {
-  const name=(document.getElementById('modal-cat-name')?.value||'').trim();
-  if (!name) { alert('カテゴリ名を入力してください'); return; }
-  const amt=parseInt(document.getElementById('modal-cat-amt')?.value)||3000;
-  const s=gs();
-  if (s.cats[name]) { alert('同じ名前のカテゴリがすでにあります'); return; }
-  s.cats[name]={amount:amt,color:'#DA7756',subs:[]};
-  ss(s); selCat=name; closeCatModal();
-  document.getElementById('modal-cat-name').value='';
-  document.getElementById('modal-cat-amt').value='';
-  renderRecord(); renderSettingsCats(gs());
-}
-
-// ── SWIPE TO DELETE ─────────────────────────────────────────────
-const _sw={};
-function swStart(e,id){
-  _sw[id]={x:e.touches[0].clientX,open:!!_sw[id]?.open};
-  const el=document.querySelector(`#sw-${CSS.escape(id)} .swipe-inner`);
-  if(el) el.style.transition='none';
-}
-function swMove(e,id){
-  const d=_sw[id]; if(!d) return;
-  const dx=e.touches[0].clientX-d.x;
-  const base=d.open?-76:0;
-  const x=Math.max(-76,Math.min(0,base+dx));
-  _sw[id].cur=x;
-  const el=document.querySelector(`#sw-${CSS.escape(id)} .swipe-inner`);
-  if(el) el.style.transform=`translateX(${x}px)`;
-}
-function swEnd(e,id){
-  const d=_sw[id]; if(!d) return;
-  const cur=d.cur??0;
-  const open=cur<-38;
-  _sw[id].open=open;
-  const el=document.querySelector(`#sw-${CSS.escape(id)} .swipe-inner`);
-  if(el){el.style.transition='transform .2s';el.style.transform=open?'translateX(-76px)':'translateX(0)';}
-  // Close all others
-  if(open) Object.keys(_sw).forEach(k=>{
-    if(k!==id&&_sw[k]?.open){
-      _sw[k].open=false;
-      const o=document.querySelector(`#sw-${CSS.escape(k)} .swipe-inner`);
-      if(o){o.style.transition='transform .2s';o.style.transform='translateX(0)';}
-    }
-  });
-}
-function confirmDeleteTxn(id){
-  if(!confirm('この記録を削除しますか？')) return;
-  const s=gs(); s.txns=s.txns.filter(t=>t.id!==id); ss(s);
-  renderTodayList(); renderHome();
-}
-
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -1575,6 +1514,66 @@ renderHome();
 initOnboarding();
 scheduleReminder();
 buildColorGrid();
+
+// ── CATEGORY MODAL ─────────────────────────────────────────────
+function showCatModal() {
+  const m=document.getElementById('cat-add-modal');
+  m.style.display='flex';
+  setTimeout(()=>document.getElementById('modal-cat-name')?.focus(),80);
+}
+function closeCatModal() {
+  document.getElementById('cat-add-modal').style.display='none';
+}
+function confirmAddCatModal() {
+  const name=(document.getElementById('modal-cat-name')?.value||'').trim();
+  if (!name) { alert('カテゴリ名を入力してください'); return; }
+  const amt=parseInt(document.getElementById('modal-cat-amt')?.value)||3000;
+  const s=gs();
+  if (s.cats[name]) { alert('同じ名前のカテゴリがすでにあります'); return; }
+  s.cats[name]={amount:amt,color:'#DA7756',subs:[]};
+  ss(s); selCat=name; closeCatModal();
+  document.getElementById('modal-cat-name').value='';
+  document.getElementById('modal-cat-amt').value='';
+  renderRecord(); renderSettingsCats(gs());
+}
+
+// ── SWIPE TO DELETE ─────────────────────────────────────────────
+const _sw={};
+function swStart(e,id){
+  _sw[id]={x:e.touches[0].clientX,open:!!_sw[id]?.open};
+  const el=document.querySelector('#sw-'+CSS.escape(id)+' .swipe-inner');
+  if(el) el.style.transition='none';
+}
+function swMove(e,id){
+  const d=_sw[id]; if(!d) return;
+  const dx=e.touches[0].clientX-d.x;
+  const base=d.open?-76:0;
+  const x=Math.max(-76,Math.min(0,base+dx));
+  _sw[id].cur=x;
+  const el=document.querySelector('#sw-'+CSS.escape(id)+' .swipe-inner');
+  if(el) el.style.transform='translateX('+x+'px)';
+}
+function swEnd(e,id){
+  const d=_sw[id]; if(!d) return;
+  const cur=d.cur??0;
+  const open=cur<-38;
+  _sw[id].open=open;
+  const el=document.querySelector('#sw-'+CSS.escape(id)+' .swipe-inner');
+  if(el){el.style.transition='transform .2s';el.style.transform=open?'translateX(-76px)':'translateX(0)';}
+  if(open) Object.keys(_sw).forEach(k=>{
+    if(k!==id&&_sw[k]?.open){
+      _sw[k].open=false;
+      const o=document.querySelector('#sw-'+CSS.escape(k)+' .swipe-inner');
+      if(o){o.style.transition='transform .2s';o.style.transform='translateX(0)';}
+    }
+  });
+}
+function confirmDeleteTxn(id){
+  if(!confirm('この記録を削除しますか？')) return;
+  const s=gs(); s.txns=s.txns.filter(t=>t.id!==id); ss(s);
+  renderTodayList(); renderHome();
+}
+
 </script>
 
 <!-- ── CATEGORY ADD MODAL ──────────────────────── -->
