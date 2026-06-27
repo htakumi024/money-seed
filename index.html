@@ -10,6 +10,8 @@
 <meta name="theme-color" content="#F7F7F5" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#191919" media="(prefers-color-scheme: dark)">
 <title>Money Seed</title>
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
@@ -107,7 +109,10 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
 <div class="page active" id="pg-home">
   <div class="sb" style="margin:8px 0 14px;">
     <div>
-      <div style="font-size:22px;font-weight:800;letter-spacing:-.5px;">マネスコ</div>
+      <div class="row" style="gap:8px;align-items:center;">
+        <img src="icon.png" style="width:30px;height:30px;border-radius:8px;flex-shrink:0;">
+        <div style="font-size:20px;font-weight:800;letter-spacing:-.5px;">Money Seed</div>
+      </div>
       <div class="hint" id="h-ym" style="margin-top:1px;"></div>
     </div>
     <div class="row">
@@ -434,7 +439,7 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
 
     <!-- Step 1: Welcome -->
     <div id="ob-1">
-      <div style="font-size:52px;text-align:center;margin-bottom:20px;">🌱</div>
+      <div style="text-align:center;margin-bottom:24px;"><img src="logo.png" style="width:140px;height:140px;object-fit:contain;"></div>
       <div style="font-size:26px;font-weight:800;text-align:center;margin-bottom:8px;letter-spacing:-.5px;">Money Seedへようこそ</div>
       <div class="hint" style="text-align:center;margin-bottom:32px;font-size:15px;line-height:1.7;">毎月の支出を記録して、<br>貯金体質になろう。</div>
       <button class="btn btn-p btn-full" style="font-size:16px;padding:14px;" onclick="obStep(2)">はじめる →</button>
@@ -1015,7 +1020,7 @@ function shareScore() {
   ctx.fillRect(0,0,600,380);
   ctx.textAlign='center';
   ctx.fillStyle=document.documentElement.getAttribute('data-theme')==='dark'?'#EFEFEF':'#1A1A1A';
-  ctx.font='bold 26px -apple-system,sans-serif'; ctx.fillText('マネスコ',300,64);
+  ctx.font='bold 26px -apple-system,sans-serif'; ctx.fillText('Money Seed',300,64);
   ctx.fillStyle='#787774'; ctx.font='16px -apple-system,sans-serif';
   ctx.fillText(ym.replace('-','年')+'月 健全スコア',300,96);
   const col=typeof sc==='number'?(sc>=80?'#2D9B5A':sc>=60?'#4F7CFF':sc>=40?'#E8720C':'#EB4336'):'#787774';
