@@ -310,6 +310,14 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
     <div id="rp-daily" style="display:none;"></div>
   </div>
 
+  <div class="card" style="padding:16px 16px 18px;">
+    <div class="sb" style="margin-bottom:6px;">
+      <div style="font-weight:700;font-size:15px;">✨ AIに家計を相談する</div>
+    </div>
+    <div class="hint" style="margin-bottom:14px;font-size:12px;">今月のデータをもとに、ChatGPT / Claude にそのまま貼れる分析プロンプトを生成します。APIキー不要。</div>
+    <button class="btn btn-p btn-full" onclick="showMagicPrompt()">プロンプトを生成する →</button>
+  </div>
+
   <div class="card" style="text-align:center;padding:18px;">
     <div style="font-weight:600;margin-bottom:4px;">スコアをシェア</div>
     <div class="hint" style="margin-bottom:14px;">画像として保存して友達と比べよう</div>
@@ -526,6 +534,19 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
 </div>
 
 <!-- ── COLOR PICKER ───────────────────────────────── -->
+<!-- Magic Prompt Modal -->
+<div id="magic-modal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.5);display:none;align-items:flex-end;justify-content:center;">
+  <div style="background:var(--bg);border-radius:20px 20px 0 0;padding:20px 16px 32px;width:100%;max-width:480px;max-height:80vh;display:flex;flex-direction:column;gap:12px;">
+    <div class="sb">
+      <div style="font-weight:700;font-size:16px;">✨ AIアドバイスプロンプト</div>
+      <button onclick="closeMagicPrompt()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--t2);">×</button>
+    </div>
+    <div class="hint" style="font-size:12px;">以下をコピーして ChatGPT / Claude に貼り付けてください。</div>
+    <textarea id="magic-prompt-text" readonly style="flex:1;min-height:220px;font-size:12px;line-height:1.6;padding:10px;border:1px solid var(--d);border-radius:8px;background:var(--sf2);color:var(--t);resize:none;font-family:inherit;"></textarea>
+    <button class="btn btn-p btn-full" onclick="copyMagicPrompt()" id="magic-copy-btn">📋 コピーする</button>
+  </div>
+</div>
+
 <div class="cp-modal" id="cp-modal">
   <div class="cp-bd" onclick="closeColorPicker()"></div>
   <div class="cp-box" id="cp-box">
@@ -1154,6 +1175,69 @@ function hexAlpha(hex, alpha) {
 }
 
 // ── SHARE ──────────────────────────────────────────
+function showMagicPrompt() {
+  const s=gs(), ym=rpYm||new Date().toISOString().slice(0,7);
+  const [yr,mo]=ym.split('-').map(Number);
+  const txns=monthTxns(s,ym);
+  const ct=catTotals(txns);
+  const total=txns.reduce((a,t)=>a+t.amount,0);
+  const sc=calcScore(s,ym);
+  const salary=s.settings.salary||0;
+  const streak=s.streak?.count||0;
+
+  // カテゴリ別の行を組み立て
+  const catLines=Object.entries(s.cats).map(([c,cfg])=>{
+    const spent=ct[c]||0;
+    const budget=cfg.amount||0;
+    const rem=budget-spent;
+    const pct=budget?Math.round(spent/budget*100):null;
+    const budgetStr=budget?`予算¥${budget.toLocaleString()} / 使用¥${spent.toLocaleString()} / 残¥${Math.max(0,rem).toLocaleString()}${pct!=null?' ('+pct+'%)':''}${rem<0?' ⚠️超過':''}` : `使用¥${spent.toLocaleString()}（上限未設定）`;
+    return `- ${c}: ${budgetStr}`;
+  }).filter((_,i)=>Object.values(ct)[i]!==undefined||Object.values(s.cats)[i]?.amount).join('\n');
+
+  // 目標
+  const goalLines=(s.goals||[]).map(g=>`- ${g.name}: 目標¥${g.target?.toLocaleString()} / 現在¥${(g.current||0).toLocaleString()}`).join('\n');
+
+  const prompt=`あなたは家計管理の専門家です。以下は私の${yr}年${mo}月の家計データです。分析して具体的なアドバイスをください。
+
+## 基本情報
+- 月収（手取り）: ¥${salary.toLocaleString()}
+- 今月の総支出: ¥${total.toLocaleString()}
+- 収支: ¥${(salary-total).toLocaleString()}（${salary-total>=0?'黒字':'赤字'}）
+- 健全スコア: ${sc??'未計算'} / 100
+- 連続記録: ${streak}日
+
+## カテゴリ別支出
+${catLines||'（データなし）'}
+
+${goalLines?`## 貯金目標\n${goalLines}\n`:''}
+## お願いしたいこと
+1. 今月の支出パターンの総評（良かった点・改善点）
+2. 予算オーバーのカテゴリがあれば、その具体的な削減アドバイス
+3. 来月の各カテゴリの推奨予算額
+4. 貯金目標を達成するための具体的なアクションプラン
+
+※ データはアプリ「Money Seed」から自動生成しました。`;
+
+  document.getElementById('magic-prompt-text').value=prompt;
+  document.getElementById('magic-copy-btn').textContent='📋 コピーする';
+  const modal=document.getElementById('magic-modal');
+  modal.style.display='flex';
+}
+function closeMagicPrompt() {
+  document.getElementById('magic-modal').style.display='none';
+}
+function copyMagicPrompt() {
+  const txt=document.getElementById('magic-prompt-text').value;
+  navigator.clipboard?.writeText(txt).then(()=>{
+    const btn=document.getElementById('magic-copy-btn');
+    btn.textContent='✅ コピーしました！';
+    setTimeout(()=>{ btn.textContent='📋 コピーする'; },2000);
+  }).catch(()=>{
+    document.getElementById('magic-prompt-text').select();
+    document.execCommand('copy');
+  });
+}
 function shareScore() {
   const s=gs(), ym=rpYm||new Date().toISOString().slice(0,7);
   const sc=calcScore(s,ym)??'--', st=s.streak.count;
