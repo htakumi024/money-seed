@@ -554,6 +554,44 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
 </nav>
 <canvas id="sh-c" style="display:none;"></canvas>
 
+<!-- ── EDIT TXN MODAL ── -->
+<div id="edit-txn-modal" style="display:none;position:fixed;inset:0;z-index:650;background:rgba(0,0,0,.45);align-items:flex-end;justify-content:center;" onclick="if(event.target===this)closeEditTxn()">
+  <div style="background:var(--sf);border-radius:18px 18px 0 0;padding:18px 16px calc(env(safe-area-inset-bottom,0px)+28px);width:100%;max-width:430px;max-height:88vh;overflow-y:auto;">
+    <div style="width:36px;height:4px;background:var(--d2);border-radius:99px;margin:0 auto 14px;"></div>
+    <div class="sb" style="margin-bottom:16px;">
+      <div style="font-size:17px;font-weight:700;">記録を編集</div>
+      <button onclick="closeEditTxn()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--t2);padding:0 4px;line-height:1;">×</button>
+    </div>
+    <div class="card" style="padding:14px;margin-bottom:12px;display:flex;flex-direction:column;gap:12px;">
+      <div>
+        <div class="lbl">金額</div>
+        <input id="et-amount" type="number" class="inp" placeholder="0" style="font-size:22px;font-weight:700;">
+      </div>
+      <div>
+        <div class="lbl">日付</div>
+        <input id="et-date" type="date" class="inp">
+      </div>
+      <div>
+        <div class="lbl">種別</div>
+        <select id="et-type" class="inp">
+          <option value="expense">支出</option>
+          <option value="income">収入</option>
+        </select>
+      </div>
+      <div>
+        <div class="lbl">カテゴリ</div>
+        <select id="et-cat" class="inp"></select>
+      </div>
+      <div>
+        <div class="lbl">メモ</div>
+        <input id="et-memo" type="text" class="inp" placeholder="メモ（任意）">
+      </div>
+    </div>
+    <button class="btn btn-p btn-full" onclick="saveEditTxn()" style="margin-bottom:10px;">保存</button>
+    <button id="et-del-btn" class="btn btn-full" onclick="tapDeleteTxn()" style="background:var(--sf2);color:var(--t2);border:none;">削除</button>
+  </div>
+</div>
+
 <!-- ── CAL DAY MODAL ── -->
 <div id="cal-day-modal" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.45);align-items:flex-end;justify-content:center;" onclick="if(event.target===this)closeCalDay()">
   <div style="background:var(--sf);border-radius:18px 18px 0 0;padding:18px 16px calc(env(safe-area-inset-bottom,0px)+24px);width:100%;max-width:430px;max-height:78vh;overflow-y:auto;box-shadow:0 -4px 24px rgba(0,0,0,.18);">
@@ -1311,7 +1349,7 @@ function renderDailyBreakdown() {
         </div>
         <div class="row" style="gap:6px;flex-shrink:0;margin-left:8px;">
           <span style="font-size:12px;font-weight:600;">¥${t.amount.toLocaleString()}</span>
-          <button onclick="deleteRpTxn('${t.id}')" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--t3);padding:0 2px;" title="削除">✕</button>
+          <button onclick="openEditTxn('${t.id}')" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--ac);padding:0 2px;font-weight:600;" title="編集">編集</button>
         </div>
       </div>`;
     }).join('');
@@ -1371,6 +1409,66 @@ function renderCalendar(s, ym) {
     }
   }
 }
+// ── EDIT TXN MODAL ─────────────────────────────────
+let _editTxnId=null, _delConfirm=false;
+function openEditTxn(id) {
+  const s=gs();
+  const t=s.txns.find(t=>t.id===id);
+  if(!t) return;
+  _editTxnId=id; _delConfirm=false;
+  document.getElementById('et-amount').value=t.amount||'';
+  document.getElementById('et-date').value=t.date||'';
+  document.getElementById('et-type').value=t.type||'expense';
+  document.getElementById('et-memo').value=t.name&&t.name!==t.cat?t.name:'';
+  // populate category select
+  const catSel=document.getElementById('et-cat');
+  const cats=Object.keys(s.cats);
+  if(!cats.includes('収入')) cats.push('収入');
+  catSel.innerHTML=cats.map(c=>`<option value="${c}"${c===t.cat?' selected':''}>${c}</option>`).join('');
+  // reset delete btn
+  const delBtn=document.getElementById('et-del-btn');
+  delBtn.textContent='削除'; delBtn.style.background=''; delBtn.style.color='';
+  document.getElementById('edit-txn-modal').style.display='flex';
+  haptic(8);
+}
+function saveEditTxn() {
+  const s=gs();
+  const t=s.txns.find(t=>t.id===_editTxnId);
+  if(!t) return;
+  const amt=parseInt(document.getElementById('et-amount').value)||0;
+  if(!amt) { document.getElementById('et-amount').focus(); return; }
+  t.amount=amt;
+  t.date=document.getElementById('et-date').value||t.date;
+  t.type=document.getElementById('et-type').value;
+  t.cat=document.getElementById('et-cat').value;
+  const memo=document.getElementById('et-memo').value.trim();
+  t.name=memo||t.cat;
+  ss(s);
+  closeEditTxn();
+  renderHome(); renderReport();
+  if(_calSelDate) calDayClick(_calSelDate);
+  haptic(20);
+}
+function tapDeleteTxn() {
+  const btn=document.getElementById('et-del-btn');
+  if(!_delConfirm) {
+    _delConfirm=true;
+    btn.textContent='本当に削除する';
+    btn.style.background='var(--err)'; btn.style.color='#fff';
+    setTimeout(()=>{ _delConfirm=false; btn.textContent='削除'; btn.style.background=''; btn.style.color=''; },3000);
+    return;
+  }
+  const s=gs(); s.txns=s.txns.filter(t=>t.id!==_editTxnId); ss(s);
+  closeEditTxn();
+  renderHome(); renderReport();
+  if(_calSelDate) calDayClick(_calSelDate);
+  haptic(30);
+}
+function closeEditTxn() {
+  document.getElementById('edit-txn-modal').style.display='none';
+  _editTxnId=null; _delConfirm=false;
+}
+
 // ── CAL DAY MODAL ──────────────────────────────────
 let _calSelDate=null;
 function calDayClick(date) {
@@ -1408,7 +1506,7 @@ function calDayClick(date) {
           </div>
           <div style="text-align:right;flex-shrink:0;margin-left:10px;">
             <div style="font-size:15px;font-weight:700;color:${isInc?'var(--ok)':'var(--t)'};">${isInc?'+':''}¥${t.amount.toLocaleString()}</div>
-            ${t.src!=='fixed'?`<button onclick="deleteCalTxn('${t.id}')" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--t3);padding:0;margin-top:1px;">削除</button>`:'<div style="font-size:10px;color:var(--t3);">自動</div>'}
+            ${t.src!=='fixed'?`<button onclick="openEditTxn('${t.id}')" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--ac);padding:0;margin-top:1px;font-weight:600;">編集</button>`:'<div style="font-size:10px;color:var(--t3);">自動</div>'}
           </div>
         </div>`;
       }).join('')}`;
