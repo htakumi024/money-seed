@@ -1640,7 +1640,7 @@ async function submitFeedback(){
   const payload={star:_fbStar,cat:_fbCat,comment:text,ts:new Date().toISOString(),ua:navigator.userAgent};
   try{
     if(FEEDBACK_URL&&FEEDBACK_URL!=='__GAS_URL__'){
-      await fetch(FEEDBACK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      await fetch(FEEDBACK_URL,{method:'POST',mode:'no-cors',body:JSON.stringify(payload)});
     }
     // ローカルにも保存（オフライン時のバックアップ）
     const s=gs(); if(!s.feedbacks) s.feedbacks=[];
