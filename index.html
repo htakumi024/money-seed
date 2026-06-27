@@ -361,7 +361,6 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
     <input type="number" id="s-sal" style="margin-bottom:12px;" placeholder="例：300000">
     <div class="lbl">給料日</div>
     <select id="s-pd" style="margin-bottom:10px;" onchange="updatePaydayUI()">
-      <option value="last">月末（末日）</option>
       <option value="first">月初（1日）</option>
       <option value="5">5日</option>
       <option value="10">10日</option>
@@ -369,6 +368,7 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
       <option value="20">20日</option>
       <option value="25">25日</option>
       <option value="27">27日</option>
+      <option value="last">月末（末日）</option>
       <option value="custom">その他（指定）</option>
     </select>
     <div id="s-pd-custom" style="display:none;margin-bottom:10px;">
@@ -1203,7 +1203,7 @@ function renderSettings() {
   // Accent
   document.querySelectorAll('[data-a]').forEach(el=>el.classList.toggle('on',el.dataset.a===s.settings.accent));
   // Payday
-  document.getElementById('s-sal').value=s.settings.salary!=null?s.settings.salary:0;
+  document.getElementById('s-sal').value=s.settings.salary||'';
   const pd=s.settings.payday||'27';
   const sel=document.getElementById('s-pd');
   sel.value=['last','first','5','10','15','20','25','27','custom'].includes(pd)?pd:'custom';
