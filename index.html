@@ -476,6 +476,27 @@ td{padding:7px 5px;border-bottom:1px solid var(--d);vertical-align:middle;}
   </div>
 
 
+  <!-- Fixed Income -->
+  <div class="card">
+    <div class="sb" style="margin-bottom:4px;">
+      <div class="section-hd" style="margin:0;">定額収入の自動記録</div>
+      <button class="btn btn-sm btn-g" onclick="toggleIncomeSection()" id="inc-toggle-btn" style="font-size:12px;">▼ 展開</button>
+    </div>
+    <div class="hint" style="font-size:12px;margin-bottom:8px;">配当・副業など毎月定額で入ってくる収入を自動記録（任意）</div>
+    <div id="inc-section" style="display:none;">
+      <div id="s-incomes"></div>
+      <div class="fix-sec" style="margin-top:8px;">
+        <div class="lbl">新しい定額収入</div>
+        <input type="text" id="inc-name" placeholder="名称（例：株式配当）" style="margin-bottom:6px;">
+        <div class="row" style="gap:6px;margin-bottom:8px;">
+          <input type="number" id="inc-amt" placeholder="金額" style="flex:1;">
+          <select id="inc-day" style="width:90px;"><option value="1">1日</option><option value="2">2日</option><option value="3">3日</option><option value="4">4日</option><option value="5">5日</option><option value="6">6日</option><option value="7">7日</option><option value="8">8日</option><option value="9">9日</option><option value="10">10日</option><option value="11">11日</option><option value="12">12日</option><option value="13">13日</option><option value="14">14日</option><option value="15">15日</option><option value="16">16日</option><option value="17">17日</option><option value="18">18日</option><option value="19">19日</option><option value="20">20日</option><option value="21">21日</option><option value="22">22日</option><option value="23">23日</option><option value="24">24日</option><option value="25">25日</option><option value="26">26日</option><option value="27">27日</option><option value="28">28日</option><option value="29">29日</option><option value="30">30日</option><option value="31">31日</option><option value="last">月末</option></select>
+        </div>
+        <button class="btn btn-p btn-full btn-sm" onclick="addFixedIncome()">＋ 追加</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Feedback -->
   <div class="card" id="s-feedback-card">
     <div class="section-hd">フィードバック</div>
@@ -1932,6 +1953,65 @@ function applyFixedExpenses(s) {
   return changed;
 }
 
+// ── FIXED INCOME ───────────────────────────────────
+function toggleIncomeSection() {
+  const sec=document.getElementById('inc-section');
+  const btn=document.getElementById('inc-toggle-btn');
+  const open=sec.style.display!=='none';
+  sec.style.display=open?'none':'block';
+  btn.textContent=open?'▼ 展開':'▲ 閉じる';
+  if (!open) renderFixedIncomeList(gs());
+}
+function renderFixedIncomeList(s) {
+  const el=document.getElementById('s-incomes'); if (!el) return;
+  const list=(s.fixedIncomes||[]);
+  el.innerHTML=list.length ? list.map(fi=>`
+    <div class="fix-sec" style="margin-bottom:4px;">
+      <div class="sb">
+        <div>
+          <div style="font-size:14px;font-weight:500;">${fi.name}</div>
+          <div style="font-size:12px;color:var(--ok);">毎月${fi.day==='last'?'月末':fi.day+'日'} ＋¥${fi.amount.toLocaleString()}</div>
+        </div>
+        <button class="btn btn-sm btn-d" style="padding:4px 8px;" onclick="deleteFixedIncome('${fi.id}')">×</button>
+      </div>
+    </div>`).join('') : '<div class="hint" style="font-size:12px;">定額収入はまだありません</div>';
+}
+function addFixedIncome() {
+  const name=(document.getElementById('inc-name')?.value||'').trim();
+  const amt=parseInt(document.getElementById('inc-amt')?.value)||0;
+  const dayVal=document.getElementById('inc-day')?.value||'1';
+  const day=dayVal==='last'?'last':Math.min(31,Math.max(1,parseInt(dayVal)||1));
+  if (!name||!amt) { alert('名称と金額を入力してください'); return; }
+  const s=gs();
+  if (!s.fixedIncomes) s.fixedIncomes=[];
+  s.fixedIncomes.push({id:'fi'+Date.now(),name,amount:amt,day});
+  ss(s);
+  document.getElementById('inc-name').value='';
+  document.getElementById('inc-amt').value='';
+  renderFixedIncomeList(s);
+}
+function deleteFixedIncome(id) {
+  const s=gs();
+  s.fixedIncomes=(s.fixedIncomes||[]).filter(fi=>fi.id!==id); ss(s);
+  renderFixedIncomeList(s);
+}
+function applyFixedIncomes(s) {
+  const now=new Date(), ym=now.toISOString().slice(0,7), today=now.getDate();
+  let changed=false;
+  const lastDay=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+  for (const fi of (s.fixedIncomes||[])) {
+    const targetDay=fi.day==='last'?lastDay:fi.day;
+    if (targetDay>today) continue;
+    const key=`fi_${fi.id}_${ym}`;
+    if (s.txns.some(t=>t.id===key)) continue;
+    const d=targetDay.toString().padStart(2,'0');
+    s.txns.push({id:key,date:`${ym}-${d}`,name:fi.name,amount:fi.amount,type:'income',cat:'収入',sub:null,src:'fixed'});
+    changed=true;
+  }
+  if (changed) ss(s);
+  return changed;
+}
+
 // ── NAV ────────────────────────────────────────────
 function nav(p) {
   haptic(5);
@@ -1957,7 +2037,7 @@ if (!CanvasRenderingContext2D.prototype.roundRect) {
   };
 }
 applyTheme();
-const _s0=gs(); applyFixedExpenses(_s0);
+const _s0=gs(); applyFixedExpenses(_s0); applyFixedIncomes(_s0);
 renderHome();
 initOnboarding();
 scheduleReminder();
